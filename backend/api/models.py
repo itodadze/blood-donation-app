@@ -19,16 +19,24 @@ class Users(models.Model):
     birthday = models.DateField()
     loc_longitude = models.FloatField()
     loc_latitude = models.FloatField()
-    blood_type = models.ForeignKey(Blood_Types, on_delete=models.CASCADE, null=True)
+    blood_type = models.ForeignKey(Blood_Types, on_delete=models.CASCADE, null=True, blank=True)
     donor_status = models.BooleanField(default=False)
-    description = models.ForeignKey(User_Icons, on_delete=models.CASCADE, null=True)
-    icon_id = models.BigIntegerField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    icon = models.ForeignKey(User_Icons, on_delete=models.CASCADE, null=True, blank=True)
     register_date = models.DateField(auto_now_add=True)
 
 
+class Chat_Requests(models.Model):
+    initiator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='chats_initiated')
+    recipient = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='chats_received')
+    initiated_date = models.DateField(auto_now_add=True)
+    accept_status = models.BooleanField(default=False)
+    description = models.TextField(null=True, blank=True)
+
+
 class Chats(models.Model):
-    donor = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+')
-    receiver = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+')
+    donor = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='donor_chats')
+    receiver = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='receiver_chats')
     start_date = models.DateField(auto_now_add=True)
     valid_status = models.BooleanField(default=True)
 
@@ -36,13 +44,13 @@ class Chats(models.Model):
 class Messages(models.Model):
     chat = models.ForeignKey(Chats, on_delete=models.CASCADE)
     sender = models.ForeignKey(Users, on_delete=models.CASCADE)
-    message_text = models.CharField(max_length=250)
+    message_text = models.TextField()
     message_status = models.CharField(max_length=20)
     message_timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Instructions(models.Model):
-    instruction_text = models.CharField(max_length=1000)
+    instruction_text = models.TextField()
 
 
 class Medical_Documents(models.Model):
@@ -50,28 +58,20 @@ class Medical_Documents(models.Model):
     upload_date = models.DateField(auto_now_add=True)
     valid_status = models.BooleanField(default=True)
     file_address = models.CharField(max_length=200)
-    description = models.CharField(max_length=500)
+    description = models.TextField()
 
 
 class Receiver_Request_Hist(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     blood_type = models.ForeignKey(Blood_Types, on_delete=models.CASCADE)
-    description = models.CharField(max_length=500, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     search_status = models.BooleanField(default=True)
     emergency_status = models.BooleanField(default=True)
     loc_longitude = models.FloatField()
     loc_latitude = models.FloatField()
     request_date = models.DateField(auto_now_add=True)
-    request_timestamp = models.DateTimeField(auto_now_add=True)
-    accept_timestamp = models.DateTimeField(null=True)
 
 
 class Donation_History(models.Model):
     donor = models.ForeignKey(Users, on_delete=models.CASCADE)
     donation_date = models.DateField(auto_now_add=True)
-    request_timestamp = models.DateTimeField()
-    accept_timestamp = models.DateTimeField(auto_now_add=True)
-
-
-
-
