@@ -1,0 +1,19 @@
+from rest_framework import serializers
+
+from backend.api.models import Receiver_Request_Hist
+
+
+class FilterSearchRequestSerializer(serializers.Serializer):
+    blood_id = serializers.UUIDField()
+    top_left_x = serializers.FloatField()
+    top_left_y = serializers.FloatField()
+    bottom_right_x = serializers.FloatField()
+    bottom_right_y = serializers.FloatField()
+    exact_match = serializers.BooleanField(default=False)
+
+
+class SearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Receiver_Request_Hist
+        fields = ('id', 'user', 'blood_type', 'description', 'search_status',
+                  'emergency_status', 'loc_longitude', 'loc_latitude', 'request_date')
