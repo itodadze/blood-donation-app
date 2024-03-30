@@ -27,15 +27,15 @@ class Users(models.Model):
 
 
 class Chats(models.Model):
-    donor_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+')
-    receiver_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+')
+    donor = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+')
+    receiver = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+')
     start_date = models.DateField(auto_now_add=True)
     valid_status = models.BooleanField(default=True)
 
 
 class Messages(models.Model):
-    chat_id = models.ForeignKey(Chats, on_delete=models.CASCADE)
-    sender_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chats, on_delete=models.CASCADE)
+    sender = models.ForeignKey(Users, on_delete=models.CASCADE)
     message_text = models.CharField(max_length=250)
     message_status = models.CharField(max_length=20)
     message_timestamp = models.DateTimeField(auto_now_add=True)
@@ -46,7 +46,7 @@ class Instructions(models.Model):
 
 
 class Medical_Documents(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     upload_date = models.DateField(auto_now_add=True)
     valid_status = models.BooleanField(default=True)
     file_address = models.CharField(max_length=200)
@@ -54,7 +54,7 @@ class Medical_Documents(models.Model):
 
 
 class Receiver_Request_Hist(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     blood_type = models.ForeignKey(Blood_Types, on_delete=models.CASCADE)
     description = models.CharField(max_length=500, null=True, blank=True)
     search_status = models.BooleanField(default=True)
@@ -67,7 +67,7 @@ class Receiver_Request_Hist(models.Model):
 
 
 class Donation_History(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    donor = models.ForeignKey(Users, on_delete=models.CASCADE)
     donation_date = models.DateField(auto_now_add=True)
     request_timestamp = models.DateTimeField()
     accept_timestamp = models.DateTimeField(auto_now_add=True)
