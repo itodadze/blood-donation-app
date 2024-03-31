@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from backend.api.models import Receiver_Request_Hist
+from api.models import Receiver_Request_Hist
 
 
 class FilterSearchRequestSerializer(serializers.Serializer):

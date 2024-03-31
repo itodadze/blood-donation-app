@@ -6,10 +6,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from backend.api.api_models.search_models import FilterSearchRequest
-from backend.api.core.blood_matcher import all_recipients
-from backend.api.models import Receiver_Request_Hist
-from backend.api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer
+from api.api_models.search_models import FilterSearchRequest
+from api.core.blood_matcher import all_recipients
+from api.models import Receiver_Request_Hist
+from api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer
 
 
 def blood_types(search: FilterSearchRequest) -> list[UUID]:

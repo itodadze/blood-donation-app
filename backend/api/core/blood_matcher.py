@@ -2,7 +2,7 @@ from uuid import UUID
 
 from django.db.models import Q
 
-from backend.api.models import Blood_Types
+from api.models import Blood_Types
 
 DONATION: dict[str, list[str]] = {
     'O': ['O', 'A', 'B', 'AB'],
@@ -28,7 +28,7 @@ def all_recipients(identifier: UUID) -> list[UUID]:
     return list(Blood_Types
                 .objects
                 .filter(Q(rhesus_factor=donor.rhesus_factor) | Q(rhesus_factor=True),
-                        blood_type__in=DONATION.get(donor.blood_type)).values())
+                        blood_type__in=DONATION.get(donor.blood_type)).values_list('id', flat=True))
 
 
 def all_donors(identifier: UUID) -> list[UUID]:
@@ -36,4 +36,4 @@ def all_donors(identifier: UUID) -> list[UUID]:
     return list(Blood_Types
                 .objects
                 .filter(Q(rhesus_factor=recipient.rhesus_factor) | Q(rhesus_factor=False),
-                        blood_type__in=RECEPTION.get(recipient.blood_type)).values())
+                        blood_type__in=RECEPTION.get(recipient.blood_type)).values_list('id', flat=True))
