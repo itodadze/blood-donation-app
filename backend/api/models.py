@@ -61,7 +61,7 @@ class MedicalDocument(models.Model):
     description = models.TextField()
 
 
-class ReceiverRequestHistory(models.Model):
+class ReceiverRequest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     blood_type = models.ForeignKey(BloodType, on_delete=models.CASCADE)
     description = models.TextField(null=True, blank=True)
@@ -72,6 +72,6 @@ class ReceiverRequestHistory(models.Model):
     request_date = models.DateField(auto_now_add=True)
 
 
-class DonationHistory(models.Model):
+class Donation(models.Model):
     donor = models.ForeignKey(User, on_delete=models.CASCADE)
     donation_date = models.DateField(auto_now_add=True)
