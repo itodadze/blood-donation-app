@@ -6,16 +6,20 @@ from api.core.blood_matcher import all_blood_types, all_recipients, all_donors
 from api.models import Blood_Types
 
 
+def fill_blood_types() -> None:
+    Blood_Types.objects.create(blood_type="O", rhesus_factor=False, narrative="პირველი უარყოფითი")
+    Blood_Types.objects.create(blood_type="O", rhesus_factor=True, narrative="პირველი დადებითი")
+    Blood_Types.objects.create(blood_type="A", rhesus_factor=False, narrative="მეორე უარყოფითი")
+    Blood_Types.objects.create(blood_type="A", rhesus_factor=True, narrative="მეორე დადებითი")
+    Blood_Types.objects.create(blood_type="B", rhesus_factor=False, narrative="მესამე უარყოფითი")
+    Blood_Types.objects.create(blood_type="B", rhesus_factor=True, narrative="მესამე დადებითი")
+    Blood_Types.objects.create(blood_type="AB", rhesus_factor=False, narrative="მეოთხე უარყოფითი")
+    Blood_Types.objects.create(blood_type="AB", rhesus_factor=True, narrative="მეოთხე დადებითი")
+
+
 class BloodMatcherTestCase(TestCase):
     def setUp(self) -> None:
-        Blood_Types.objects.create(blood_type="O", rhesus_factor=False, narrative="პირველი უარყოფითი")
-        Blood_Types.objects.create(blood_type="O", rhesus_factor=True, narrative="პირველი დადებითი")
-        Blood_Types.objects.create(blood_type="A", rhesus_factor=False, narrative="მეორე უარყოფითი")
-        Blood_Types.objects.create(blood_type="A", rhesus_factor=True, narrative="მეორე დადებითი")
-        Blood_Types.objects.create(blood_type="B", rhesus_factor=False, narrative="მესამე უარყოფითი")
-        Blood_Types.objects.create(blood_type="B", rhesus_factor=True, narrative="მესამე დადებითი")
-        Blood_Types.objects.create(blood_type="AB", rhesus_factor=False, narrative="მეოთხე უარყოფითი")
-        Blood_Types.objects.create(blood_type="AB", rhesus_factor=True, narrative="მეოთხე დადებითი")
+        fill_blood_types()
 
     def test_all_blood_types(self) -> None:
         result: list[UUID] = all_blood_types()

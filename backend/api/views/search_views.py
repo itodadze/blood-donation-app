@@ -28,8 +28,9 @@ class FilterSearchRequestsView(APIView):
             queryset: QuerySet = (Receiver_Request_Hist.objects
                                   .filter(blood_type__in=recipient_blood_types,
                                           loc_latitude__range=(search.bottom_right_y, search.top_left_y),
-                                          loc_longitude__range=(search.top_left_x, search.bottom_right_x)))
+                                          loc_longitude__range=(search.top_left_x, search.bottom_right_x),
+                                          search_status=True))
             result_serializer = SearchSerializer(queryset, many=True)
             return Response(result_serializer.data, status=status.HTTP_200_OK)
         else:
-            Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
