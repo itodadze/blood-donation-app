@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import Receiver_Request_Hist
+from api.models import ReceiverRequest
 
 
 class FilterSearchRequestSerializer(serializers.Serializer):
@@ -14,6 +14,6 @@ class FilterSearchRequestSerializer(serializers.Serializer):
 
 class SearchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Receiver_Request_Hist
+        model = ReceiverRequest
         fields = ('id', 'user', 'blood_type', 'description', 'search_status',
                   'emergency_status', 'loc_longitude', 'loc_latitude', 'request_date')

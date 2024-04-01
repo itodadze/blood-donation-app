@@ -8,7 +8,7 @@ from rest_framework import status
 
 from api.api_models.search_models import FilterSearchRequest
 from api.core.blood_matcher import all_recipients
-from api.models import Receiver_Request_Hist
+from api.models import ReceiverRequest
 from api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer
 
 
@@ -25,7 +25,7 @@ class FilterSearchRequestsView(APIView):
         if serializer.is_valid():
             search: FilterSearchRequest = FilterSearchRequest(**serializer.validated_data)
             recipient_blood_types = blood_types(search)
-            queryset: QuerySet = (Receiver_Request_Hist.objects
+            queryset: QuerySet = (ReceiverRequest.objects
                                   .filter(blood_type__in=recipient_blood_types,
                                           loc_latitude__range=(search.bottom_right_y, search.top_left_y),
                                           loc_longitude__range=(search.top_left_x, search.bottom_right_x),

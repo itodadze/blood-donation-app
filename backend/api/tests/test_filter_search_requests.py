@@ -6,14 +6,14 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from api.api_models.search_models import FilterSearchRequest
-from api.models import Receiver_Request_Hist, Users, Blood_Types, User_Icons
+from api.models import ReceiverRequest, User, BloodType, UserIcon
 from api.tests.test_blood_matcher import fill_blood_types
 from api.views.search_views import FilterSearchRequestsView
 
 
-def insert_default_user(blood: Blood_Types) -> Users:
-    icon: User_Icons = User_Icons.objects.create(file_address="path/to/icon")
-    return Users.objects.create(
+def insert_default_user(blood: BloodType) -> User:
+    icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
+    return User.objects.create(
         email="test_subject@gmail.com", first_name="Test", last_name="Subject", password_hash="1",
         birthday=datetime(1995, 12, 12), loc_longitude=11.1, loc_latitude=5.5,
         blood_type=blood, donor_status=False, description="Test Subject", icon=icon,
@@ -24,24 +24,24 @@ def insert_default_user(blood: Blood_Types) -> Users:
 class FilterSearchRequestsTestCase(TestCase):
     def setUp(self) -> None:
         fill_blood_types()
-        self.o_minus: Blood_Types = Blood_Types.objects.get(blood_type="O", rhesus_factor=False)
-        self.o_plus: Blood_Types = Blood_Types.objects.get(blood_type="O", rhesus_factor=True)
-        self.ab_minus: Blood_Types = Blood_Types.objects.get(blood_type="AB", rhesus_factor=False)
-        self.ab_plus: Blood_Types = Blood_Types.objects.get(blood_type="AB", rhesus_factor=True)
-        self.user: Users = insert_default_user(self.o_plus)
-        Receiver_Request_Hist.objects.create(
+        self.o_minus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=False)
+        self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
+        self.ab_minus: BloodType = BloodType.objects.get(blood_type="AB", rhesus_factor=False)
+        self.ab_plus: BloodType = BloodType.objects.get(blood_type="AB", rhesus_factor=True)
+        self.user: User = insert_default_user(self.o_plus)
+        ReceiverRequest.objects.create(
             user=self.user, blood_type=self.o_minus, description="searching", search_status=True,
             emergency_status=True, loc_longitude=55.5, loc_latitude=55.5, request_date=datetime.now()
         )
-        Receiver_Request_Hist.objects.create(
+        ReceiverRequest.objects.create(
             user=self.user, blood_type=self.o_plus, description="searching", search_status=True,
             emergency_status=True, loc_longitude=15.5, loc_latitude=22.5, request_date=datetime.now()
         )
-        Receiver_Request_Hist.objects.create(
+        ReceiverRequest.objects.create(
             user=self.user, blood_type=self.ab_minus, description="searching", search_status=True,
             emergency_status=True, loc_longitude=19.5, loc_latitude=1.5, request_date=datetime.now()
         )
-        Receiver_Request_Hist.objects.create(
+        ReceiverRequest.objects.create(
             user=self.user, blood_type=self.ab_minus, description="searching", search_status=False,
             emergency_status=True, loc_longitude=15.5, loc_latitude=22.5, request_date=datetime.now()
         )
