@@ -20,5 +20,5 @@ class FilterSearchRequestSerializer(serializers.Serializer):
 
 
 class FilterUsersRequestSerializer(serializers.Serializer):
-    blood_id = serializers.UUIDField()
-    name = serializers.CharField(max_length=101)
+    blood_id = serializers.UUIDField(allow_null=True)
+    name = serializers.CharField(max_length=101, allow_blank=True)

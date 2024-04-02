@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from django.db.models import QuerySet, Value, CharField, Q
-from django.db.models.functions import Concat
+from django.db.models.functions import Concat, Lower
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,7 +9,7 @@ from rest_framework import status
 
 from api.api_models.search_models import FilterSearchRequest, FilterUsersRequest
 from api.api_models.user_models import UserResponse
-from api.core.blood_matcher import all_recipients
+from api.core.blood_matcher import all_recipients, all_blood_types
 from api.models import ReceiverRequest, User
 from api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer, \
     FilterUsersRequestSerializer
@@ -46,18 +46,26 @@ class FilterUsersView(APIView):
         serializer = FilterUsersRequestSerializer(data=request.data)
         if serializer.is_valid():
             search: FilterUsersRequest = FilterUsersRequest(**serializer.validated_data)
+            blood_types = self._blood_types(search)
             queryset: QuerySet = User.objects.annotate(
-                full_name_sf=Concat(
-                    'first_name', Value(' '), 'last_name', output_field=CharField()),
-                full_name_sl=Concat(
-                    'last_name', Value(' '), 'first_name', output_field=CharField())
+                fn_sf=Lower(Concat(
+                    'first_name', Value(' '), 'last_name', output_field=CharField())),
+                fn_sl=Lower(Concat(
+                    'last_name', Value(' '), 'first_name', output_field=CharField()))
             ).filter(
-                (Q(full_name_sf__startswith=search.name) | Q(full_name_sl__startswith=search.name))
-                & Q(blood_type=search.blood_id)
+                (Q(fn_sf__icontains=search.name.lower()) | Q(fn_sl__icontains=search.name.lower()))
+                & Q(blood_type__in=blood_types)
             )
             mapped: list[UserResponse] = [UserResponse.from_user(user) for user in list(queryset)]
             result_serializer = UserResponseSerializer(mapped, many=True)
             return Response(result_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @staticmethod
+    def _blood_types(search: FilterUsersRequest) -> list[UUID]:
+        if search.blood_id is not None:
+            return [search.blood_id]
+        else:
+            return all_blood_types()
 

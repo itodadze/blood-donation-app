@@ -32,8 +32,8 @@ def all_recipients(identifier: UUID) -> list[UUID]:
 
 
 def all_donors(identifier: UUID) -> list[UUID]:
-    recipient: Blood_Types = Blood_Types.objects.get(pk=identifier)
-    return list(Blood_Types
+    recipient: BloodType = BloodType.objects.get(pk=identifier)
+    return list(BloodType
                 .objects
                 .filter(Q(rhesus_factor=recipient.rhesus_factor) | Q(rhesus_factor=False),
                         blood_type__in=RECEPTION.get(recipient.blood_type)).values_list('id', flat=True))

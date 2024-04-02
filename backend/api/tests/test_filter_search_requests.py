@@ -8,17 +8,8 @@ from rest_framework.response import Response
 from api.api_models.search_models import FilterSearchRequest
 from api.models import ReceiverRequest, User, BloodType, UserIcon
 from api.tests.test_blood_matcher import fill_blood_types
+from api.tests.test_filter_users import insert_default_user
 from api.views.search_views import FilterSearchRequestsView
-
-
-def insert_default_user(blood: BloodType) -> User:
-    icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-    return User.objects.create(
-        email="test_subject@gmail.com", first_name="Test", last_name="Subject", password_hash="1",
-        birthday=datetime(1995, 12, 12), loc_longitude=11.1, loc_latitude=5.5,
-        blood_type=blood, donor_status=False, description="Test Subject", icon=icon,
-        register_date=datetime.now()
-    )
 
 
 class FilterSearchRequestsTestCase(TestCase):
@@ -28,7 +19,8 @@ class FilterSearchRequestsTestCase(TestCase):
         self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
         self.ab_minus: BloodType = BloodType.objects.get(blood_type="AB", rhesus_factor=False)
         self.ab_plus: BloodType = BloodType.objects.get(blood_type="AB", rhesus_factor=True)
-        self.user: User = insert_default_user(self.o_plus)
+        icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
+        self.user: User = insert_default_user(icon, self.o_plus, "Test", "Subject")
         ReceiverRequest.objects.create(
             user=self.user, blood_type=self.o_minus, description="searching", search_status=True,
             emergency_status=True, loc_longitude=55.5, loc_latitude=55.5, request_date=datetime.now()
