@@ -1,5 +1,7 @@
+from datetime import datetime
 from uuid import UUID
 
+from django.core.mail import send_mail
 from django.db.models import QuerySet, Value, CharField, Q
 from django.db.models.functions import Concat, Lower
 from rest_framework.request import Request
@@ -7,12 +9,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from api.api_models.search_models import FilterSearchRequest, FilterUsersRequest
+from api.api_models.search_models import FilterSearchRequest, FilterUsersRequest, BroadcastSearchRequest
 from api.api_models.user_models import UserResponse
-from api.core.blood_matcher import all_recipients, all_blood_types
+from api.core.blood_matcher import all_recipients, all_blood_types, all_donors
 from api.models import ReceiverRequest, User
 from api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer, \
-    FilterUsersRequestSerializer
+    FilterUsersRequestSerializer, BroadcastSearchSerializer
 from api.serializers.user_serializers import UserResponseSerializer
 
 
@@ -69,3 +71,37 @@ class FilterUsersView(APIView):
         else:
             return all_blood_types()
 
+
+class BroadcastSearchView(APIView):
+    def broadcast(self, request: Request) -> Response:
+        serializer = BroadcastSearchSerializer(data=request.data)
+        if serializer.is_valid():
+            search: BroadcastSearchRequest = BroadcastSearchRequest(**serializer.validated_data)
+            ReceiverRequest.objects.create(
+                user=search.user_id, blood_type=search.blood_id, description=search.description,
+                search_status=True, emergency_status=search.emergency_status,
+                loc_longitude=search.loc_longitude, loc_latitude=search.loc_latitude,
+                request_date=datetime.now()
+            )
+            blood_types = all_donors(search.blood_id)
+            users: list[User] = list(User.objects.filter(
+                blood_type__in=blood_types, donor_status=True
+            ))
+            self._order_users(search, users)
+            # send_mail(
+            #    subject="სისხლის დონაცია",
+            #    message="ჩატის ლინკი: ___, მიმღები: ___, სისხლის ჯგუფი: ___",
+            #    from_email="გამგზავნის იმეილი",
+            #    recipient_list= "პირველი დაახლ. 10 ავირჩიოთ, პერსონ. ლინკები გავუგზავნოთ",
+            #    fail_silently=False
+            # )
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @staticmethod
+    def _order_users(search: BroadcastSearchRequest, users: list[User]) -> None:
+        # currently only location is taken into account, later take into account
+        # documents.
+        users.sort(key=lambda x: pow(abs(search.loc_latitude - x.loc_latitude), 2) +
+                                 pow(abs(search.loc_longitude - x.loc_longitude), 2))
