@@ -12,6 +12,7 @@ from rest_framework import status
 from api.api_models.search_models import FilterSearchRequest, FilterUsersRequest, BroadcastSearchRequest
 from api.api_models.user_models import UserResponse
 from api.core.blood_matcher import all_recipients, all_blood_types, all_donors
+from api.core.donor_ranker import DonorPriorityRanker
 from api.models import ReceiverRequest, User
 from api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer, \
     FilterUsersRequestSerializer, BroadcastSearchSerializer
@@ -86,8 +87,8 @@ class BroadcastSearchView(APIView):
             blood_types = all_donors(search.blood_id)
             users: list[User] = list(User.objects.filter(
                 blood_type__in=blood_types, donor_status=True
-            ))
-            self._order_users(search, users)
+            ).exclude(pk=search.blood_id))
+            ranked_users = DonorPriorityRanker(search).rank(users)
             # send_mail(
             #    subject="სისხლის დონაცია",
             #    message="ჩატის ლინკი: ___, მიმღები: ___, სისხლის ჯგუფი: ___",
@@ -98,10 +99,3 @@ class BroadcastSearchView(APIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
-    def _order_users(search: BroadcastSearchRequest, users: list[User]) -> None:
-        # currently only location is taken into account, later take into account
-        # documents.
-        users.sort(key=lambda x: pow(abs(search.loc_latitude - x.loc_latitude), 2) +
-                                 pow(abs(search.loc_longitude - x.loc_longitude), 2))
