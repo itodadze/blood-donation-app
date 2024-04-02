@@ -20,3 +20,15 @@ class FilterSearchRequest:
             "bottom_right_y": self.bottom_right_y,
             "exact_match": self.exact_match
         }
+
+
+@dataclass
+class FilterUsersRequest:
+    blood_id: UUID
+    name: str
+
+    def as_dictionary(self) -> dict:
+        return {
+            "blood_id": self.blood_id,
+            "name": self.name
+        }
