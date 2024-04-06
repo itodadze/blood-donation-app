@@ -1,6 +1,8 @@
 import {useEffect, useRef, useState} from "react";
-
-const mapboxgl = require('mapbox-gl');
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl';
+import {Helmet} from "react-helmet";
+import {getPinMarker} from "./PinMarkerComponent";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXRvZGFkemUiLCJhIjoiY2x1bWdveHpnMG4zdjJrb2F2bXN3ZWx6YiJ9.-yIhnR6oioGEsaa2U1vgsQ';
 
@@ -18,10 +20,15 @@ export const Map = () => {
             center: [lng, lat],
             zoom: zoom
         });
-    });
+        /*getPinMarker('A-', 44.7851, 41.7105).addTo(map.current);*/
+        });
     return (
         <div>
-            <div ref={mapContainer} style={{ minWidth: "100vh", minHeight: "70vh", textAlign: "center" }} />
+            <Helmet>
+                <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+                <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
+            </Helmet>
+            <div ref={mapContainer} style={{minWidth: "100vh", minHeight: "90vh", textAlign: "center"}}/>
         </div>
     );
 }

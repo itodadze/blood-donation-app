@@ -4,15 +4,15 @@ import {Map} from "../components/map/Map"
 
 export const Home = () => {
     return (
-        <div style={{
-            backgroundColor: colors.dark_gray,
-            minHeight: "100vh", margin: "0", padding: "0", border: "0", minWidth: "100vh"
-        }}>
-            <h1 style={{color: colors.primary, textAlign: "center"}}>Test Primary Color</h1>
-            <h2 style={{color: colors.secondary, textAlign: "center"}}>Test Secondary Color</h2>
-            <h3 style={{color: colors.tertiary, textAlign: "center"}}>Test Tertiary Color</h3>
-            <div>
-                <Map />
+        <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
+            <div style={{flex: '0 0 30vh', backgroundColor: colors.secondary}}>
+            </div>
+            <div style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
+                <div style={{flex: '0 0 10vh', backgroundColor: colors.tertiary}}>
+                </div>
+                <div style={{flex: '1', position: 'relative'}}>
+                    <Map/>
+                </div>
             </div>
         </div>
     );
