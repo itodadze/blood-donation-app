@@ -1,10 +1,21 @@
-import React from 'react'
-import colors from "../values/colors";
+import React, {useState} from 'react'
 import {Map} from "../components/map/Map"
-import {HomePageMenu} from "../components/map/HomePageMenu";
+import {HomePageMenu} from "../components/HomePageMenu";
 import {Helmet} from "react-helmet";
+import {HomePageSearchBar} from "../components/HomePageSearchBar";
 
 export const Home = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [bloodOverUsers, setBloodOverUsers] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const toggleFilterButton = () => {
+        setBloodOverUsers(!bloodOverUsers);
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
             <Helmet>
@@ -16,10 +27,10 @@ export const Home = () => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            <HomePageMenu/>
+            {isSidebarOpen && <HomePageMenu />}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
-            <div style={{flex: '0 0 10vh', backgroundColor: colors.tertiary}}>
-                </div>
+                <HomePageSearchBar toggleSidebar={toggleSidebar} bloodOverUsers={bloodOverUsers}
+                toggleFilterButton={toggleFilterButton}/>
                 <div style={{flex: '1', position: 'relative'}}>
                     <Map/>
                 </div>
