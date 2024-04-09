@@ -43,7 +43,20 @@
     margin: 5px;
 }
 
-.home-blood-menu-dropdown {
-    margin: 4px;
-    color: #e6534e;
+.home-dropdown-menu {
+    background-color: #e6534e;
+    margin: 5px;
+    color: #f6f7f5;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+}
+
+.home-dropdown-menu:hover,
+.home-dropdown-menu:focus,
+.home-dropdown-menu:active {
+    background-color: #e6534e;
+    margin: 5px;
+    color: #f6f7f5;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
 }
