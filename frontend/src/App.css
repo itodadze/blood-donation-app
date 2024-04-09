@@ -28,6 +28,10 @@
     border-color: #ffc2d1;
     color: #f6f7f5;
     margin: 5px;
+    @media (max-width: 1000px) {
+        width: 120px;
+        font-size: small;
+    }
 }
 
 .home-unselected-button {
@@ -41,6 +45,10 @@
     border-color: #ffc2d1;
     color: #e6534e;
     margin: 5px;
+    @media (max-width: 1000px) {
+        width: 120px;
+        font-size: small;
+    }
 }
 
 .home-dropdown-menu {
@@ -49,6 +57,9 @@
     color: #f6f7f5;
     font-family: ".noto-sans-georgian-elegant", serif;
     font-weight: bold;
+    @media (max-width: 1000px) {
+        font-size: small;
+    }
 }
 
 .home-dropdown-menu:hover,

@@ -19,7 +19,7 @@ export const HomePageBloodFilterOptions = ({handleHeightChange}) => {
 
     useEffect(() => {
         handleHeightChange();
-    }, [selectedBlood]);
+    }, [selectedBlood, selectedMatch])
 
     /* Later get this data from db */
     const blood_types = [
