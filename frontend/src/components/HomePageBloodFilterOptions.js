@@ -1,5 +1,5 @@
 import '../App.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { Dropdown, Button } from 'react-bootstrap';
 import {DropdownBloodOption} from "./DropdownBloodOption";
 import o_p from "../assets/blood_types/o_p.svg"
@@ -12,10 +12,14 @@ import ab_p from "../assets/blood_types/ab_p.svg"
 import ab_n from "../assets/blood_types/ab_n.svg"
 import {DropdownMatchOption} from "./DropdownMatchOption";
 
-export const HomePageBloodFilterOptions = () => {
+export const HomePageBloodFilterOptions = ({handleHeightChange}) => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedMatch, setMatch] = useState(null);
+
+    useEffect(() => {
+        handleHeightChange();
+    }, [selectedBlood]);
 
     /* Later get this data from db */
     const blood_types = [
@@ -42,7 +46,7 @@ export const HomePageBloodFilterOptions = () => {
     }
 
     return (
-        <div style={{display: 'flex', flexDirection: 'row'}}>
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
             <Dropdown>
                 <Dropdown.Toggle as={Button} variant="outline-dark" className={"home-dropdown-menu"}>
                     {selectedBlood ? selectedBlood : 'სისხლის ტიპი'}

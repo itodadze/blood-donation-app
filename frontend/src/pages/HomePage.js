@@ -19,6 +19,7 @@ export const Home = () => {
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
             <Helmet>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
                 <link
@@ -27,11 +28,11 @@ export const Home = () => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <HomePageMenu />}
-            <div style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
+            {isSidebarOpen && <HomePageMenu/>}
+            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <HomePageSearchBar toggleSidebar={toggleSidebar} bloodOverUsers={bloodOverUsers}
                 toggleFilterButton={toggleFilterButton}/>
-                <div style={{flex: '1', position: 'relative'}}>
+                <div style={{flex: '1', position: 'relative', width: "100%"}}>
                     <Map/>
                 </div>
             </div>
