@@ -72,7 +72,7 @@ class FilterUsersView(APIView):
 
 
 class BroadcastSearchView(APIView):
-    def broadcast(self, request: Request) -> Response:
+    def post(self, request: Request) -> Response:
         serializer = BroadcastSearchSerializer(data=request.data)
         if serializer.is_valid():
             search: BroadcastSearchRequest = BroadcastSearchRequest(**serializer.validated_data)
