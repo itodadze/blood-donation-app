@@ -12,10 +12,6 @@ class SearchSerializer(serializers.ModelSerializer):
 
 class FilterSearchRequestSerializer(serializers.Serializer):
     blood_id = serializers.UUIDField()
-    top_left_x = serializers.FloatField()
-    top_left_y = serializers.FloatField()
-    bottom_right_x = serializers.FloatField()
-    bottom_right_y = serializers.FloatField()
     exact_match = serializers.BooleanField(default=False)
 
 

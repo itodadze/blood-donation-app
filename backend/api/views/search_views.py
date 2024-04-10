@@ -27,8 +27,6 @@ class FilterSearchRequestsView(APIView):
             recipient_blood_types = self._blood_types(search)
             queryset: QuerySet = ReceiverRequest.objects.filter(
                 blood_type__in=recipient_blood_types,
-                loc_latitude__range=(search.bottom_right_y, search.top_left_y),
-                loc_longitude__range=(search.top_left_x, search.bottom_right_x),
                 search_status=True
             )
             result_serializer = SearchSerializer(queryset, many=True)
