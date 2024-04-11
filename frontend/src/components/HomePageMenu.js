@@ -1,12 +1,12 @@
 import React from 'react';
 import colors from "../values/colors"
 import {HomePageMenuButton} from "./HomePageMenuButton";
-import blood from "../assets/icons/blood.svg"
-import profile from "../assets/icons/profile.svg"
-import chat from "../assets/icons/chat.svg"
-import help from "../assets/icons/help.svg"
-import settings from "../assets/icons/settings.svg"
-import support from "../assets/icons/support.svg"
+import blood from "../../src/assets/icons/blood.svg"
+import profile from "../../src/assets/icons/profile.svg"
+import chat from "../../src/assets/icons/chat.svg"
+import help from "../../src/assets/icons/help.svg"
+import settings from "../../src/assets/icons/settings.svg"
+import support from "../../src/assets/icons/support.svg"
 import { motion } from 'framer-motion';
 import "../App.css"
 

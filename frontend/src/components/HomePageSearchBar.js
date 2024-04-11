@@ -1,5 +1,5 @@
 import colors from "../values/colors";
-import menu from "../assets/icons/menu.svg";
+import menu from "../../src/assets/icons/menu.svg";
 import React, {useEffect, useRef, useState} from "react";
 import {HomePageBloodFilterOptions} from "./HomePageBloodFilterOptions";
 import {HomePageUserFilterOptions} from "./HomePageUserFilterOptions";
