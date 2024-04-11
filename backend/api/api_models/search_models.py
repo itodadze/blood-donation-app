@@ -4,12 +4,12 @@ from uuid import UUID
 
 @dataclass
 class FilterSearchRequest:
-    blood_id: UUID
+    narrative: str | None
     exact_match: bool
 
     def as_dictionary(self) -> dict:
         return {
-            "blood_id": self.blood_id,
+            "narrative": self.narrative,
             "exact_match": self.exact_match
         }
 

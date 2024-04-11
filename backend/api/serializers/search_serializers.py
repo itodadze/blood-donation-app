@@ -11,7 +11,7 @@ class SearchSerializer(serializers.ModelSerializer):
 
 
 class FilterSearchRequestSerializer(serializers.Serializer):
-    blood_id = serializers.UUIDField()
+    narrative = serializers.CharField(allow_null=True)
     exact_match = serializers.BooleanField(default=False)
 
 

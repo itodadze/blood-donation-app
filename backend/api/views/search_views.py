@@ -20,7 +20,7 @@ from api.serializers.user_serializers import UserResponseSerializer
 
 
 class FilterSearchRequestsView(APIView):
-    def get(self, request: Request) -> Response:
+    def post(self, request: Request) -> Response:
         serializer = FilterSearchRequestSerializer(data=request.data)
         if serializer.is_valid():
             search: FilterSearchRequest = FilterSearchRequest(**serializer.validated_data)
@@ -36,10 +36,13 @@ class FilterSearchRequestsView(APIView):
 
     @staticmethod
     def _blood_types(search: FilterSearchRequest) -> list[UUID]:
-        if search.exact_match:
-            return [search.blood_id]
+        curr_id = BloodType.objects.get(narrative=search.narrative).pk
+        if curr_id is None:
+            return all_blood_types()
+        elif search.exact_match:
+            return [curr_id]
         else:
-            return all_recipients(search.blood_id)
+            return all_recipients(curr_id)
 
 
 class FilterUsersView(APIView):
@@ -72,7 +75,7 @@ class FilterUsersView(APIView):
 
 
 class BroadcastSearchView(APIView):
-    def post(self, request: Request) -> Response:
+    def put(self, request: Request) -> Response:
         serializer = BroadcastSearchSerializer(data=request.data)
         if serializer.is_valid():
             search: BroadcastSearchRequest = BroadcastSearchRequest(**serializer.validated_data)
