@@ -2,8 +2,9 @@ import '../App.css';
 import {useEffect, useState} from "react";
 import {BloodDropdownMenu} from "./BloodDropdownMenu";
 import {MatchDropdownMenu} from "./MatchDropdownMenu";
+import {getSearchRequests} from "../services/SearchRequestService";
 
-export const HomePageBloodFilterOptions = ({handleHeightChange}) => {
+export const HomePageBloodFilterOptions = ({handleHeightChange, setMapData}) => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedMatch, setMatch] = useState(null);
@@ -11,6 +12,12 @@ export const HomePageBloodFilterOptions = ({handleHeightChange}) => {
     useEffect(() => {
         handleHeightChange();
     }, [selectedBlood, selectedMatch])
+
+    useEffect(() => {
+        getSearchRequests({selectedBlood, selectedMatch}).then(data => {
+            setMapData(data);
+        });
+    }, [selectedBlood, selectedMatch]);
 
     const matches = [
         "ყველა მიმღები", "მხოლოდ მონიშნული"

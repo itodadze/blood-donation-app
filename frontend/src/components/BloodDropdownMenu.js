@@ -10,7 +10,6 @@ export const BloodDropdownMenu = ({selectedBlood, handleSelect}) => {
     useEffect(() => {
         getBloodTypes().then(data => {
             setBloodTypes(data);
-            console.log("BLOOD TYPES:", data);
         });
     }, []);
 

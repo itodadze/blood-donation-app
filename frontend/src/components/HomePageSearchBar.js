@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {HomePageBloodFilterOptions} from "./HomePageBloodFilterOptions";
 import {HomePageUserFilterOptions} from "./HomePageUserFilterOptions";
 
-export const HomePageSearchBar = ({toggleSidebar, bloodOverUsers, toggleFilterButton}) => {
+export const HomePageSearchBar = ({toggleSidebar, bloodOverUsers, toggleFilterButton, setMapData}) => {
 
     const [contentHeight, setContentHeight] = useState(0);
     const [heightChange, handleHeightChange] = useState(false);
@@ -39,7 +39,7 @@ export const HomePageSearchBar = ({toggleSidebar, bloodOverUsers, toggleFilterBu
                                 onClick={toggleFilterButton}>მომხმარებლის ძებნა
                         </button>
                     </div>
-                    {bloodOverUsers && <HomePageBloodFilterOptions handleHeightChange={heightChangeFromChildren}/>}
+                    {bloodOverUsers && <HomePageBloodFilterOptions handleHeightChange={heightChangeFromChildren} setMapData={setMapData}/>}
                     {!bloodOverUsers && <HomePageUserFilterOptions handleHeightChange={heightChangeFromChildren} />}
                 </div>
             </div>

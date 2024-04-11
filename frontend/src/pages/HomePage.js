@@ -7,6 +7,7 @@ import {HomePageSearchBar} from "../components/HomePageSearchBar";
 export const Home = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [bloodOverUsers, setBloodOverUsers] = useState(true);
+    const [mapData, setMapData] = useState([])
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -31,9 +32,9 @@ export const Home = () => {
             {isSidebarOpen && <HomePageMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <HomePageSearchBar toggleSidebar={toggleSidebar} bloodOverUsers={bloodOverUsers}
-                toggleFilterButton={toggleFilterButton}/>
+                toggleFilterButton={toggleFilterButton} setMapData={setMapData}/>
                 <div style={{flex: '1', position: 'relative', width: "100%"}}>
-                    <Map/>
+                    <Map mapData={mapData}/>
                 </div>
             </div>
         </div>
