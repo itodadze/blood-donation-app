@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,12 +35,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "api",
     "corsheaders",
     "rest_framework",
+    "api",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -48,7 +49,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -77,17 +77,17 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blood_donation_db', #tugindat tqvenc ase daarqvit
-        'USER': '', #am orshi tqvenebi
-        'PASSWORD': '',
+        'NAME': 'blood_donation_db',
+        'USER': 'root',
+        'PASSWORD': 'rootroot',
         'HOST': 'localhost',
         'PORT': '5432',
     },
     'test': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blood_donation_test_db',#tugindat tqvenc ase daarqvit
-        'USER': '',
-        'PASSWORD': '',
+        'NAME': 'blood_donation_test_db',
+        'USER': 'root',
+        'PASSWORD': 'rootroot',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -114,6 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 )
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

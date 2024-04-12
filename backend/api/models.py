@@ -5,6 +5,7 @@ class BloodType(models.Model):
     blood_type = models.CharField(max_length=2)
     rhesus_factor = models.BooleanField()
     narrative = models.CharField(max_length=50)
+    icon_path = models.CharField(blank=True, null=True)
 
 
 class UserIcon(models.Model):

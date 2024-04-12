@@ -1,15 +1,42 @@
-import React from 'react'
-import colors from "../values/colors";
+import React, {useState} from 'react'
+import {Map} from "../components/map/Map"
+import {HomePageMenu} from "../components/HomePageMenu";
+import {Helmet} from "react-helmet";
+import {HomePageSearchBar} from "../components/HomePageSearchBar";
 
 export const Home = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [bloodOverUsers, setBloodOverUsers] = useState(true);
+    const [mapData, setMapData] = useState([])
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const toggleFilterButton = () => {
+        setBloodOverUsers(!bloodOverUsers);
+    }
+
     return (
-        <div style={{
-            backgroundColor: colors.dark_gray,
-            minHeight: "100vh", margin: "0", padding: "0", border: "0"
-        }}>
-            <h1 style={{color: colors.primary, textAlign: "center"}}>Test Primary Color</h1>
-            <h2 style={{color: colors.secondary, textAlign: "center"}}>Test Secondary Color</h2>
-            <h3 style={{color: colors.tertiary, textAlign: "center"}}>Test Tertiary Color</h3>
+        <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
+            <Helmet>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
+                    rel="stylesheet"/>
+                <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+                <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
+            </Helmet>
+            {isSidebarOpen && <HomePageMenu/>}
+            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
+                <HomePageSearchBar toggleSidebar={toggleSidebar} bloodOverUsers={bloodOverUsers}
+                toggleFilterButton={toggleFilterButton} setMapData={setMapData}/>
+                <div style={{flex: '1', position: 'relative', width: "100%"}}>
+                    <Map mapData={mapData}/>
+                </div>
+            </div>
         </div>
     );
 }

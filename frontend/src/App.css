@@ -1,0 +1,73 @@
+.noto-sans-georgian-elegant {
+    font-family: "Noto Sans Georgian", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-style: normal;
+    font-variation-settings:
+            "wdth" 100;
+}
+
+.home-menu-button {
+    width: 250px;
+    height: 8vh;
+    margin: 1vh;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 2vh;
+}
+
+.home-selected-button {
+    width: 180px;
+    height: 45px;
+    background-color: #e6534e;
+    border-radius: 2vh;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+    border-width: 2px;
+    border-color: #ffc2d1;
+    color: #f6f7f5;
+    margin: 5px;
+    @media (max-width: 1000px) {
+        width: 120px;
+        font-size: small;
+    }
+}
+
+.home-unselected-button {
+    width: 180px;
+    height: 45px;
+    background-color: #f6f7f5;
+    border-radius: 2vh;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+    border-width: 2px;
+    border-color: #ffc2d1;
+    color: #e6534e;
+    margin: 5px;
+    @media (max-width: 1000px) {
+        width: 120px;
+        font-size: small;
+    }
+}
+
+.home-dropdown-menu {
+    background-color: #e6534e;
+    margin: 5px;
+    color: #f6f7f5;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+    @media (max-width: 1000px) {
+        font-size: small;
+    }
+}
+
+.home-dropdown-menu:hover,
+.home-dropdown-menu:focus,
+.home-dropdown-menu:active {
+    background-color: #e6534e;
+    margin: 5px;
+    color: #f6f7f5;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+}

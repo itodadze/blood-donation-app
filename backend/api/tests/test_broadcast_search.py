@@ -22,7 +22,7 @@ class BroadcastSearchTestCase(TestCase):
         search = "test_invalid"
         request = MagicMock(spec=Request)
         request.data = search
-        response: Response = BroadcastSearchView().broadcast(request)
+        response: Response = BroadcastSearchView().put(request)
         self.assertEquals(response.status_code, 400)
 
     def test_broadcast_search_adds_valid(self) -> None:
@@ -31,7 +31,7 @@ class BroadcastSearchTestCase(TestCase):
         ).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search
-        response: Response = BroadcastSearchView().broadcast(request)
+        response: Response = BroadcastSearchView().put(request)
         self.assertEquals(response.status_code, 200)
         row = ReceiverRequest.objects.get(user=self.user.pk)
         self.assertIsNotNone(row)
