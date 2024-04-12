@@ -33,13 +33,7 @@ export const Map = ({mapData}) => {
             }
         }
         mapData.forEach(marker => {
-            let blood = marker.blood_type;
-            // if (marker.blood_type.rhesus_factor) {
-            //     blood += "+";
-            // } else {
-            //     blood += "-";
-            // }
-            marker = getPinMarker(blood, marker.loc_longitude, marker.loc_latitude)
+            marker = getPinMarker(marker.blood_txt, marker.loc_longitude, marker.loc_latitude)
             marker.addTo(map.current)
             currentMarkers.push(marker);
         });

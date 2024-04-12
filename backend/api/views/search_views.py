@@ -34,6 +34,7 @@ class FilterSearchRequestsView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
     @staticmethod
     def _blood_types(search: FilterSearchRequest) -> list[UUID]:
         curr_id = BloodType.objects.get(narrative=search.narrative).pk
