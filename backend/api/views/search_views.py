@@ -34,16 +34,16 @@ class FilterSearchRequestsView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
     @staticmethod
     def _blood_types(search: FilterSearchRequest) -> list[UUID]:
-        curr_id = BloodType.objects.get(narrative=search.narrative).pk
-        if curr_id is None:
+        try:
+            curr_id = BloodType.objects.get(narrative=search.narrative).pk
+            if search.exact_match:
+                return [curr_id]
+            else:
+                return all_recipients(curr_id)
+        except:
             return all_blood_types()
-        elif search.exact_match:
-            return [curr_id]
-        else:
-            return all_recipients(curr_id)
 
 
 class FilterUsersView(APIView):
