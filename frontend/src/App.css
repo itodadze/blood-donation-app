@@ -18,8 +18,8 @@
 }
 
 .home-selected-button {
-    width: 180px;
-    height: 45px;
+    width: 206px;
+    height: 48px;
     background-color: #e6534e;
     border-radius: 2vh;
     font-family: ".noto-sans-georgian-elegant", serif;
@@ -27,7 +27,7 @@
     border-width: 2px;
     border-color: #ffc2d1;
     color: #f6f7f5;
-    margin: 5px;
+    margin: 3px 7px;
     @media (max-width: 1000px) {
         width: 120px;
         font-size: small;
@@ -35,8 +35,8 @@
 }
 
 .home-unselected-button {
-    width: 180px;
-    height: 45px;
+    width: 200px;
+    height: 44px;
     background-color: #f6f7f5;
     border-radius: 2vh;
     font-family: ".noto-sans-georgian-elegant", serif;
@@ -44,7 +44,7 @@
     border-width: 2px;
     border-color: #ffc2d1;
     color: #e6534e;
-    margin: 5px;
+    margin: 5px 10px;
     @media (max-width: 1000px) {
         width: 120px;
         font-size: small;
@@ -53,7 +53,7 @@
 
 .home-dropdown-menu {
     background-color: #e6534e;
-    margin: 5px;
+    margin: 5px 10px;
     color: #f6f7f5;
     font-family: ".noto-sans-georgian-elegant", serif;
     font-weight: bold;
@@ -66,7 +66,7 @@
 .home-dropdown-menu:focus,
 .home-dropdown-menu:active {
     background-color: #e6534e;
-    margin: 5px;
+    margin: 5px 10px;
     color: #f6f7f5;
     font-family: ".noto-sans-georgian-elegant", serif;
     font-weight: bold;

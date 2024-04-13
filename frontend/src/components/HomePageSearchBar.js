@@ -36,7 +36,7 @@ export const HomePageSearchBar = ({toggleSidebar, bloodOverUsers, toggleFilterBu
                                 onClick={toggleFilterButton}>მოთხოვნების ძებნა
                         </button>
                         <button className={bloodOverUsers ? "home-unselected-button" : "home-selected-button"}
-                                onClick={toggleFilterButton}>მომხმარებლის ძებნა
+                                onClick={toggleFilterButton}>დონორთა ძებნა
                         </button>
                     </div>
                     {bloodOverUsers && <HomePageBloodFilterOptions handleHeightChange={heightChangeFromChildren} setMapRequestData={setMapRequestData}/>}
