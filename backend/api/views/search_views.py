@@ -1,29 +1,25 @@
 from datetime import datetime
 from uuid import UUID
 
-from django.core.mail import send_mail
-from django.db.models import QuerySet, Value, CharField, Q
-from django.db.models.functions import Concat, Lower
+from django.db.models import QuerySet
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from api.api_models.search_models import FilterSearchRequest, FilterUsersRequest, BroadcastSearchRequest
-from api.api_models.user_models import UserResponse
+from api.api_models.search_models import BroadcastSearchRequest, FilterRequest
 from api.core.blood_matcher import all_recipients, all_blood_types, all_donors
 from api.core.donor_ranker import DonorPriorityRanker
 from api.models import ReceiverRequest, User, BloodType
-from api.serializers.search_serializers import FilterSearchRequestSerializer, SearchSerializer, \
-    FilterUsersRequestSerializer, BroadcastSearchSerializer
-from api.serializers.user_serializers import UserResponseSerializer
+from api.serializers.search_serializers import (
+    SearchSerializer, BroadcastSearchSerializer, FilterRequestSerializer)
 
 
 class FilterSearchRequestsView(APIView):
     def post(self, request: Request) -> Response:
-        serializer = FilterSearchRequestSerializer(data=request.data)
+        serializer = FilterRequestSerializer(data=request.data)
         if serializer.is_valid():
-            search: FilterSearchRequest = FilterSearchRequest(**serializer.validated_data)
+            search: FilterRequest = FilterRequest(**serializer.validated_data)
             recipient_blood_types = self._blood_types(search)
             queryset: QuerySet = ReceiverRequest.objects.filter(
                 blood_type__in=recipient_blood_types,
@@ -35,7 +31,7 @@ class FilterSearchRequestsView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @staticmethod
-    def _blood_types(search: FilterSearchRequest) -> list[UUID]:
+    def _blood_types(search: FilterRequest) -> list[UUID]:
         try:
             curr_id = BloodType.objects.get(narrative=search.narrative).pk
             if search.exact_match:
@@ -43,35 +39,6 @@ class FilterSearchRequestsView(APIView):
             else:
                 return all_recipients(curr_id)
         except:
-            return all_blood_types()
-
-
-class FilterUsersView(APIView):
-    def get(self, request: Request) -> Response:
-        serializer = FilterUsersRequestSerializer(data=request.data)
-        if serializer.is_valid():
-            search: FilterUsersRequest = FilterUsersRequest(**serializer.validated_data)
-            blood_types = self._blood_types(search)
-            queryset: QuerySet = User.objects.annotate(
-                fn_sf=Lower(Concat(
-                    'first_name', Value(' '), 'last_name', output_field=CharField())),
-                fn_sl=Lower(Concat(
-                    'last_name', Value(' '), 'first_name', output_field=CharField()))
-            ).filter(
-                (Q(fn_sf__icontains=search.name.lower()) | Q(fn_sl__icontains=search.name.lower()))
-                & Q(blood_type__in=blood_types)
-            )
-            mapped: list[UserResponse] = [UserResponse.from_user(user) for user in list(queryset)]
-            result_serializer = UserResponseSerializer(mapped, many=True)
-            return Response(result_serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
-    def _blood_types(search: FilterUsersRequest) -> list[UUID]:
-        if search.blood_id is not None:
-            return [search.blood_id]
-        else:
             return all_blood_types()
 
 
