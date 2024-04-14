@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from backend.api.models import User
+from api.models import User
 
 
 @dataclass
