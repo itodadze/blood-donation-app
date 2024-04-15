@@ -8,9 +8,12 @@ import help from "../../src/assets/icons/help.svg"
 import settings from "../../src/assets/icons/settings.svg"
 import support from "../../src/assets/icons/support.svg"
 import { motion } from 'framer-motion';
+import {useNavigate} from 'react-router-dom';
 import "../App.css"
 
 export const HomePageMenu = () => {
+    const navigate = useNavigate();
+
     return (
         <motion.div
             style={{
@@ -30,7 +33,8 @@ export const HomePageMenu = () => {
             </div>
             <HomePageMenuButton svg_file={profile} height={"38vh"} text={"პროფილი"}/>
             <HomePageMenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}/>
-            <HomePageMenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}/>
+            <HomePageMenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
+                onClick={() => navigate("/request")}/>
             <HomePageMenuButton svg_file={help} height={"38vh"} text={"თხოვნები"}/>
             <div style={{marginTop: "auto"}}>
                 <HomePageMenuButton svg_file={settings} height={"50vh"} text={"პარამეტრები"}/>
