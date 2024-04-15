@@ -21,11 +21,11 @@ export const ChosenChat = ({chosenRecipient}) => {
                     let divs = [];
 
                     for (let i = 0; i < 50; i++) {
-                        divs.push(<ChatMessage
+                        divs.push(<ChatMessage key={i+'received'}
                             messageContent={'ძალიან ძალიან დიდი უზარმაზარი მესიჯი მესიჯი მესიჯი მესიჯი მესიჯი მესიჯიი ' + i}
                             isSent={false}/>);
 
-                        divs.push(<ChatMessage
+                        divs.push(<ChatMessage key={i+'sent'}
                             messageContent={'კიდევ უფრო დიდი, ძალიან ძალიან ძალიან ძალიან დიდი უზარმაზარი ' + 'პასუხიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიი ' + i}
                             isSent={true}/>);
                     }
