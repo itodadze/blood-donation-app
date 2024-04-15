@@ -32,8 +32,9 @@ export const SideMenu = ({current}) => {
                     APP NAME AND LOGO HERE; DIFFERENT DIV AROUND IT AS WELL
                 </text>
             </div>
-            {(current !== strings.HOME) && <HomePageMenuButton svg_file={feed} height={"40vh"}
-                                                               text={"მთავარი"}/>}
+            {(current !== strings.HOME) &&
+                <HomePageMenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
+                                    onClick={() => navigate("/")}/>}
 
             {(current !== strings.PROFILE) && <HomePageMenuButton svg_file={profile} height={"38vh"}
                                                                   text={"პროფილი"}/>}

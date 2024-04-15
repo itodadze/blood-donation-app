@@ -4,15 +4,10 @@ import {HomePageMenu} from "../components/HomePageMenu";
 import {Helmet} from "react-helmet";
 import {HomePageSearchBar} from "../components/HomePageSearchBar";
 
-export const Home = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+export const Home = ({isSidebarOpen, toggleSidebar}) => {
     const [bloodOverUsers, setBloodOverUsers] = useState(true);
     const [mapRequestData, setMapRequestData] = useState([])
     const [mapUserData, setMapUserData] = useState([])
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
 
     const toggleFilterButton = () => {
         setBloodOverUsers(!bloodOverUsers);
