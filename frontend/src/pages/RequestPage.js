@@ -2,6 +2,7 @@ import {Helmet} from "react-helmet";
 import {RequestPageMenu} from "../components/RequestPageMenu";
 import {RequestPageTopBar} from "../components/RequestPageTopBar";
 import {RequestForm} from "../components/RequestForm";
+import React from "react";
 
 export const Request = ({isSidebarOpen, toggleSidebar}) => {
     return (
@@ -13,6 +14,8 @@ export const Request = ({isSidebarOpen, toggleSidebar}) => {
                 <link
                     href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
                     rel="stylesheet"/>
+                <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+                <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
             {isSidebarOpen && <RequestPageMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
