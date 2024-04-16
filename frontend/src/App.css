@@ -71,3 +71,28 @@
     font-family: ".noto-sans-georgian-elegant", serif;
     font-weight: bold;
 }
+
+.request-dropdown-menu {
+    background-color: #f6f7f5;
+    border-color: #4c1d1a;
+    border-width: 2px;
+    margin: 5px 10px;
+    color: #000000;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+    @media (max-width: 1000px) {
+        font-size: small;
+    }
+}
+
+.request-dropdown-menu:hover,
+.request-dropdown-menu:focus,
+.request-dropdown-menu:active {
+    background-color: #f6f7f5;
+    border-color: #4c1d1a;
+    border-width: 2px;
+    margin: 5px 10px;
+    color: #000000;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+}

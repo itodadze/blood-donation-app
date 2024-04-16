@@ -1,7 +1,7 @@
 import {Helmet} from "react-helmet";
 import {RequestPageMenu} from "../components/RequestPageMenu";
 import {RequestPageTopBar} from "../components/RequestPageTopBar";
-import background from "../assets/background/background.png"
+import {RequestForm} from "../components/RequestForm";
 
 export const Request = ({isSidebarOpen, toggleSidebar}) => {
     return (
@@ -17,9 +17,7 @@ export const Request = ({isSidebarOpen, toggleSidebar}) => {
             {isSidebarOpen && <RequestPageMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <RequestPageTopBar toggleSidebar={toggleSidebar}/>
-                <div style={{flex: '1', position: 'relative', width: "100%", backgroundImage: `url(${background})`,
-                    backgroundSize: 'cover'}}>
-                </div>
+                <RequestForm />
             </div>
         </div>
     );
