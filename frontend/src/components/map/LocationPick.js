@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 
-export const LocationPick = () => {
+export const LocationPick = ({setSelectedLat, setSelectedLon}) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [lng] = useState(44.78);
@@ -27,6 +27,8 @@ export const LocationPick = () => {
             } else {
                 marker.setLngLat(e.lngLat)
             }
+            setSelectedLat(e.lngLat.lat)
+            setSelectedLon(e.lngLat.lng)
         })
     });
 

@@ -96,3 +96,23 @@
     font-family: ".noto-sans-georgian-elegant", serif;
     font-weight: bold;
 }
+
+.request-item {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-item-desc {
+    margin: 10px;
+    color: #000000;
+    font-family: ".noto-sans-georgian-elegant", serif;
+    font-weight: bold;
+    font-size: large;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
