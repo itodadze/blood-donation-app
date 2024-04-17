@@ -2,6 +2,8 @@ import {useEffect, useRef, useState} from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 
+import colors from "../../values/colors";
+
 export const LocationPick = ({setSelectedLat, setSelectedLon}) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -34,7 +36,7 @@ export const LocationPick = ({setSelectedLat, setSelectedLon}) => {
 
     return (
         <div>
-            <div ref={mapContainer} style={{minWidth: "40vh", minHeight: "25vh", textAlign: "center"}}/>
+            <div ref={mapContainer} className={"request-location"}/>
         </div>
     );
 }
