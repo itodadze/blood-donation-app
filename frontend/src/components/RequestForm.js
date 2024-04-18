@@ -3,13 +3,14 @@ import {useState} from "react";
 import {BloodDropdownMenu} from "./BloodDropdownMenu";
 import {LocationPick} from "./map/LocationPick";
 import colors from "../values/colors";
+import {broadcastRequest} from "../services/BroadcastRequestService";
 
 export const RequestForm = () => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
     const [selectedLon, setSelectedLon] = useState(null)
-    const [inputValue, setInputValue] = useState('');
+    const [description, setDescription] = useState('');
     const [emergency, setEmergency] = useState(true);
 
     const handleEmergency = () => {
@@ -17,12 +18,19 @@ export const RequestForm = () => {
     };
 
     const handleChange = (event) => {
-        setInputValue(event.target.value);
+        setDescription(event.target.value);
     };
 
     const handleSelect = (eventKey, event) => {
         setSelectedBlood(event.target.innerText);
     };
+
+    const handleConfirm = () => {
+        broadcastRequest({selectedBlood, description,
+        emergency, selectedLat, selectedLon}).then(data => {
+            // TODO: popup confirmation / error
+        });
+    }
 
     return (
         <div style={{
@@ -53,7 +61,7 @@ export const RequestForm = () => {
                     </text>
                     <div style={{width: '380px', height: '170px', overflowX: 'auto'}}>
                         <textarea
-                            value={inputValue}
+                            value={description}
                             onChange={handleChange}
                             className={"scroll request-description"}
                         />
@@ -71,7 +79,7 @@ export const RequestForm = () => {
                     />
                 </div>
                 <div className={"request-item"}>
-                    <button className={"request-confirm"}>
+                    <button className={"request-confirm"} onClick={handleConfirm}>
                         გაგზავნა
                     </button>
                 </div>
