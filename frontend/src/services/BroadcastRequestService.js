@@ -10,9 +10,5 @@ export const broadcastRequest = async ({selectedBlood, description, emergency, s
         loc_latitude: selectedLon
     }
 
-    return api.put('/search-requests', requestData).then(response => response.data)
-        .catch(error => {
-            console.error("Error broadcasting request", error);
-            return null
-        })
+    return api.post('/broadcast', requestData);
 }

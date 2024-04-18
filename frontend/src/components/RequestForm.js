@@ -13,6 +13,9 @@ export const RequestForm = () => {
     const [description, setDescription] = useState('');
     const [emergency, setEmergency] = useState(true);
 
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState('');
+
     const handleEmergency = () => {
         setEmergency(!emergency);
     };
@@ -25,11 +28,23 @@ export const RequestForm = () => {
         setSelectedBlood(event.target.innerText);
     };
 
+    const handleSuccess = () => {
+        setPopupMessage("მოთხოვნა წარმატებით გაიგზავნა");
+        setShowPopup(true);
+    }
+
+    const handleFailure = () => {
+        setPopupMessage("მოთხოვნა ვერ გაიგზავნა, კიდევ სცადეთ")
+        setShowPopup(true);
+    }
+
+    const onPopupClose = () => {
+        setShowPopup(false)
+    }
+
     const handleConfirm = () => {
         broadcastRequest({selectedBlood, description,
-        emergency, selectedLat, selectedLon}).then(data => {
-            // TODO: popup confirmation / error
-        });
+        emergency, selectedLat, selectedLon}).then(handleSuccess).catch(handleFailure);
     }
 
     return (
@@ -38,12 +53,17 @@ export const RequestForm = () => {
             backgroundSize: 'cover', display: "flex", justifyContent: "center", flexDirection: "column",
             alignItems: 'center'
         }}>
-            <div style={{
+            {showPopup && <div className={"request-popup"}>
+                <div className="close-button" onClick={onPopupClose}>X</div>
+                <text className={"request-item-desc"}>{popupMessage}</text>
+            </div>}
+
+            {!showPopup && <div style={{
                 height: "90%", width: "92%", position: 'relative', backgroundColor:
                 colors.pearl, display: "flex", justifyContent: "center", flexDirection: "column"
             }}>
                 <div className={"request-item"}>
-                    <text className={"request-item-desc"}>
+                <text className={"request-item-desc"}>
                         მჭირდება:
                     </text>
                     <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}
@@ -83,7 +103,7 @@ export const RequestForm = () => {
                         გაგზავნა
                     </button>
                 </div>
-            </div>
+            </div>}
         </div>
     );
 }

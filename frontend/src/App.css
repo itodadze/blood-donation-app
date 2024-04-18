@@ -162,3 +162,33 @@
         width: 240px;
     }
 }
+
+.request-popup {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    border-style: solid;
+    border-color: #e6534e;
+    background-color: #ffc2d1;
+    border-width: 2px;
+    text-align: center;
+    align-content: center;
+    color: #000000;
+
+    @media (max-width: 1000px) {
+        width: 250px;
+        height: 150px;
+    }
+}
+
+.close-button {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 5px;
+    outline-width: 2px;
+    outline-color: #000000;
+    background-color: #ffffff;
+}
