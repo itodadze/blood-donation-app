@@ -30,7 +30,7 @@ class FilterRequestSerializer(serializers.Serializer):
 
 class BroadcastSearchSerializer(serializers.Serializer):
     user_id = serializers.UUIDField()
-    blood_id = serializers.UUIDField()
+    narrative = serializers.CharField()
     description = serializers.CharField()
     emergency_status = serializers.BooleanField()
     loc_longitude = serializers.FloatField()

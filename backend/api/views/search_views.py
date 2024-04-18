@@ -48,17 +48,17 @@ class BroadcastSearchView(APIView):
         if serializer.is_valid():
             search: BroadcastSearchRequest = BroadcastSearchRequest(**serializer.validated_data)
             user: User = User.objects.get(pk=search.user_id)
-            blood_type: BloodType = BloodType.objects.get(pk=search.blood_id)
+            blood_type: BloodType = BloodType.objects.get(narrative=search.narrative)
             ReceiverRequest.objects.create(
                 user=user, blood_type=blood_type, description=search.description,
                 search_status=True, emergency_status=search.emergency_status,
                 loc_longitude=search.loc_longitude, loc_latitude=search.loc_latitude,
                 request_date=datetime.now()
             )
-            blood_types = all_donors(search.blood_id)
+            blood_types = all_donors(blood_type.pk)
             users: list[User] = list(User.objects.filter(
                 blood_type__in=blood_types, donor_status=True
-            ).exclude(pk=search.blood_id))
+            ).exclude(pk=user.pk))
             ranked_users = DonorPriorityRanker(search).rank(users)
             # send_mail(
             #    subject="სისხლის დონაცია",

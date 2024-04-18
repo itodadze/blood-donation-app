@@ -17,7 +17,7 @@ class FilterRequest:
 @dataclass
 class BroadcastSearchRequest:
     user_id: UUID
-    blood_id: UUID
+    narrative: str
     description: str
     emergency_status: bool
     loc_longitude: float
@@ -26,7 +26,7 @@ class BroadcastSearchRequest:
     def as_dictionary(self) -> dict:
         return {
             "user_id": self.user_id,
-            "blood_id": self.blood_id,
+            "narrative": self.narrative,
             "description": self.description,
             "emergency_status": self.emergency_status,
             "loc_longitude": self.loc_longitude,
