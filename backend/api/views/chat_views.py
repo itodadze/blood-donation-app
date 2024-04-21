@@ -1,16 +1,15 @@
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import Q
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from api.serializers.chat_serializers import ChatPeopleRequestSerializer, ChatPeopleResponseSerializer
-from api.api_models.chat_models import ChatPeopleRequest, ChatPeopleResponse
-from api.models import User, Chat
-
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
+from api.serializers.chat_serializers import ChatPeopleRequestSerializer, ChatPeopleResponseSerializer, \
+    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer
+from api.api_models.chat_models import (ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse,
+                                        ChatNewMessageRequest)
+from api.models import User, Chat, Message
 
 
 class ChatPeopleView(APIView):
@@ -18,22 +17,19 @@ class ChatPeopleView(APIView):
         serializer = ChatPeopleRequestSerializer(data=request.data)
         if serializer.is_valid():
             people: ChatPeopleRequest = ChatPeopleRequest(**serializer.validated_data)
-            user_mail_field = self.string_to_email(people.user_email)
-
-            if user_mail_field is None:
-                return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+            user_id = people.user_id
 
             try:
-                user = User.objects.get(email=user_mail_field)
+                user = User.objects.get(id=user_id)
 
                 user_chats = Chat.objects.filter(models.Q(donor=user.id) | models.Q(receiver=user.id))
 
                 chat_people_ids = set()
                 for chat in user_chats:
                     if chat.donor == user.id:
-                        chat_people_ids.add(chat.receiver)
+                        chat_people_ids.add(chat.receiver.id)
                     else:
-                        chat_people_ids.add(chat.donor)
+                        chat_people_ids.add(chat.donor.id)
 
                 chat_people_info: list[ChatPeopleResponse] = []
                 for person_id in chat_people_ids:
@@ -49,39 +45,69 @@ class ChatPeopleView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @staticmethod
-    def string_to_email(email_str):
-        try:
-            validate_email(email_str)
-            return email_str
-        except ValidationError:
-            return None
+
+class ChatMessagesView(APIView):
+    def get(self, request: Request) -> Response:
+        serializer = ChatMessagesRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            users_info: ChatMessagesRequest = ChatMessagesRequest(**serializer.validated_data)
+            logged_in_user_id = users_info.logged_in_user_id
+            chat_user_id = users_info.chat_user_id
+
+            chat = Chat.objects.filter(
+                Q(donor_id=logged_in_user_id, receiver_id=chat_user_id) |
+                Q(donor_id=chat_user_id, receiver_id=logged_in_user_id)
+            ).first()
+
+            if chat is None:
+                return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+            chat_id = chat.id
+            messages = Message.objects.filter(chat_id=chat_id).order_by('-message_timestamp')
+            messages_list = list(messages)
+
+            messages_response_info: list[ChatMessageResponse] = []
+            for message_info in messages_list:
+                new_message_response = ChatMessageResponse.from_message(message_info)
+                messages_response_info.append(new_message_response)
+
+            result_serializer = ChatMessagesResponseSerializer(messages_response_info, many=True)
+            return Response(result_serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class ChatMessagesView(APIView):
-#     def get(self, request: Request) -> Response:
-#         serializer = FilterUsersRequestSerializer(data=request.data)
-#         if serializer.is_valid():
-#             search: FilterUsersRequest = FilterUsersRequest(**serializer.validated_data)
-#             blood_types = self._blood_types(search)
-#             queryset: QuerySet = User.objects.annotate(
-#                 fn_sf=Lower(Concat(
-#                     'first_name', Value(' '), 'last_name', output_field=CharField())),
-#                 fn_sl=Lower(Concat(
-#                     'last_name', Value(' '), 'first_name', output_field=CharField()))
-#             ).filter(
-#                 (Q(fn_sf__icontains=search.name.lower()) | Q(fn_sl__icontains=search.name.lower()))
-#                 & Q(blood_type__in=blood_types)
-#             )
-#             mapped: list[UserResponse] = [UserResponse.from_user(user) for user in list(queryset)]
-#             result_serializer = UserResponseSerializer(mapped, many=True)
-#             return Response(result_serializer.data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#     @staticmethod
-#     def _blood_types(search: FilterUsersRequest) -> list[UUID]:
-#         if search.blood_id is not None:
-#             return [search.blood_id]
-#         else:
-#             return all_blood_types()
+class ChatNewMessageView(APIView):
+    def post(self, request: Request) -> Response:
+        serializer = ChatNewMessageRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            new_message_info: ChatNewMessageRequest = ChatNewMessageRequest(**serializer.validated_data)
+            sender_id = new_message_info.sender_id
+            receiver_id = new_message_info.receiver_id
+            message_text = new_message_info.message_text
+
+            chat = Chat.objects.filter(
+                Q(donor_id=sender_id, receiver_id=receiver_id) |
+                Q(donor_id=receiver_id, receiver_id=sender_id)
+            ).first()
+
+            if chat is None:
+                return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+            chat_id = chat.id
+            new_message = Message.objects.create(
+                chat_id=chat_id,
+                sender_id=sender_id,
+                message_text=message_text,
+                message_status='Sent'
+            )
+
+            new_message.save()
+
+            return Response(None, status=status.HTTP_200_OK)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

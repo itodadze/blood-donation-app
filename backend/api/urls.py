@@ -6,6 +6,9 @@ urlpatterns = [
     path("search-requests", search_views.FilterSearchRequestsView.as_view(), name='get-search-requests'),
     path("users/", search_views.FilterUsersView.as_view(), name='get-users'),
     path("search-requests/", search_views.BroadcastSearchView.as_view(), name='broadcast-search-request'),
-    path("chats", chat_views.ChatPeopleView.as_view(), name='get-chat-people'),
-    # path("chats", chat_views.ChatMessagesView.as_view(), name='get-chat-messages'),
+    path("chats/user/<int:user_id>", chat_views.ChatPeopleView.as_view(), name='get-chat-people'),
+    path("chats/user/<int:user_id>/chat-user/<int:user_id>", chat_views.ChatMessagesView.as_view(), name='get-chat'
+                                                                                                         '-messages'),
+    path("chats/user/<int:user_id>/chat-user/<int:user_id>", chat_views.ChatNewMessageView.as_view(), name='add-new'
+                                                                                                           '-message'),
 ]
