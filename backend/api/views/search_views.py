@@ -1,6 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
+from django.core.mail import EmailMessage
 from django.db.models import QuerySet
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -59,14 +60,9 @@ class BroadcastSearchView(APIView):
             users: list[User] = list(User.objects.filter(
                 blood_type__in=blood_types, donor_status=True
             ).exclude(pk=user.pk))
-            ranked_users = DonorPriorityRanker(search).rank(users)
-            # send_mail(
-            #    subject="სისხლის დონაცია",
-            #    message="ჩატის ლინკი: ___, მიმღები: ___, სისხლის ჯგუფი: ___",
-            #    from_email="გამგზავნის იმეილი",
-            #    recipient_list= "პირველი დაახლ. 10 ავირჩიოთ, პერსონ. ლინკები გავუგზავნოთ",
-            #    fail_silently=False
-            # )
+            ranked_user_emails = [user.email for user in DonorPriorityRanker(search).rank(users)]
+            email = EmailMessage('Subject', 'Body', to=ranked_user_emails)
+            email.send()
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
