@@ -61,7 +61,12 @@ class BroadcastSearchView(APIView):
                 blood_type__in=blood_types, donor_status=True
             ).exclude(pk=user.pk))
             ranked_user_emails = [user.email for user in DonorPriorityRanker(search).rank(users)]
-            email = EmailMessage('Subject', 'Body', to=ranked_user_emails)
+            email_body = ('სისხლი ესაჭიროება მომხმარებელს: ' + user.first_name + ' ' + user.last_name
+                          + '-ს. \n' + 'ეძებს დონორს სისხლისთვის: ' + blood_type.narrative + '.\n'
+                          + 'აღწერა: ' + search.description + '\n' + 'მიმოწერის ლინკი: TODO\n')
+            email = EmailMessage(subject='სისხლის დონაცია',
+                                 body=email_body,
+                                 to=ranked_user_emails)
             email.send()
             return Response(status=status.HTTP_200_OK)
         else:
