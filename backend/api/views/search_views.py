@@ -11,7 +11,7 @@ from rest_framework import status
 from api.api_models.search_models import BroadcastSearchRequest, FilterRequest
 from api.core.blood_matcher import all_recipients, all_blood_types, all_donors
 from api.core.donor_ranker import DonorPriorityRanker
-from api.models import ReceiverRequest, User, BloodType
+from api.models import ReceiverRequest, User, BloodType, ChatRequest
 from api.serializers.search_serializers import (
     SearchSerializer, BroadcastSearchSerializer, FilterRequestSerializer)
 
@@ -60,14 +60,23 @@ class BroadcastSearchView(APIView):
             users: list[User] = list(User.objects.filter(
                 blood_type__in=blood_types, donor_status=True
             ).exclude(pk=user.pk))
-            ranked_user_emails = [user.email for user in DonorPriorityRanker(search).rank(users)]
-            email_body = ('სისხლი ესაჭიროება მომხმარებელს: ' + user.first_name + ' ' + user.last_name
-                          + '-ს. \n' + 'ეძებს დონორს სისხლისთვის: ' + blood_type.narrative + '.\n'
-                          + 'აღწერა: ' + search.description + '\n' + 'მიმოწერის ლინკი: TODO\n')
-            email = EmailMessage(subject='სისხლის დონაცია',
-                                 body=email_body,
-                                 to=ranked_user_emails)
-            email.send()
-            return Response(status=status.HTTP_200_OK)
+            for user_to in DonorPriorityRanker(search).rank(users):
+                self.email(search, user, user_to)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def email(self, search: BroadcastSearchRequest, user_from: User, user_to: User) -> None:
+        conversation = ChatRequest.objects.get(initiator=user_from, recipient=user_to)
+        if not conversation:
+            conversation = ChatRequest.objects.create(
+                initiator=user_from, recipient=user_to, accept_status=False
+            )
+        link_url = "http://localhost:3000/chat/" + conversation.pk
+        email_body = ('სისხლი ესაჭიროება მომხმარებელს: ' + user_from.first_name + ' '
+                      + user_from.last_name + '-ს. \n' + 'ეძებს დონორს სისხლისთვის: '
+                      + search.narrative + '.\n' + 'აღწერა: ' + search.description + '\n'
+                      + 'მიმოწერის ლინკი: ' + link_url + '\n')
+        email = EmailMessage(subject='სისხლის დონაცია',
+                             body=email_body,
+                             to=[user_to.email])
+        email.send()
