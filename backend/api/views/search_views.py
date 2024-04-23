@@ -71,7 +71,7 @@ class BroadcastSearchView(APIView):
             conversation = ChatRequest.objects.create(
                 initiator=user_from, recipient=user_to, accept_status=False
             )
-        link_url = "http://localhost:3000/chat/" + conversation.pk
+        link_url = "http://localhost:3000/chats/" + user_from.pk + "/" + user_to.pk
         email_body = ('სისხლი ესაჭიროება მომხმარებელს: ' + user_from.first_name + ' '
                       + user_from.last_name + '-ს. \n' + 'ეძებს დონორს სისხლისთვის: '
                       + search.narrative + '.\n' + 'აღწერა: ' + search.description + '\n'
