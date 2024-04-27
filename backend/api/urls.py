@@ -7,8 +7,8 @@ urlpatterns = [
     path("users/", search_views.FilterUsersView.as_view(), name='get-users'),
     path("search-requests/", search_views.BroadcastSearchView.as_view(), name='broadcast-search-request'),
     path("chats/user/", chat_views.ChatPeopleView.as_view(), name='get-chat-people'),
-    path("chats/user/messages", chat_views.ChatMessagesView.as_view(), name='get-chat'
+    path("chats/user/messages/", chat_views.ChatMessagesView.as_view(), name='get-chat'
                                                                             '-messages'),
-    path("chats/user/messages/new", chat_views.ChatNewMessageView.as_view(), name='add-new'
+    path("chats/user/messages/new/", chat_views.ChatNewMessageView.as_view(), name='add-new'
                                                                                   '-message'),
 ]

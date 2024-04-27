@@ -7,7 +7,6 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
 
     useEffect(() => {
         getConversationList(3).then(data => {
-            console.log('Data:', data);
             fillConversations(data);
         }).catch(error => {
             console.error('Error fetching conversation list:', error);
@@ -30,28 +29,26 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
             let divs = [];
             if (conversations !== null && conversations !== undefined) {
                 for (const conversation of conversations) {
-                    divs.push(<div
+                    divs.push(<button
                         key={conversation.email}
                         style={{
                             padding: '5%',
                             height: '70px',
-                            backgroundColor: chosenRecipient === conversation.id ? colors.primary : colors.white,
-                            border: colors.primary,
-                            borderStyle: 'solid',
-                            borderRadius: '50px',
                             margin: '2vh',
                             position: 'relative',
-                            width: "100%"
+                            width: "100%",
+                            backgroundColor: chosenRecipient === conversation.id ? colors.primary : colors.white,
+                            borderColor: colors.primary_dark,
+                            borderRadius: '50px',
+                            overflowX: 'hidden'
                         }}
                         onClick={() => chooseRecipient(conversation.id)}
                     >
                         <div style={{}}> {conversation.first_name + ' ' + conversation.last_name} </div>
-                    </div>)
-                    console.log(chosenRecipient)
+                    </button>)
                 }
+                console.log(chosenRecipient)
             }
-
-
             return divs;
         })()}
 

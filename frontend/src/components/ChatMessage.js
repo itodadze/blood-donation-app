@@ -9,9 +9,15 @@ export const ChatMessage = ({messageContent, isSent}) => {
     };
 
     const messageStyle = isSent ? {
+        borderTopRightRadius: '25px',
+        borderTopLeftRadius: '25px',
         borderBottomRightRadius: '0px',
+        borderBottomLeftRadius: '25px',
     } : {
-        borderBottomLeftRadius: '0px'
+        borderTopRightRadius: '25px',
+        borderTopLeftRadius: '25px',
+        borderBottomRightRadius: '25px',
+        borderBottomLeftRadius: '0px',
     };
     return (<div style={{
             display: 'flex',
@@ -22,9 +28,8 @@ export const ChatMessage = ({messageContent, isSent}) => {
             ...messagePlacing
         }}>
             <div style={{
-                border: isSent ? colors.primary : colors.secondary,
+                borderColor: isSent ? colors.primary : colors.secondary,
                 borderStyle: 'solid',
-                borderRadius: '25px',
                 padding: '2%',
                 backgroundColor: isSent ? colors.primary : colors.secondary,
                 maxWidth: '40%',
