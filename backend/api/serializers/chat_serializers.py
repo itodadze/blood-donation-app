@@ -17,13 +17,14 @@ class ChatNewMessageRequestSerializer(serializers.Serializer):
 
 
 class ChatPeopleResponseSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     email = serializers.EmailField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
 
 
 class ChatMessagesResponseSerializer(serializers.Serializer):
-    sender_id: serializers.IntegerField()
-    message_text: serializers.CharField()
-    message_status: serializers.CharField()
-    message_timestamp: serializers.DateTimeField()
+    sender_id = serializers.IntegerField()
+    message_text = serializers.CharField()
+    message_status = serializers.CharField()
+    message_timestamp = serializers.DateTimeField()

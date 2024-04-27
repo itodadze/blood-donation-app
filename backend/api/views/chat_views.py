@@ -14,7 +14,7 @@ from api.models import User, Chat, Message
 
 class ChatPeopleView(APIView):
     def get(self, request: Request) -> Response:
-        serializer = ChatPeopleRequestSerializer(data=request.data)
+        serializer = ChatPeopleRequestSerializer(data=request.query_params)
         if serializer.is_valid():
             people: ChatPeopleRequest = ChatPeopleRequest(**serializer.validated_data)
             user_id = people.user_id
@@ -26,7 +26,7 @@ class ChatPeopleView(APIView):
 
                 chat_people_ids = set()
                 for chat in user_chats:
-                    if chat.donor == user.id:
+                    if chat.donor.id == user.id:
                         chat_people_ids.add(chat.receiver.id)
                     else:
                         chat_people_ids.add(chat.donor.id)
@@ -48,7 +48,7 @@ class ChatPeopleView(APIView):
 
 class ChatMessagesView(APIView):
     def get(self, request: Request) -> Response:
-        serializer = ChatMessagesRequestSerializer(data=request.data)
+        serializer = ChatMessagesRequestSerializer(data=request.query_params)
 
         if serializer.is_valid():
             users_info: ChatMessagesRequest = ChatMessagesRequest(**serializer.validated_data)
@@ -64,7 +64,7 @@ class ChatMessagesView(APIView):
                 return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
             chat_id = chat.id
-            messages = Message.objects.filter(chat_id=chat_id).order_by('-message_timestamp')
+            messages = Message.objects.filter(chat_id=chat_id).order_by('message_timestamp')
             messages_list = list(messages)
 
             messages_response_info: list[ChatMessageResponse] = []
