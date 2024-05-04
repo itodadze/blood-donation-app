@@ -2,8 +2,8 @@ import React from 'react';
 import {SideMenu} from "./SideMenu";
 import strings from "../values/strings";
 
-export const HomePageMenu = () => {
+export const RequestPageMenu = () => {
     return (
-        <SideMenu current={strings.HOME}/>
+        <SideMenu current={strings.REQUEST}/>
     );
 }
