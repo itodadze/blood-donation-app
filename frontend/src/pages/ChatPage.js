@@ -34,7 +34,7 @@ export const Chat = () => {
                     </div>
                 </div>
 
-                <div style={{margin: '2vh', border: colors.tertiary, borderStyle:'dotted', flex: '1', display: 'flex', flexDirection: 'row', backgroundColor: colors.pearl, maxHeight: '86vh'}}>
+                <div style={{margin: '2vh', border: colors.tertiary, borderStyle:'dotted',  display: 'flex', flexDirection: 'row', flex: '1', backgroundColor: colors.pearl, maxHeight: '86vh'}}>
                     <ChosenChat chosenRecipient={chosenRecipient} />
                     <ConversationList chosenRecipient={chosenRecipient} chooseRecipient={chooseRecipient} />
                 </div>

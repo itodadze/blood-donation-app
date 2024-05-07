@@ -33,7 +33,7 @@ export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
         position: 'absolute',
         bottom: '2vh',
         width: '80%',
-        height: '15%',
+        height: '65px',
         backgroundColor: colors.tertiary,
         border: 'solid',
         borderColor: colors.primary_dark,

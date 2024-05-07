@@ -1,17 +1,50 @@
 import colors from "../values/colors";
 import React, {useEffect, useState} from "react";
 import {getConversationList} from "../services/ChatConversationListService";
+import ReactLoading from "react-loading";
+
 
 export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
     const [conversations, fillConversations] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         getConversationList(3).then(data => {
             fillConversations(data);
         }).catch(error => {
             console.error('Error fetching conversation list:', error);
+        }).finally(() => {
+            setLoading(false);
         });
     }, [chosenRecipient]);
+
+    const renderConversationList = () => {
+        if (loading) {
+            return <LoadingIndicator />;
+        }
+        if (!conversations) return null;
+
+        return conversations.map(conversation => (
+            <button
+                key={conversation.id}
+                style={{
+                    padding: '5%',
+                    height: '70px',
+                    margin: '2vh',
+                    position: 'relative',
+                    width: "100%",
+                    backgroundColor: chosenRecipient === conversation.id ? colors.primary : colors.white,
+                    borderColor: colors.primary_dark,
+                    borderRadius: '50px',
+                    overflowX: 'hidden'
+                }}
+                onClick={() => chooseRecipient(conversation.id)}
+            >
+                <div>{conversation.first_name + ' ' + conversation.last_name}</div>
+            </button>
+        ));
+    };
 
     return (<div
         style={{
@@ -25,32 +58,11 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
             overflowY: 'scroll',
             maxHeight: '100%'
         }}>
-        {(() => {
-            let divs = [];
-            if (conversations !== null && conversations !== undefined) {
-                for (const conversation of conversations) {
-                    divs.push(<button
-                        key={conversation.email}
-                        style={{
-                            padding: '5%',
-                            height: '70px',
-                            margin: '2vh',
-                            position: 'relative',
-                            width: "100%",
-                            backgroundColor: chosenRecipient === conversation.id ? colors.primary : colors.white,
-                            borderColor: colors.primary_dark,
-                            borderRadius: '50px',
-                            overflowX: 'hidden'
-                        }}
-                        onClick={() => chooseRecipient(conversation.id)}
-                    >
-                        <div style={{}}> {conversation.first_name + ' ' + conversation.last_name} </div>
-                    </button>)
-                }
-                console.log(chosenRecipient)
-            }
-            return divs;
-        })()}
-
+        {renderConversationList()}
     </div>)
-}
+};
+const LoadingIndicator = () => {
+    return <div style={{alignSelf:'center'}}>
+        <ReactLoading type={'bubbles'} color={colors.primary}/>
+    </div>;
+};

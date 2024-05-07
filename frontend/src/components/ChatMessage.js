@@ -32,7 +32,7 @@ export const ChatMessage = ({messageContent, isSent}) => {
                 borderStyle: 'solid',
                 padding: '2%',
                 backgroundColor: isSent ? colors.primary : colors.secondary,
-                maxWidth: '40%',
+                maxWidth: '150px',
                 overflowWrap: 'break-word',
                 whiteSpace: 'pre-wrap',
                 fontFamily: 'noto-sans-georgian-elegant',
