@@ -66,14 +66,6 @@ export const ChosenChat = ({chosenRecipient}) => {
                 maxHeight: '100%',
                 position: 'relative',
             }} ref={chatRef}>
-                {/*{(() => {*/}
-                {/*    let divs = [];*/}
-                {/*    if (conversation !== null && conversation !== undefined) {*/}
-                {/*        divs.push(renderMessages());*/}
-                {/*        divs.push(<span key={'space'} style={{margin: '2vh 0'}}/>);*/}
-                {/*    }*/}
-                {/*    return divs;*/}
-                {/*})()}*/}
                 {renderMessages()}
             </div>
 
