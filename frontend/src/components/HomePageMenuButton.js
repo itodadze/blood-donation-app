@@ -1,8 +1,9 @@
 import colors from "../values/colors";
 
-export const HomePageMenuButton = ({svg_file, height, text}) => {
+export const HomePageMenuButton = ({svg_file, height, text, onClick}) => {
     return (
-        <div className={"home-menu-button"} style={{backgroundColor: colors.pearl}}>
+        <div className={"home-menu-button"} style={{backgroundColor: colors.pearl}}
+        onClick={onClick}>
             <img src={svg_file} alt="profile icon" width="52vh" height={height}/>
             <text className={"noto-sans-georgian-elegant"} style={{
                 color: colors.secondary_dark,

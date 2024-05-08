@@ -3,7 +3,7 @@ from uuid import UUID
 
 
 @dataclass
-class FilterSearchRequest:
+class FilterRequest:
     narrative: str | None
     exact_match: bool
 
@@ -14,28 +14,10 @@ class FilterSearchRequest:
         }
 
 
-class FilterUsersRequest:
-    blood_id: UUID | None
-    name: str
-
-    def __init__(self, blood_id: UUID | None, name: str):
-        self.blood_id = blood_id
-        if name is None or len(name) == 0:
-            self.name = " "
-        else:
-            self.name = name
-
-    def as_dictionary(self) -> dict:
-        return {
-            "blood_id": self.blood_id,
-            "name": self.name
-        }
-
-
 @dataclass
 class BroadcastSearchRequest:
     user_id: UUID
-    blood_id: UUID
+    narrative: str
     description: str
     emergency_status: bool
     loc_longitude: float
@@ -44,7 +26,7 @@ class BroadcastSearchRequest:
     def as_dictionary(self) -> dict:
         return {
             "user_id": self.user_id,
-            "blood_id": self.blood_id,
+            "narrative": self.narrative,
             "description": self.description,
             "emergency_status": self.emergency_status,
             "loc_longitude": self.loc_longitude,

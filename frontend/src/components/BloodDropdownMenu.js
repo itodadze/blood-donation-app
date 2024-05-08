@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {getBloodTypes} from "../services/BloodTypeService";
 import {bloodTypeToSvg} from "../services/BloodTypeToSvg";
 
-export const BloodDropdownMenu = ({selectedBlood, handleSelect}) => {
+export const BloodDropdownMenu = ({selectedBlood, handleSelect, className}) => {
     const [bloodTypes, setBloodTypes] = useState([]);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export const BloodDropdownMenu = ({selectedBlood, handleSelect}) => {
 
     return (
         <Dropdown>
-            <Dropdown.Toggle as={Button} variant="outline-dark" className={"home-dropdown-menu"}>
+            <Dropdown.Toggle as={Button} variant="outline-dark" className={className}>
                 {selectedBlood ? selectedBlood : 'სისხლის ტიპი'}
             </Dropdown.Toggle>
             <Dropdown.Menu>

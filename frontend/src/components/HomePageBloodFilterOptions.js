@@ -4,7 +4,7 @@ import {BloodDropdownMenu} from "./BloodDropdownMenu";
 import {MatchDropdownMenu} from "./MatchDropdownMenu";
 import {getSearchRequests} from "../services/SearchRequestService";
 
-export const HomePageBloodFilterOptions = ({handleHeightChange, setMapData}) => {
+export const HomePageBloodFilterOptions = ({handleHeightChange, setMapRequestData}) => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedMatch, setMatch] = useState(null);
@@ -15,7 +15,7 @@ export const HomePageBloodFilterOptions = ({handleHeightChange, setMapData}) => 
 
     useEffect(() => {
         getSearchRequests({selectedBlood, selectedMatch}).then(data => {
-            setMapData(data);
+            setMapRequestData(data);
         });
     }, [selectedBlood, selectedMatch]);
 
@@ -33,7 +33,7 @@ export const HomePageBloodFilterOptions = ({handleHeightChange, setMapData}) => 
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-            <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}/>
+            <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect} className={"home-dropdown-menu"}/>
             <MatchDropdownMenu matches={matches} selectedMatch={selectedMatch} handleMatch={handleMatch}/>
         </div>
     );

@@ -27,7 +27,7 @@ class BroadcastSearchTestCase(TestCase):
 
     def test_broadcast_search_adds_valid(self) -> None:
         search = BroadcastSearchRequest(
-            self.user.pk, self.b_plus.pk, "Test Search", True, 1.0, 10.0
+            self.user.pk, self.b_plus.narrative, "Test Search", True, 1.0, 10.0
         ).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search

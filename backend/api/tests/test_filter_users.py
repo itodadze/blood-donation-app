@@ -5,10 +5,10 @@ from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.api_models.search_models import FilterUsersRequest
+from api.api_models.search_models import FilterRequest
 from api.models import UserIcon, BloodType, User
 from api.tests.test_blood_matcher import fill_blood_types
-from api.views.search_views import FilterUsersView
+from api.views.user_views import FilterDonorsView
 
 
 def insert_default_user(icon: UserIcon, blood: BloodType,
@@ -17,7 +17,7 @@ def insert_default_user(icon: UserIcon, blood: BloodType,
     return User.objects.create(
         email=email, first_name=first_name, last_name=last_name, password_hash="1",
         birthday=datetime(1995, 12, 12), loc_longitude=11.1, loc_latitude=5.5,
-        blood_type=blood, donor_status=False, description="Test Subject", icon=icon,
+        blood_type=blood, donor_status=True, description="Test Subject", icon=icon,
         register_date=datetime.now()
     )
 
@@ -36,37 +36,13 @@ class FilterUsersRequestsTestCase(TestCase):
         search = "test"
         request = MagicMock(spec=Request)
         request.data = search
-        response: Response = FilterUsersView().get(request)
+        response: Response = FilterDonorsView().post(request)
         self.assertEquals(response.status_code, 400)
 
     def test_filter_users_blood(self) -> None:
-        search = FilterUsersRequest(self.o_plus.pk, "").as_dictionary()
+        search = FilterRequest(self.o_plus.narrative, True).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search
-        response: Response = FilterUsersView().get(request)
+        response: Response = FilterDonorsView().post(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(len(list(response.data)), 2)
-
-    def test_filter_users_name_starts(self) -> None:
-        search = FilterUsersRequest(None, "test").as_dictionary()
-        request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterUsersView().get(request)
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(len(list(response.data)), 3)
-
-    def test_filter_users_name_and_blood(self) -> None:
-        search = FilterUsersRequest(self.a_minus.pk, "tEST").as_dictionary()
-        request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterUsersView().get(request)
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(len(list(response.data)), 1)
-
-    def test_filter_users_name_ends(self) -> None:
-        search = FilterUsersRequest(None, "subject1").as_dictionary()
-        request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterUsersView().get(request)
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(len(list(response.data)), 1)
