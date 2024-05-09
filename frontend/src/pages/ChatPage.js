@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import {Helmet} from "react-helmet";
 import colors from "../values/colors";
-import {HomePageMenu} from "../components/HomePageMenu";
 import menu from "../assets/icons/menu.svg";
 import {ChosenChat} from "../components/ChosenChat";
 import {ConversationList} from "../components/ChatConversationList";
+import {ChatPageMenu} from "../components/ChatPageMenu";
 
 export const Chat = ({isSidebarOpen, toggleSidebar}) => {
     const [chosenRecipient, setRecipient] = useState(null);
@@ -20,7 +20,7 @@ export const Chat = ({isSidebarOpen, toggleSidebar}) => {
                     href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
                     rel="stylesheet"/>
             </Helmet>
-            {isSidebarOpen && <HomePageMenu/>}
+            {isSidebarOpen && <ChatPageMenu/>}
             <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
                 <div style={{backgroundColor: colors.tertiary, display: 'flex', flexDirection: 'row', height: '10vh'}}>
                     <div style={{alignItems: "center", display: "flex"}}>

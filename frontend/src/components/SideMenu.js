@@ -39,8 +39,9 @@ export const SideMenu = ({current}) => {
             {(current !== strings.PROFILE) && <HomePageMenuButton svg_file={profile} height={"38vh"}
                                                                   text={"პროფილი"}/>}
 
-            {(current !== strings.CHATS) && <HomePageMenuButton svg_file={chat} height={"42vh"}
-                                                                text={"შეტყობინებები"}/>}
+            {(current !== strings.CHATS) &&
+                <HomePageMenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
+                                    onClick={() => navigate("/chat")}/>}
 
             {(current !== strings.REQUEST) &&
                 <HomePageMenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
