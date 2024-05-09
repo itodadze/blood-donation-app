@@ -2,7 +2,7 @@ import colors from "../../values/colors";
 import menu from "../../assets/icons/menu.svg";
 import React from "react";
 
-export const RequestPageTopBar = ({toggleSidebar}) => {
+export const RequestFormPageTopBar = ({toggleSidebar}) => {
     return (
         <div style={{flex: '0 0 80px', backgroundColor: colors.dark_pearl}}>
             <div style={{display: 'flex', flexDirection: 'row', height: '80px'}}>

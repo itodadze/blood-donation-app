@@ -5,7 +5,7 @@ import {LocationPick} from "../map/LocationPick";
 import colors from "../../values/colors";
 import {broadcastRequest} from "../../services/BroadcastRequestService";
 
-export const RequestForm = () => {
+export const RequestFormInput = () => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
