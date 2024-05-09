@@ -10,5 +10,5 @@ export const broadcastRequest = async ({selectedBlood, description, emergency, s
         loc_latitude: selectedLon
     }
 
-    return api.post('/broadcast', requestData);
+    return api.post('/broadcast/', requestData);
 }

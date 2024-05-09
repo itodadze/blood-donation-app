@@ -6,6 +6,6 @@ export const getUsers = ({selectedBlood, selectedMatch}) => {
         exact_match: selectedMatch === "მხოლოდ მონიშნული"
     };
 
-    return api.post('/users', requestData).then(response => response.data)
+    return api.post('/users/', requestData).then(response => response.data)
         .catch(error => console.error('Error fetching users:', error));
 }
