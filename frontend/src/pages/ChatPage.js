@@ -6,13 +6,8 @@ import menu from "../assets/icons/menu.svg";
 import {ChosenChat} from "../components/ChosenChat";
 import {ConversationList} from "../components/ChatConversationList";
 
-export const Chat = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+export const Chat = ({isSidebarOpen, toggleSidebar}) => {
     const [chosenRecipient, setRecipient] = useState(null);
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
 
     const chooseRecipient = (recipient) => {
         setRecipient(recipient);

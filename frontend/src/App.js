@@ -3,14 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import {Home} from "./pages/HomePage";
 import {Request} from "./pages/RequestPage"
 import {useState} from "react";
-// import {Chat} from "./pages/ChatPage";
-
-// function App() {
-//   return (
-//       <Routes>
-//         <Route path='/' element={<Chat />}/>
-//       </Routes>
-//   );
+import {Chat} from "./pages/ChatPage";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -25,6 +18,8 @@ function App() {
                                            toggleSidebar={toggleSidebar}/>}/>
             <Route path='/request' element={<Request isSidebarOpen={isSidebarOpen}
                                                      toggleSidebar={toggleSidebar}/>}/>
+            <Route path='/chat' element={<Chat isSidebarOpen={isSidebarOpen}
+                                               toggleSidebar={toggleSidebar}/>}/>
         </Routes>
     );
 }
