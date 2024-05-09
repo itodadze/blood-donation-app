@@ -1,9 +1,9 @@
-import background from "../assets/background/background.png";
+import background from "../../assets/background/background.png";
 import {useState} from "react";
-import {BloodDropdownMenu} from "./BloodDropdownMenu";
-import {LocationPick} from "./map/LocationPick";
-import colors from "../values/colors";
-import {broadcastRequest} from "../services/BroadcastRequestService";
+import {BloodDropdownMenu} from "../BloodDropdownMenu";
+import {LocationPick} from "../map/LocationPick";
+import colors from "../../values/colors";
+import {broadcastRequest} from "../../services/BroadcastRequestService";
 
 export const RequestForm = () => {
 

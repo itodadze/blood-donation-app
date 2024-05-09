@@ -1,7 +1,7 @@
 import {Helmet} from "react-helmet";
-import {RequestPageMenu} from "../components/RequestPageMenu";
-import {RequestPageTopBar} from "../components/RequestPageTopBar";
-import {RequestForm} from "../components/RequestForm";
+import {RequestPageMenu} from "../components/request/RequestPageMenu";
+import {RequestPageTopBar} from "../components/request/RequestPageTopBar";
+import {RequestForm} from "../components/request/RequestForm";
 import React from "react";
 
 export const Request = ({isSidebarOpen, toggleSidebar}) => {

@@ -1,5 +1,5 @@
-import colors from "../values/colors";
-import menu from "../assets/icons/menu.svg";
+import colors from "../../values/colors";
+import menu from "../../assets/icons/menu.svg";
 import React from "react";
 
 export const RequestPageTopBar = ({toggleSidebar}) => {
