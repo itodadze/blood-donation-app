@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import {Map} from "../components/map/Map"
-import {HomePageMenu} from "../components/HomePageMenu";
+import {HomePageMenu} from "../components/home/HomePageMenu";
 import {Helmet} from "react-helmet";
-import {HomePageSearchBar} from "../components/HomePageSearchBar";
+import {HomePageSearchBar} from "../components/home/HomePageSearchBar";
 
 export const Home = ({isSidebarOpen, toggleSidebar}) => {
     const [bloodOverUsers, setBloodOverUsers] = useState(true);

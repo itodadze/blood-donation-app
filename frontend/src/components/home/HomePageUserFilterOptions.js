@@ -1,11 +1,9 @@
-import '../App.css';
 import {useEffect, useState} from "react";
-import {BloodDropdownMenu} from "./BloodDropdownMenu";
-import {MatchDropdownMenu} from "./MatchDropdownMenu";
-import {getSearchRequests} from "../services/SearchRequestService";
+import {BloodDropdownMenu} from "../BloodDropdownMenu";
+import {MatchDropdownMenu} from "../MatchDropdownMenu";
+import {getUsers} from "../../services/UserService";
 
-export const HomePageBloodFilterOptions = ({handleHeightChange, setMapRequestData}) => {
-
+export const HomePageUserFilterOptions = ({handleHeightChange, setMapUserData}) => {
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedMatch, setMatch] = useState(null);
 
@@ -14,13 +12,13 @@ export const HomePageBloodFilterOptions = ({handleHeightChange, setMapRequestDat
     }, [selectedBlood, selectedMatch])
 
     useEffect(() => {
-        getSearchRequests({selectedBlood, selectedMatch}).then(data => {
-            setMapRequestData(data);
+        getUsers({selectedBlood, selectedMatch}).then(data => {
+            setMapUserData(data);
         });
     }, [selectedBlood, selectedMatch]);
 
     const matches = [
-        "ყველა მიმღები", "მხოლოდ მონიშნული"
+        "ყველა დონორი", "მხოლოდ მონიშნული"
     ]
 
     const handleSelect = (eventKey, event) => {
@@ -32,7 +30,7 @@ export const HomePageBloodFilterOptions = ({handleHeightChange, setMapRequestDat
     }
 
     return (
-        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center'}}>
             <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect} className={"home-dropdown-menu"}/>
             <MatchDropdownMenu matches={matches} selectedMatch={selectedMatch} handleMatch={handleMatch}/>
         </div>

@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {motion} from "framer-motion";
 import colors from "../values/colors";
-import {HomePageMenuButton} from "./HomePageMenuButton";
+import {MenuButton} from "./MenuButton";
 import feed from "../assets/icons/feed.svg"
 import profile from "../assets/icons/profile.svg";
 import chat from "../assets/icons/chat.svg";
@@ -33,27 +33,27 @@ export const SideMenu = ({current}) => {
                 </text>
             </div>
             {(current !== strings.HOME) &&
-                <HomePageMenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
-                                    onClick={() => navigate("/")}/>}
+                <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
+                            onClick={() => navigate("/")}/>}
 
-            {(current !== strings.PROFILE) && <HomePageMenuButton svg_file={profile} height={"38vh"}
-                                                                  text={"პროფილი"}/>}
+            {(current !== strings.PROFILE) && <MenuButton svg_file={profile} height={"38vh"}
+                                                          text={"პროფილი"}/>}
 
             {(current !== strings.CHATS) &&
-                <HomePageMenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
-                                    onClick={() => navigate("/chat")}/>}
+                <MenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
+                            onClick={() => navigate("/chat")}/>}
 
             {(current !== strings.REQUEST) &&
-                <HomePageMenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
-                                    onClick={() => navigate("/request")}/>}
+                <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
+                            onClick={() => navigate("/request")}/>}
 
-            {(current !== strings.REQUESTS) && <HomePageMenuButton svg_file={help} height={"38vh"}
-                                                                   text={"თხოვნები"}/>}
+            {(current !== strings.REQUESTS) && <MenuButton svg_file={help} height={"38vh"}
+                                                           text={"თხოვნები"}/>}
 
             <div style={{marginTop: "auto"}}>
-                <HomePageMenuButton svg_file={settings} height={"50vh"} text={"პარამეტრები"}/>
+                <MenuButton svg_file={settings} height={"50vh"} text={"პარამეტრები"}/>
             </div>
-            <HomePageMenuButton svg_file={support} height={"40vh"} text={"დახმარება"}/>
+            <MenuButton svg_file={support} height={"40vh"} text={"დახმარება"}/>
         </motion.div>
     );
 }

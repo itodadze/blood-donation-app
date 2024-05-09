@@ -1,6 +1,6 @@
 import colors from "../values/colors";
 
-export const HomePageMenuButton = ({svg_file, height, text, onClick}) => {
+export const MenuButton = ({svg_file, height, text, onClick}) => {
     return (
         <div className={"home-menu-button"} style={{backgroundColor: colors.pearl}}
         onClick={onClick}>
