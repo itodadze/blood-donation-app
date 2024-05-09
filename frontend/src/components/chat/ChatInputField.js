@@ -1,6 +1,6 @@
-import colors from "../values/colors";
+import colors from "../../values/colors";
 import React, {useState} from "react";
-import {sendMessage} from "../services/ChosenChatService";
+import {sendMessage} from "../../services/ChosenChatService";
 
 export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
     const [message, setMessage] = useState("");

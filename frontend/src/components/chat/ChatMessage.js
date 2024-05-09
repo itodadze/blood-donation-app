@@ -1,4 +1,4 @@
-import colors from "../values/colors";
+import colors from "../../values/colors";
 import React from "react";
 
 export const ChatMessage = ({messageContent, isSent}) => {

@@ -1,7 +1,7 @@
-import colors from "../values/colors";
+import colors from "../../values/colors";
 import React, {useEffect, useRef, useState} from "react";
 import {ChatMessage} from "./ChatMessage";
-import {getConversation} from "../services/ChosenChatService"
+import {getConversation} from "../../services/ChosenChatService"
 import {ChatInputField} from "./ChatInputField";
 import ReactLoading from 'react-loading';
 

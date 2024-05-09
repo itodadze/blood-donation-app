@@ -1,6 +1,6 @@
-import colors from "../values/colors";
+import colors from "../../values/colors";
 import React, {useEffect, useState} from "react";
-import {getConversationList} from "../services/ChatConversationListService";
+import {getConversationList} from "../../services/ChatConversationListService";
 import ReactLoading from "react-loading";
 
 

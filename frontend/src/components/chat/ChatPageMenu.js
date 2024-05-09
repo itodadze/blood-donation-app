@@ -1,5 +1,5 @@
-import strings from "../values/strings";
-import {SideMenu} from "./SideMenu";
+import strings from "../../values/strings";
+import {SideMenu} from "../SideMenu";
 
 export const ChatPageMenu = () => {
     return (

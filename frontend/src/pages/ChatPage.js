@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import menu from "../assets/icons/menu.svg";
-import {ChosenChat} from "../components/ChosenChat";
-import {ConversationList} from "../components/ChatConversationList";
-import {ChatPageMenu} from "../components/ChatPageMenu";
+import {ChosenChat} from "../components/chat/ChosenChat";
+import {ConversationList} from "../components/chat/ChatConversationList";
+import {ChatPageMenu} from "../components/chat/ChatPageMenu";
 
 export const Chat = ({isSidebarOpen, toggleSidebar}) => {
     const [chosenRecipient, setRecipient] = useState(null);
