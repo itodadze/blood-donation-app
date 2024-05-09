@@ -62,16 +62,18 @@ class BroadcastSearchView(APIView):
             ).exclude(pk=user.pk))
             for user_to in DonorPriorityRanker(search).rank(users):
                 self.email(search, user, user_to)
+            return Response(status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def email(self, search: BroadcastSearchRequest, user_from: User, user_to: User) -> None:
-        conversation = ChatRequest.objects.get(initiator=user_from, recipient=user_to)
-        if not conversation:
-            conversation = ChatRequest.objects.create(
+        try:
+            ChatRequest.objects.get(initiator=user_from, recipient=user_to)
+        except Exception:
+            ChatRequest.objects.create(
                 initiator=user_from, recipient=user_to, accept_status=False
             )
-        link_url = "http://localhost:3000/chats/" + user_from.pk + "/" + user_to.pk
+        link_url = "http://localhost:3000/chats/" + str(user_from.pk) + "/" + str(user_to.pk)
         email_body = ('სისხლი ესაჭიროება მომხმარებელს: ' + user_from.first_name + ' '
                       + user_from.last_name + '-ს. \n' + 'ეძებს დონორს სისხლისთვის: '
                       + search.narrative + '.\n' + 'აღწერა: ' + search.description + '\n'
