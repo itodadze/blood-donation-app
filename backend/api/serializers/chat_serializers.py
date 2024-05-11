@@ -16,6 +16,11 @@ class ChatNewMessageRequestSerializer(serializers.Serializer):
     message_text = serializers.CharField()
 
 
+class ConversationCreateRequestSerializer(serializers.Serializer):
+    receiver_id = serializers.IntegerField(allow_null=False)
+    donor_id = serializers.IntegerField(allow_null=False)
+
+
 class ChatPeopleResponseSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     email = serializers.EmailField()
@@ -28,3 +33,7 @@ class ChatMessagesResponseSerializer(serializers.Serializer):
     message_text = serializers.CharField()
     message_status = serializers.CharField()
     message_timestamp = serializers.DateTimeField()
+
+
+class ConversationResponseSerializer(serializers.Serializer):
+    id = serializers.IntegerField()

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.db.models import Q
 from rest_framework.request import Request
@@ -6,9 +8,10 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from api.serializers.chat_serializers import ChatPeopleRequestSerializer, ChatPeopleResponseSerializer, \
-    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer
+    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer, \
+    ConversationCreateRequestSerializer, ConversationResponseSerializer
 from api.api_models.chat_models import (ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse,
-                                        ChatNewMessageRequest)
+                                        ChatNewMessageRequest, ConversationCreateRequest, ConversationResponse)
 from api.models import User, Chat, Message
 
 
@@ -111,3 +114,32 @@ class ChatNewMessageView(APIView):
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConversationCreateView(APIView):
+    def post(self, request: Request) -> Response:
+        serializer = ConversationCreateRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            conversation: ConversationCreateRequest = ConversationCreateRequest(**serializer.validated_data)
+            try:
+                chat = Chat.objects.get(
+                    donor_id=conversation.donor_id,
+                    receiver_id=conversation.receiver_id,
+                )
+
+                result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                return Response(result.data, status=status.HTTP_200_OK)
+            except Chat.DoesNotExist:
+                chat = Chat.objects.create(
+                    donor_id=conversation.donor_id,
+                    receiver_id=conversation.receiver_id,
+                    start_date=datetime.now(),
+                    valid_status=True
+                )
+
+                result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                return Response(result.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

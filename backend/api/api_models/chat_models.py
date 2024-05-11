@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from api.models import User, Message
+from api.models import User, Message, Chat
 from datetime import datetime
 
 
@@ -20,6 +20,12 @@ class ChatNewMessageRequest:
     sender_id: int
     receiver_id: int
     message_text: str
+
+
+@dataclass
+class ConversationCreateRequest:
+    receiver_id: int
+    donor_id: int
 
 
 @dataclass
@@ -48,3 +54,12 @@ class ChatMessageResponse:
         return ChatMessageResponse(
             sender_id=message.sender.id, message_text=message.message_text, message_status=message.message_status,
             message_timestamp=message.message_timestamp)
+
+
+@dataclass
+class ConversationResponse:
+    id: int
+
+    @staticmethod
+    def from_chat(chat: Chat) -> 'ConversationResponse':
+        return ConversationResponse(id=chat.id)
