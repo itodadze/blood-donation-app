@@ -28,6 +28,12 @@ class ConversationCreateTestCase(TestCase):
         response: Response = ConversationCreateView().post(request)
         self.assertEquals(response.status_code, 400)
 
+    def test_create_conversation_invalid_user(self) -> None:
+        request = MagicMock(spec=Request)
+        request.data = ConversationCreateRequest(self.user_2.pk, 999).as_dictionary()
+        response: Response = ConversationCreateView().post(request)
+        self.assertEquals(response.status_code, 400)
+
     def test_create_conversation_existing_conversation(self) -> None:
         Chat.objects.create(
             donor=self.user_1, receiver=self.user_2, start_date=datetime.now(), valid_status=True
@@ -42,4 +48,3 @@ class ConversationCreateTestCase(TestCase):
         request.data = ConversationCreateRequest(self.user_2.pk, self.user_1.pk).as_dictionary()
         response: Response = ConversationCreateView().post(request)
         self.assertEquals(response.status_code, 201)
-
