@@ -9,9 +9,10 @@ from rest_framework import status
 
 from api.serializers.chat_serializers import ChatPeopleRequestSerializer, ChatPeopleResponseSerializer, \
     ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer, \
-    ConversationCreateRequestSerializer, ConversationResponseSerializer
+    ConversationCreateRequestSerializer, ConversationResponseSerializer, ConversationDeleteRequestSerializer
 from api.api_models.chat_models import (ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse,
-                                        ChatNewMessageRequest, ConversationCreateRequest, ConversationResponse)
+                                        ChatNewMessageRequest, ConversationCreateRequest, ConversationResponse,
+                                        ConversationDeleteRequest)
 from api.models import User, Chat, Message
 
 
@@ -150,3 +151,23 @@ class ConversationCreateView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ConversationDeleteView(APIView):
+    def delete(self, request: Request) -> Response:
+        serializer = ConversationDeleteRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            conversation: ConversationDeleteRequest = ConversationDeleteRequest(
+                **serializer.validated_data)
+
+            try:
+                chat = Chat.objects.get(pk=conversation.conversation_id)
+                Chat.objects.filter(pk=chat.pk).delete()
+
+                Message.objects.filter(chat=chat).delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+            except Chat.DoesNotExist:
+                return Response("Invalid chat", status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

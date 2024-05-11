@@ -35,6 +35,16 @@ class ConversationCreateRequest:
 
 
 @dataclass
+class ConversationDeleteRequest:
+    conversation_id: int
+
+    def as_dictionary(self) -> dict:
+        return {
+            "conversation_id": self.conversation_id
+        }
+
+
+@dataclass
 class ChatPeopleResponse:
     id: int
     email: str
