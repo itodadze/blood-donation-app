@@ -4,6 +4,7 @@ from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from api.api_models.chat_models import ConversationDeleteRequest
 from api.models import UserIcon, BloodType, User
 from api.views.chat_views import ConversationDeleteView
 from test_blood_matcher import fill_blood_types
@@ -23,5 +24,11 @@ class ConversationDeleteTestCase(TestCase):
     def test_delete_conversation_incorrect_data(self) -> None:
         request = MagicMock(spec=Request)
         request.data = 3
+        response: Response = ConversationDeleteView().delete(request)
+        self.assertEquals(response.status_code, 400)
+
+    def test_delete_conversation_invalid_chat(self) -> None:
+        request = MagicMock(spec=Request)
+        request.data = ConversationDeleteRequest(999).as_dictionary()
         response: Response = ConversationDeleteView().delete(request)
         self.assertEquals(response.status_code, 400)
