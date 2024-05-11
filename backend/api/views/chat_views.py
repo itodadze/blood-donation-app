@@ -124,16 +124,16 @@ class ConversationCreateView(APIView):
             conversation: ConversationCreateRequest = ConversationCreateRequest(**serializer.validated_data)
             try:
                 chat = Chat.objects.get(
-                    donor_id=conversation.donor_id,
-                    receiver_id=conversation.receiver_id,
+                    donor=conversation.donor_id,
+                    receiver=conversation.receiver_id,
                 )
 
                 result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
                 return Response(result.data, status=status.HTTP_200_OK)
             except Chat.DoesNotExist:
                 chat = Chat.objects.create(
-                    donor_id=conversation.donor_id,
-                    receiver_id=conversation.receiver_id,
+                    donor=conversation.donor_id,
+                    receiver=conversation.receiver_id,
                     start_date=datetime.now(),
                     valid_status=True
                 )
