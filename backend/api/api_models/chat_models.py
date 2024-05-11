@@ -27,6 +27,12 @@ class ConversationCreateRequest:
     receiver_id: int
     donor_id: int
 
+    def as_dictionary(self) -> dict:
+        return {
+            "receiver_id": self.receiver_id,
+            "donor_id": self.donor_id
+        }
+
 
 @dataclass
 class ChatPeopleResponse:
