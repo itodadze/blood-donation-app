@@ -39,3 +39,18 @@ class ReceiverRequestTestCase(TestCase):
         request.data = ReceiverRequestId(expected.pk).as_dictionary()
         response: Response = ReceiverRequestView().get(request)
         self.assertEquals(response.status_code, 200)
+
+    def test_delete_receiver_request_incorrect_data(self) -> None:
+        request = MagicMock(spec=Request)
+        request.data = 3
+        response: Response = ReceiverRequestView().delete(request)
+        self.assertEquals(response.status_code, 400)
+
+    def test_delete_receiver_request_existing_request(self) -> None:
+        expected = ReceiverRequest.objects.create(
+            user=self.user, blood_type=self.o_plus, loc_longitude=5.0, loc_latitude=5.0
+        )
+        request = MagicMock(spec=Request)
+        request.data = ReceiverRequestId(expected.pk).as_dictionary()
+        response: Response = ReceiverRequestView().delete(request)
+        self.assertEquals(response.status_code, 204)
