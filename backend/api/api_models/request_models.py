@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ReceiverRequestGet:
+class ReceiverRequestId:
     id: int
 
     def as_dictionary(self) -> dict:

@@ -4,7 +4,7 @@ from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.api_models.request_models import ReceiverRequestGet
+from api.api_models.request_models import ReceiverRequestId
 from api.models import UserIcon, BloodType, User, ReceiverRequest
 from api.views.request_views import ReceiverRequestView
 from test_blood_matcher import fill_blood_types
@@ -27,7 +27,7 @@ class ReceiverRequestGetTestCase(TestCase):
 
     def test_get_receiver_request_invalid_request(self) -> None:
         request = MagicMock(spec=Request)
-        request.data = ReceiverRequestGet(15).as_dictionary()
+        request.data = ReceiverRequestId(15).as_dictionary()
         response: Response = ReceiverRequestView().get(request)
         self.assertEquals(response.status_code, 400)
 
@@ -36,6 +36,6 @@ class ReceiverRequestGetTestCase(TestCase):
             user=self.user, blood_type=self.o_plus, loc_longitude=5.0, loc_latitude=5.0
         )
         request = MagicMock(spec=Request)
-        request.data = ReceiverRequestGet(expected.pk).as_dictionary()
+        request.data = ReceiverRequestId(expected.pk).as_dictionary()
         response: Response = ReceiverRequestView().get(request)
         self.assertEquals(response.status_code, 200)
