@@ -11,7 +11,7 @@ from test_blood_matcher import fill_blood_types
 from test_filter_users import insert_default_user
 
 
-class ReceiverRequestGetTestCase(TestCase):
+class ReceiverRequestTestCase(TestCase):
     def setUp(self) -> None:
         self.icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
         fill_blood_types()
