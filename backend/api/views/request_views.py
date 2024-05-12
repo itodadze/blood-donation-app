@@ -23,3 +23,16 @@ class ReceiverRequestView(APIView):
                 return Response("Invalid receiver request", status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request: Request) -> Response:
+        serializer = ReceiverRequestIdSerializer(data=request.data)
+
+        if serializer.is_valid():
+            receiver_request: ReceiverRequestId = ReceiverRequestId(**serializer.validated_data)
+            try:
+                ReceiverRequest.objects.filter(pk=receiver_request.id).delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+            except ReceiverRequest.DoesNotExist:
+                return Response("Invalid receiver request", status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
