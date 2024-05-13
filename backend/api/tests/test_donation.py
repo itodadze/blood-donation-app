@@ -4,7 +4,7 @@ from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.api_models.donation_models import DonationPost
+from api.api_models.donation_models import Donor
 from api.models import UserIcon, BloodType, User
 from api.views.donation_views import DonationView
 from test_blood_matcher import fill_blood_types
@@ -27,12 +27,12 @@ class DonationTestCase(TestCase):
 
     def test_create_donation_invalid_user(self) -> None:
         request = MagicMock(spec=Request)
-        request.data = DonationPost(999).as_dictionary()
+        request.data = Donor(999).as_dictionary()
         response: Response = DonationView().post(request)
         self.assertEquals(response.status_code, 400)
 
     def test_create_donation_existing_user(self) -> None:
         request = MagicMock(spec=Request)
-        request.data = DonationPost(self.user.pk).as_dictionary()
+        request.data = Donor(self.user.pk).as_dictionary()
         response: Response = DonationView().post(request)
         self.assertEquals(response.status_code, 201)

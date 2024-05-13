@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DonationPost:
+class Donor:
     donor: int
 
     def as_dictionary(self) -> dict:

@@ -3,17 +3,17 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.api_models.donation_models import DonationPost
+from api.api_models.donation_models import Donor
 from api.models import User, Donation
-from api.serializers.donation_serializers import DonationPostSerializer, AmountSerializer
+from api.serializers.donation_serializers import DonorSerializer, AmountSerializer
 
 
 class DonationView(APIView):
     def post(self, request: Request) -> Response:
-        serializer = DonationPostSerializer(data=request.data)
+        serializer = DonorSerializer(data=request.data)
 
         if serializer.is_valid():
-            donation = DonationPost(**serializer.validated_data)
+            donation = Donor(**serializer.validated_data)
             try:
                 user = User.objects.get(pk=donation.donor)
                 Donation.objects.create(donor=user)
@@ -26,10 +26,10 @@ class DonationView(APIView):
 
 class DonationAmountView(APIView):
     def get(self, request: Request) -> Response:
-        serializer = DonationPostSerializer(data=request.data)
+        serializer = DonorSerializer(data=request.data)
 
         if serializer.is_valid():
-            donation = DonationPost(**serializer.validated_data)
+            donation = Donor(**serializer.validated_data)
             try:
                 user = User.objects.get(pk=donation.donor)
                 amount = Donation.objects.filter(donor=user).count()

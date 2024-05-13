@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-class DonationPostSerializer(serializers.Serializer):
+class DonorSerializer(serializers.Serializer):
     donor = serializers.IntegerField(allow_null=False)
 
 
