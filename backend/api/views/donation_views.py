@@ -33,7 +33,7 @@ class DonationAmountView(APIView):
             try:
                 user = User.objects.get(pk=donation.donor)
                 amount = Donation.objects.filter(donor=user).count()
-                return Response(AmountSerializer(amount=amount).data, status=status.HTTP_200_OK)
+                return Response(AmountSerializer({"amount": amount}).data, status=status.HTTP_200_OK)
             except User.DoesNotExist:
                 return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
         else:

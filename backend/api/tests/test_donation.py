@@ -5,8 +5,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from api.api_models.donation_models import Donor
-from api.models import UserIcon, BloodType, User
-from api.views.donation_views import DonationView
+from api.models import UserIcon, BloodType, User, Donation
+from api.views.donation_views import DonationView, DonationAmountView
 from test_blood_matcher import fill_blood_types
 from test_filter_users import insert_default_user
 
@@ -36,3 +36,18 @@ class DonationTestCase(TestCase):
         request.data = Donor(self.user.pk).as_dictionary()
         response: Response = DonationView().post(request)
         self.assertEquals(response.status_code, 201)
+
+    def test_get_donation_amount_incorrect_data(self) -> None:
+        request = MagicMock(spec=Request)
+        request.data = 3
+        response: Response = DonationAmountView().get(request)
+        self.assertEquals(response.status_code, 400)
+
+    def test_get_donation_amount_valid_user(self) -> None:
+        request = MagicMock(spec=Request)
+        Donation.objects.create(donor=self.user)
+        Donation.objects.create(donor=self.user)
+        request.data = Donor(self.user.pk).as_dictionary()
+        response: Response = DonationAmountView().get(request)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.data, {"amount": 2})
