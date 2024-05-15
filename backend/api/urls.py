@@ -15,5 +15,5 @@ urlpatterns = [
     path("chats/new/", chat_views.ConversationCreateView.as_view(), name='create-conversation'),
     path("chats/delete/", chat_views.ConversationDeleteView.as_view(), name='delete-conversation'),
     path("donation/", donation_views.DonationView.as_view(), name='donation'),
-    path("donation/count/", donation_views.DonationAmountView(), name='donation-count')
+    path("donation/count/", donation_views.DonationAmountView().as_view(), name='donation-count')
 ]
