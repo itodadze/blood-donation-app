@@ -7,22 +7,22 @@ export const RequestInfo = ({request_id}) => {
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
 
-    const handleSuccess = ({request}) => {
+    const handleSuccess = (request) => {
         setShowPopup(false);
     }
 
-    const handleFailure = () => {
-        setPopupMessage("მოთხოვნა ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.")
+    const handleFailure = (request_id) => {
+        setPopupMessage(`მოთხოვნა ${request_id} ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
         setShowPopup(true);
     }
 
-    const getCurrentRequest = ({request_id}) => {
-        getRequest({request_id})
+    const getCurrentRequest = (request_id) => {
+        getRequest({requestId: request_id})
             .then((request) => handleSuccess(request))
-            .catch(handleFailure)
+            .catch(() => handleFailure(request_id))
     }
 
-    getCurrentRequest({request_id})
+    getCurrentRequest(request_id)
 
     return (
         <div style={{

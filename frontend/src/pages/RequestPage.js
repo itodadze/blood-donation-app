@@ -5,7 +5,7 @@ import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar
 import {RequestInfo} from "../components/request/RequestInfo";
 
 export const Request = ({isSidebarOpen, toggleSidebar}) => {
-    const { request_id } = useParams();
+    let { request_id } = useParams();
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>

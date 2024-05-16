@@ -11,18 +11,12 @@ from api.serializers.search_serializers import SearchSerializer
 
 class ReceiverRequestView(APIView):
     def get(self, request: Request) -> Response:
-        serializer = ReceiverRequestIdSerializer(data=request.data)
-
-        if serializer.is_valid():
-            receiver_request: ReceiverRequestId = ReceiverRequestId(**serializer.validated_data)
-
-            try:
-                result = ReceiverRequest.objects.get(pk=receiver_request.id)
-                return Response(SearchSerializer(result).data, status=status.HTTP_200_OK)
-            except ReceiverRequest.DoesNotExist:
-                return Response("Invalid receiver request", status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        identifier = request.query_params.get("request_id")
+        try:
+            result = ReceiverRequest.objects.get(pk=identifier)
+            return Response(SearchSerializer(result).data, status=status.HTTP_200_OK)
+        except ReceiverRequest.DoesNotExist:
+            return Response("Invalid receiver request", status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request: Request) -> Response:
         serializer = ReceiverRequestIdSerializer(data=request.data)
