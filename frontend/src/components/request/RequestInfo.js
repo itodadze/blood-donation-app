@@ -1,6 +1,8 @@
 import {getRequest} from "../../services/RequestService";
+import {Location} from "../../components/map/Location"
 import {useState} from "react";
 import background from "../../assets/background/background.png";
+import colors from "../../values/colors";
 
 export const RequestInfo = ({request_id}) => {
 
@@ -40,6 +42,35 @@ export const RequestInfo = ({request_id}) => {
         }}>
             {showPopup && <div className={"request-popup"}>
                 <text className={"request-item-desc"}>{popupMessage}</text>
+            </div>}
+            {!showPopup && <div style={{
+                height: "90%", width: "92%", position: 'relative', backgroundColor:
+                colors.pearl, display: "flex", justifyContent: "center", flexDirection: "column"
+            }}>
+                <div className={"request-item"}>
+                    <text className={"request-item-desc"}>
+                        სისხლი:
+                    </text>
+                    <text className={"request-item-desc"}>
+                        {selectedBlood}
+                    </text>
+                </div>
+                <div className={"request-item"}>
+                    <text className={"request-item-desc"}>
+                        ლოკაცია:
+                    </text>
+                    <Location selectedLat={selectedLat} selectedLon={selectedLon}/>
+                </div>
+                <div className={"request-item"}>
+                    <text className={"request-item-desc"}>
+                        აღწერა:
+                    </text>
+                    <div style={{width: '380px', height: '170px', overflowX: 'auto'}}>
+                        <div className={"scroll request-description"}>
+                            {description}
+                        </div>
+                    </div>
+                </div>
             </div>}
         </div>
     );
