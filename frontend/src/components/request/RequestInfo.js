@@ -4,10 +4,18 @@ import background from "../../assets/background/background.png";
 
 export const RequestInfo = ({request_id}) => {
 
+    const [selectedBlood, setSelectedBlood] = useState(null);
+    const [selectedLat, setSelectedLat] = useState(null);
+    const [selectedLon, setSelectedLon] = useState(null)
+    const [description, setDescription] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
 
     const handleSuccess = (request) => {
+        setSelectedLat(request.loc_latitude)
+        setSelectedLon(request.loc_longitude)
+        setSelectedBlood(request.blood_txt)
+        setDescription(request.description)
         setShowPopup(false);
     }
 
