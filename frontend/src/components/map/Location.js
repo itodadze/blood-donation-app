@@ -8,9 +8,17 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaXRvZGFkemUiLCJhIjoiY2x1bWdveHpnMG4zdjJrb2F2b
 export const Location = ({selectedLat, selectedLon}) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng] = useState(selectedLon);
-    const [lat] = useState(selectedLat);
+    const [lat, setLat] = useState(selectedLat);
+    const [lng, setLng] = useState(selectedLon);
     const [zoom] = useState(12);
+
+    useEffect(() => {
+        setLat(selectedLat)
+    }, [selectedLat])
+
+    useEffect(() => {
+        setLng(selectedLon)
+    }, [selectedLon])
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -24,7 +32,7 @@ export const Location = ({selectedLat, selectedLon}) => {
         new mapboxgl.Marker()
             .setLngLat([lng, lat])
             .addTo(map.current);
-    });
+    }, []);
 
     return (
         <div>

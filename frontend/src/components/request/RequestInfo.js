@@ -1,6 +1,6 @@
 import {getRequest} from "../../services/RequestService";
 import {Location} from "../../components/map/Location"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import background from "../../assets/background/background.png";
 import colors from "../../values/colors";
 
@@ -10,8 +10,8 @@ export const RequestInfo = ({request_id}) => {
     const [selectedLat, setSelectedLat] = useState(null);
     const [selectedLon, setSelectedLon] = useState(null)
     const [description, setDescription] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
-    const [popupMessage, setPopupMessage] = useState('');
+    const [showPopup, setShowPopup] = useState(true);
+    const [popupMessage, setPopupMessage] = useState('იძებნება');
 
     const handleSuccess = (request) => {
         setSelectedLat(request.loc_latitude)
@@ -26,13 +26,11 @@ export const RequestInfo = ({request_id}) => {
         setShowPopup(true);
     }
 
-    const getCurrentRequest = (request_id) => {
+    useEffect(() => {
         getRequest({requestId: request_id})
             .then((request) => handleSuccess(request))
             .catch(() => handleFailure(request_id))
-    }
-
-    getCurrentRequest(request_id)
+    })
 
     return (
         <div style={{
