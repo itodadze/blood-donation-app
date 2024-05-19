@@ -1,4 +1,4 @@
-import {getRequest} from "../../services/RequestService";
+import {deleteRequest, getRequest} from "../../services/RequestService";
 import {Location} from "../../components/map/Location"
 import {useEffect, useState} from "react";
 import background from "../../assets/background/background.png";
@@ -27,6 +27,11 @@ export const RequestInfo = ({request_id}) => {
     const handleFailure = (request_id) => {
         setPopupMessage(`მოთხოვნა ${request_id} ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
         setShowPopup(true);
+    }
+
+    const handleDelete = () => {
+        deleteRequest({requestId: request_id})
+            .then().catch()
     }
 
     useEffect(() => {
@@ -72,9 +77,9 @@ export const RequestInfo = ({request_id}) => {
                         </div>
                     </div>
                 </div>
-                {user != null && user.id === receiver &&
+                {user == null &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                    <button className={"request-confirm"}>
+                    <button className={"request-confirm"} onClick={handleDelete}>
                         წაშლა
                     </button>
                     <button className={"request-confirm"}>
