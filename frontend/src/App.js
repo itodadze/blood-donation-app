@@ -4,6 +4,8 @@ import {Home} from "./pages/HomePage";
 import {RequestForm} from "./pages/RequestFormPage"
 import {useState} from "react";
 import {Chat} from "./pages/ChatPage";
+import {Login} from "./pages/LoginPage";
+import {Register} from "./pages/RegisterPage";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -20,6 +22,10 @@ function App() {
                                                          toggleSidebar={toggleSidebar}/>}/>
             <Route path='/chat' element={<Chat isSidebarOpen={isSidebarOpen}
                                                toggleSidebar={toggleSidebar}/>}/>
+            <Route path='/login' element={<Login isSidebarOpen={isSidebarOpen}
+                                                 toggleSidebar={toggleSidebar}/>}/>
+            <Route path='/register' element={<Register isSidebarOpen={isSidebarOpen}
+                                                       toggleSidebar={toggleSidebar}/>}/>
         </Routes>
     );
 }
