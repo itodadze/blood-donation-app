@@ -8,15 +8,18 @@ export const RequestInfo = ({request_id}) => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
-    const [selectedLon, setSelectedLon] = useState(null)
+    const [selectedLon, setSelectedLon] = useState(null);
+    const [receiver, setSelectedReceiver] = useState(null);
     const [description, setDescription] = useState('');
     const [showPopup, setShowPopup] = useState(true);
     const [popupMessage, setPopupMessage] = useState('იძებნება');
+    const [user, setUser] = useState(null)
 
     const handleSuccess = (request) => {
         setSelectedLat(request.loc_latitude)
         setSelectedLon(request.loc_longitude)
         setSelectedBlood(request.blood_txt)
+        setSelectedReceiver(request.user)
         setDescription(request.description)
         setShowPopup(false);
     }
@@ -69,6 +72,21 @@ export const RequestInfo = ({request_id}) => {
                         </div>
                     </div>
                 </div>
+                {user != null && user.id === receiver &&
+                    <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                    <button className={"request-confirm"}>
+                        წაშლა
+                    </button>
+                    <button className={"request-confirm"}>
+                        შესრულებულია
+                    </button>
+                </div>}
+                {user != null && user.id !== receiver &&
+                    <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                    <button className={"request-confirm"}>
+                        დაკავშირება
+                    </button>
+                </div>}
             </div>}
         </div>
     );
