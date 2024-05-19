@@ -1,8 +1,5 @@
 import {Button, Dropdown} from "react-bootstrap";
-import {DropdownBloodOption} from "./DropdownBloodOption";
-import {useEffect, useState} from "react";
-import {getBloodTypes} from "../services/BloodTypeService";
-import {bloodTypeToSvg} from "../services/BloodTypeToSvg";
+import {useState} from "react";
 import {DropdownDonorOption} from "./DropdownDonorOption";
 
 export const DonorDropdownMenu = ({users, className}) => {

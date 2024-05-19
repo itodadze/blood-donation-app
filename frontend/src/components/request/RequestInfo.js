@@ -3,6 +3,8 @@ import {Location} from "../../components/map/Location"
 import {useEffect, useState} from "react";
 import background from "../../assets/background/background.png";
 import colors from "../../values/colors";
+import {DonorDropdownMenu} from "./DonorDropdownMenu";
+import {getDonors} from "../../services/UserService";
 
 export const RequestInfo = ({request_id}) => {
 
@@ -14,6 +16,7 @@ export const RequestInfo = ({request_id}) => {
     const [showPopup, setShowPopup] = useState(true);
     const [popupMessage, setPopupMessage] = useState('იძებნება');
     const [user, setUser] = useState(null)
+    const [users, setUsers] = useState([])
 
     const handleSuccess = (request) => {
         setSelectedLat(request.loc_latitude)
@@ -21,7 +24,13 @@ export const RequestInfo = ({request_id}) => {
         setSelectedBlood(request.blood_txt)
         setSelectedReceiver(request.user)
         setDescription(request.description)
-        setShowPopup(false);
+        getDonors({id: receiver}).then((users) =>
+        {
+            setUsers(users)
+            setShowPopup(false);
+        }).catch(
+            'ვერ იქნა მონაცემები წამოღებული'
+        )
     }
 
     const handleFailure = (request_id) => {
@@ -32,6 +41,10 @@ export const RequestInfo = ({request_id}) => {
     const handleDelete = () => {
         deleteRequest({requestId: request_id})
             .then().catch()
+    }
+
+    const handleAccept = () => {
+
     }
 
     useEffect(() => {
@@ -79,12 +92,13 @@ export const RequestInfo = ({request_id}) => {
                 </div>
                 {user == null &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                    <button className={"request-confirm"} onClick={handleDelete}>
-                        წაშლა
-                    </button>
-                    <button className={"request-confirm"}>
-                        შესრულებულია
-                    </button>
+                        <button className={"request-confirm"} onClick={handleDelete}>
+                            წაშლა
+                        </button>
+                        <button className={"request-confirm"} onClick={handleAccept}>
+                            შესრულებულია
+                        </button>
+                        <DonorDropdownMenu users={users} className={"home-dropdown-menu"}/>
                 </div>}
                 {user != null && user.id !== receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>

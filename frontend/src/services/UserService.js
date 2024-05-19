@@ -9,3 +9,9 @@ export const getUsers = ({selectedBlood, selectedMatch}) => {
     return api.post('/users/', requestData).then(response => response.data)
         .catch(error => console.error('Error fetching users:', error));
 }
+
+export const getDonors = ({id}) => {
+    return api.get('/users/donors/', {params: {id: id}})
+        .then(response => response.data)
+        .catch(error => console.error('Error fetching users:', error));
+}
