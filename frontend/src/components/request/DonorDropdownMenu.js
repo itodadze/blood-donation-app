@@ -17,7 +17,7 @@ export const DonorDropdownMenu = ({users, className, selectedUsers, setSelectedU
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {
-                    users.map(
+                    users != null && users.map(
                         (user) => {
                             return (
                                 <DropdownDonorOption

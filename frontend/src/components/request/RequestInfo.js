@@ -21,17 +21,19 @@ export const RequestInfo = ({request_id}) => {
     const [selectedUsers, setSelectedUsers] = useState([])
 
     const handleSuccess = (request) => {
-        setSelectedLat(request.loc_latitude)
-        setSelectedLon(request.loc_longitude)
-        setSelectedBlood(request.blood_txt)
-        setSelectedReceiver(request.user)
-        setDescription(request.description)
+        setSelectedLat(request.loc_latitude);
+        setSelectedLon(request.loc_longitude);
+        setSelectedBlood(request.blood_txt);
+        setSelectedReceiver(request.user);
+        setDescription(request.description);
         getDonors({id: receiver}).then((users) =>
         {
-            setUsers(users)
+            setUsers(users);
             setShowPopup(false);
-        }).catch(
-            'ვერ იქნა მონაცემები წამოღებული'
+        }).catch((error) => {
+                setShowPopup('ვერ იქნა მონაცემები წამოღებული');
+                setShowPopup(true);
+            }
         )
     }
 
@@ -97,7 +99,7 @@ export const RequestInfo = ({request_id}) => {
                         </div>
                     </div>
                 </div>
-                {user == null &&
+                {user != null && user.id === receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                         <button className={"request-confirm"} onClick={handleDelete}>
                             წაშლა
