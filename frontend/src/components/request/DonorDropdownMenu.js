@@ -1,15 +1,12 @@
 import {Button, Dropdown} from "react-bootstrap";
-import {useState} from "react";
 import {DropdownDonorOption} from "./DropdownDonorOption";
 
-export const DonorDropdownMenu = ({users, className}) => {
-    const [donors, setDonors] = useState([]);
-
+export const DonorDropdownMenu = ({users, className, selectedUsers, setSelectedUsers}) => {
     const handleDonor = ({user, check}) => {
         if (check) {
-            setDonors(donors + user)
+            setSelectedUsers(selectedUsers + user)
         } else {
-            setDonors(donors.filter(function(e) { return e !== user }))
+            setSelectedUsers(selectedUsers.filter(function(e) { return e !== user }))
         }
     }
 

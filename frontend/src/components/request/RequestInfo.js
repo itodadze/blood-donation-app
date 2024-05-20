@@ -5,6 +5,7 @@ import background from "../../assets/background/background.png";
 import colors from "../../values/colors";
 import {DonorDropdownMenu} from "./DonorDropdownMenu";
 import {getDonors} from "../../services/UserService";
+import {donate} from "../../services/DonationService";
 
 export const RequestInfo = ({request_id}) => {
 
@@ -17,6 +18,7 @@ export const RequestInfo = ({request_id}) => {
     const [popupMessage, setPopupMessage] = useState('იძებნება');
     const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
+    const [selectedUsers, setSelectedUsers] = useState([])
 
     const handleSuccess = (request) => {
         setSelectedLat(request.loc_latitude)
@@ -44,7 +46,12 @@ export const RequestInfo = ({request_id}) => {
     }
 
     const handleAccept = () => {
-
+        selectedUsers.map(
+            (selectedUser) =>
+                donate({id: selectedUser})
+        )
+        deleteRequest({requestId: request_id})
+            .then().catch()
     }
 
     useEffect(() => {
@@ -98,7 +105,8 @@ export const RequestInfo = ({request_id}) => {
                         <button className={"request-confirm"} onClick={handleAccept}>
                             შესრულებულია
                         </button>
-                        <DonorDropdownMenu users={users} className={"home-dropdown-menu"}/>
+                        <DonorDropdownMenu users={users} className={"home-dropdown-menu"}
+                                           selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
                 </div>}
                 {user != null && user.id !== receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
