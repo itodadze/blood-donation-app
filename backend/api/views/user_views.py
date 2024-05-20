@@ -43,7 +43,7 @@ class ReceiverDonorUsersView(APIView):
         try:
             user = User.objects.get(pk=identifier)
             chats = Chat.objects.filter(receiver=user).values('donor')
-            serializer = UserSerializer(User.objects.filter(pk___in=chats), many=True)
+            serializer = UserSerializer(User.objects.filter(pk__in=chats), many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response("User does not exist", status=status.HTTP_400_BAD_REQUEST)
