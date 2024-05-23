@@ -10,7 +10,9 @@ export const SignButton = ({buttonText}) => {
             flex: 0.3,
             alignSelf: 'center',
             backgroundColor: colors.primary,
-            color: colors.dark_pearl
+            color: colors.dark_pearl,
+            marginBottom: '5%',
+            width: '90%'
         }}
     >
         {buttonText}

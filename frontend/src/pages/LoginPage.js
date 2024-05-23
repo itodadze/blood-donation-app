@@ -15,7 +15,7 @@ export const Login = () => {
         </Helmet>
         <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
             <div style={{
-                backgroundColor: colors.pearl, display: 'flex', flexDirection: 'row', height: '10vh'
+                backgroundColor: colors.pearl, display: 'flex', flexDirection: 'row', height: '10%'
             }}>
 
             </div>
@@ -23,10 +23,10 @@ export const Login = () => {
             <div style={{
                 backgroundColor: colors.dark_pearl,
                 display: 'flex',
-                flexDirection: 'row',
-                height: '90vh',
-                maxHeight: '90vh',
-                maxWidth: '100vw',
+                flexDirection: 'column',
+                height: '90%',
+                maxHeight: '90%',
+                maxWidth: '100%',
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
@@ -35,17 +35,21 @@ export const Login = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    width: '300px',
-                    height: '300px',
+                    width: '80%',
+                    maxWidth: '300px',
+                    height: '60%',
+                    maxHeight: '300px',
                     borderStyle: 'solid',
-                    borderColor: colors.secondary,
-                    padding: '10px'
+                    borderColor: colors.secondary
                 }}>
                     <CredentialField fieldName={'Email'}/>
                     <PasswordField/>
                     <SignButton buttonText={'Log In'}/>
 
                 </div>
+                <a href={'register'} style={{margin: '10px', color: colors.blood}}>
+                    Create New Account
+                </a>
             </div>
         </div>
 

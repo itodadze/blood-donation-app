@@ -12,39 +12,57 @@ export const PasswordField = () => {
     };
 
     return (<div
-        style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <text style={{display: 'flex', marginBottom: '10px', color: colors.gray}}>
-            Password
-        </text>
-        <div style={{
-            flexDirection: 'row', display: 'flex', // backgroundColor: colors.white,
-            width: '90%', height: '50px', justifyContent: 'center', alignItems: 'center'
+        style={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '2%'
         }}>
+        <p style={{display: 'flex', marginBottom: '2%', color: colors.gray}}>
+            Password
+        </p>
+        <div
+            style={{
+                position: 'relative',
+                width: '90%',
+                height: '90%',
+                maxHeight: '50px',
+            }}
+        >
             <input
                 placeholder={'Enter Your Password'}
                 type={showPassword ? 'text' : 'password'}
-                // value={password}
-                // onChange={handleChangePass}
-                // onKeyUp={handleKeyUp}
                 style={{
                     borderStyle: 'solid',
                     borderColor: colors.primary,
                     borderRadius: '15px',
-                    margin: '2%',
+                    padding: '10px',
+                    paddingRight: '40px',
                     width: '100%',
-                    height: '100%'
+                    height: '100%',
+                    boxSizing: 'border-box'
                 }}
             />
-
-            <button onClick={toggleShowPassword} style={{borderStyle: 'none', backgroundColor: colors.pearl}}>
-                <img src={showPassword ? hide_pass : show_pass}
-                     alt={showPassword ? 'hide password' : 'show password'}
-                     style={{
-                         height: '30px', width: '30px'
-                     }}
+            <button
+                onClick={toggleShowPassword}
+                style={{
+                    border: 'none',
+                    background: 'none',
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    cursor: 'pointer',
+                }}
+            >
+                <img
+                    src={showPassword ? hide_pass : show_pass}
+                    alt={showPassword ? 'Hide password' : 'Show password'}
+                    style={{height: '20px', width: '20px'}}
                 />
             </button>
-
         </div>
 
 
