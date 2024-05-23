@@ -31,12 +31,13 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
                 style={{
                     padding: '5%',
                     height: '70px',
-                    margin: '2vh',
+                    marginTop: '2vh',
+                    marginBottom: '2vh',
                     position: 'relative',
-                    width: "100%",
+                    width: '85%',
                     backgroundColor: chosenRecipient === conversation.id ? colors.primary : colors.white,
                     borderColor: colors.primary_dark,
-                    borderRadius: '50px',
+                    borderRadius: '20px',
                     overflowX: 'hidden'
                 }}
                 onClick={() => chooseRecipient(conversation.id)}
