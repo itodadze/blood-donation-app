@@ -31,41 +31,54 @@ export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
 
     return (<div style={{
         position: 'absolute',
-        bottom: '2vh',
+        bottom: '4vh',
         width: '80%',
         height: '65px',
-        backgroundColor: colors.tertiary,
-        border: 'solid',
-        borderColor: colors.primary_dark,
-        borderRadius: '20px',
         overflowX: 'clip',
         alignSelf: 'center',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end'
     }}>
-        <input
-            placeholder="Type your message..."
-            value={message}
-            onChange={handleChangeMessage}
-            onKeyUp={handleKeyUp}
-            style={{
-                borderColor: colors.primary_dark,
-                borderRadius: '15px',
-                margin: '2%',
-                width: '100%',
-                backgroundColor: colors.tertiary
-            }}
-        />
-        <button style={{
-            borderColor: colors.primary_dark,
-            borderRadius: '15px',
-            alignSelf: 'center',
-            marginRight: '2vw',
-            backgroundColor: colors.primary,
-            color: colors.dark_pearl
-        }} onClick={handleSendMessage}>
-            Send
-        </button>
+        <div style={{
+            position: 'relative',
+            width: '100%',
+            height: '100%'
+        }}>
+            <input
+                placeholder="Type your message..."
+                value={message}
+                onChange={handleChangeMessage}
+                onKeyUp={handleKeyUp}
+                style={{
+                    backgroundColor: colors.tertiary,
+                    border: 'solid',
+                    borderColor: colors.primary_dark,
+                    borderRadius: '20px',
+                    padding: '15px',
+                    width: '100%',
+                    height: '100%',
+                    boxSizing: 'border-box',
+                    paddingRight: '77px'
+                }}
+            />
+            <button
+                onClick={handleSendMessage}
+                style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: colors.primary,
+                    color: colors.dark_pearl,
+                    borderRadius: '15px',
+                    height: '70%',
+                    width: '60px',
+                    cursor: 'pointer',
+                }}
+            >
+                Send
+            </button>
+        </div>
     </div>);
 }
