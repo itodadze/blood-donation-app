@@ -4,7 +4,7 @@ import hide_pass from "../../assets/icons/hide_pass.svg";
 import show_pass from "../../assets/icons/show_pass.svg";
 
 
-export const PasswordField = () => {
+export const PasswordField = ({fieldName, placeholderText}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const toggleShowPassword = () => {
@@ -21,7 +21,7 @@ export const PasswordField = () => {
             marginBottom: '2%'
         }}>
         <p style={{display: 'flex', marginBottom: '2%', color: colors.gray}}>
-            Password
+            {fieldName ? fieldName : 'Password'}
         </p>
         <div
             style={{
@@ -32,7 +32,7 @@ export const PasswordField = () => {
             }}
         >
             <input
-                placeholder={'Enter Your Password'}
+                placeholder={placeholderText ? placeholderText : 'Enter Your Password'}
                 type={showPassword ? 'text' : 'password'}
                 style={{
                     borderStyle: 'solid',
