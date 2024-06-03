@@ -6,6 +6,7 @@ import {useState} from "react";
 import {Chat} from "./pages/ChatPage";
 import {Login} from "./pages/LoginPage";
 import {Register} from "./pages/RegisterPage";
+import {RegisterMedInfo} from "./pages/RegisterMedInfo";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,6 +27,7 @@ function App() {
                                                  toggleSidebar={toggleSidebar}/>}/>
             <Route path='/register' element={<Register isSidebarOpen={isSidebarOpen}
                                                        toggleSidebar={toggleSidebar}/>}/>
+            <Route path='/registerMed' element={<RegisterMedInfo/>}/>
         </Routes>
     );
 }

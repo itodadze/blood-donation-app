@@ -1,0 +1,79 @@
+import React, {useState} from 'react'
+import {Helmet} from "react-helmet";
+import colors from "../values/colors";
+import {Map} from "../components/map/Map"
+import {CredentialField} from "../components/sign_system/CredentialField";
+import {PasswordField} from "../components/sign_system/PasswordField";
+import {DateChooser} from "../components/sign_system/DateChooser";
+import {RegisterButton} from "../components/sign_system/RegisterButton";
+
+export const RegisterMedInfo = () => {
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
+        <Helmet>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
+                rel="stylesheet"/>
+        </Helmet>
+        <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
+            <div style={{
+                backgroundColor: colors.pearl, display: 'flex', flexDirection: 'row', height: '10%'
+            }}>
+
+            </div>
+
+            <div style={{
+                backgroundColor: colors.dark_pearl,
+                display: 'flex',
+                flexDirection: 'column',
+                height: '90%',
+                maxHeight: '90%',
+                maxWidth: '100%',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <div style={{
+                    backgroundColor: colors.pearl,
+                    display: 'flex',
+                    flexDirection: 'column', // justifyContent: 'center',
+                    width: '80%',
+                    maxWidth: '500px',
+                    height: '80%',
+                    maxHeight: '500px',
+                    borderStyle: 'solid',
+                    borderColor: colors.secondary
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        height: '20%',
+                        borderBottom: 'dotted',
+                        borderColor: colors.secondary,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        textJustify: 'center',
+                        fontSize: 'larger'
+                    }}>
+                        <p style={{color: colors.primary_dark, marginBottom: '0px'}}> Medical Information Form </p>
+                    </div>
+
+                    <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
+                        <label style={{width: '100%', margin: '2%', display: 'flex', justifyContent: 'center'}}>
+                            <input type={"checkbox"}
+                                   style={{width: '20px', height: '25px', marginLeft: '2%', marginRight: '2%'}}/>
+                            <span> Don't Include My Medical Information </span>
+                        </label>
+                    </div>
+                    {/*<Map mapData={null}/>*/}
+                </div>
+                {/*<a href={'register'} style={{margin: '10px', color: colors.blood}}>*/}
+                {/*    Create New Account*/}
+                {/*</a>*/}
+            </div>
+
+        </div>
+
+
+    </div>);
+}
