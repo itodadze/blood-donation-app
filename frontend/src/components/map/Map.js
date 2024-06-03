@@ -3,10 +3,13 @@ import {useEffect, useRef, useState} from "react";
 import mapboxgl from '!mapbox-gl';
 import {getPinMarker} from "./PinMarkerComponent";
 //import {getPinMarker} from "./PinMarkerComponent";
+import {useNavigate} from "react-router-dom";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXRvZGFkemUiLCJhIjoiY2x1bWdveHpnMG4zdjJrb2F2bXN3ZWx6YiJ9.-yIhnR6oioGEsaa2U1vgsQ';
 
 export const Map = ({mapData}) => {
+    const navigate = useNavigate();
+
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [lng] = useState(44.78);
@@ -33,8 +36,12 @@ export const Map = ({mapData}) => {
             }
         }
         mapData.forEach(marker => {
+            let id = marker.id
             marker = getPinMarker(marker.blood_txt, marker.loc_longitude, marker.loc_latitude)
             marker.addTo(map.current)
+            marker.getElement().addEventListener('click', () => {
+                navigate("/request/" + id);
+            });
             currentMarkers.push(marker);
         });
     }, [mapData]);
