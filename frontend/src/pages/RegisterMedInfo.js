@@ -6,9 +6,18 @@ import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {DateChooser} from "../components/sign_system/DateChooser";
 import {RegisterButton} from "../components/sign_system/RegisterButton";
+import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
 
 export const RegisterMedInfo = () => {
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [medInfo, setInputInfo] = useState(true);
+    const [selectedBlood, setSelectedBlood] = useState(null);
+
+    const handleMedInfo = () => {
+        setInputInfo(!medInfo)
+    }
+    const handleSelect = (eventKey, event) => {
+        setSelectedBlood(event.target.innerText);
+    };
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
@@ -59,10 +68,17 @@ export const RegisterMedInfo = () => {
                     </div>
 
                     <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
-                        <label style={{width: '100%', margin: '2%', display: 'flex', justifyContent: 'center'}}>
-                            <input type={"checkbox"}
+                        <label style={{width: '100%', padding: '2%', display: 'flex', justifyContent: 'center'}}>
+                            <input type={"checkbox"} onInput={handleMedInfo}
                                    style={{width: '20px', height: '25px', marginLeft: '2%', marginRight: '2%'}}/>
                             <span> Don't Include My Medical Information </span>
+                        </label>
+                    </div>
+
+                    <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
+                        <label style={{width: '100%', padding: '2%', display: 'flex', justifyContent: 'center', boxSizing: 'border-box'}}>
+                            {medInfo && <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect} className={"med-dropdown-menu"}/>}
+                            {!medInfo && <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}> Without Specifying Medical Information, You Will Not Be Active As A Donor </span>}
                         </label>
                     </div>
                     {/*<Map mapData={null}/>*/}
