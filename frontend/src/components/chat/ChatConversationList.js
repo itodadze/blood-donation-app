@@ -2,6 +2,7 @@ import colors from "../../values/colors";
 import React, {useEffect, useState} from "react";
 import {getConversationList} from "../../services/ChatConversationListService";
 import ReactLoading from "react-loading";
+import "../../styles/chat_page.css"
 
 
 export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
@@ -21,49 +22,33 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
 
     const renderConversationList = () => {
         if (loading) {
-            return <LoadingIndicator />;
+            return <LoadingIndicator/>;
         }
         if (!conversations) return null;
 
-        return conversations.map(conversation => (
-            <button
+        return conversations.map(conversation => (<button
                 key={conversation.id}
+                className={"chat-header"}
                 style={{
-                    padding: '5%',
-                    height: '70px',
-                    marginTop: '2vh',
-                    marginBottom: '2vh',
-                    position: 'relative',
-                    width: '85%',
-                    backgroundColor: chosenRecipient === conversation.id ? colors.primary : colors.white,
-                    borderColor: colors.primary_dark,
-                    borderRadius: '20px',
-                    overflowX: 'hidden'
+                    '--background-color': chosenRecipient === conversation.id ? colors.primary : colors.white,
+                    '--border-color': colors.primary_dark
                 }}
                 onClick={() => chooseRecipient(conversation.id)}
             >
                 <div>{conversation.first_name + ' ' + conversation.last_name}</div>
-            </button>
-        ));
+            </button>));
     };
 
     return (<div
+        className={"conversation-list-container"}
         style={{
-            flex: '0.3',
-            backgroundColor: colors.pearl,
-            border: colors.tertiary,
-            borderLeftStyle: 'dotted',
-            alignItems: "center",
-            flexDirection: "column",
-            display: "flex",
-            overflowY: 'scroll',
-            maxHeight: '100%'
+            '--background-color': colors.pearl, '--border-color': colors.tertiary
         }}>
         {renderConversationList()}
     </div>)
 };
 const LoadingIndicator = () => {
-    return <div style={{alignSelf:'center'}}>
+    return <div style={{alignSelf: 'center'}}>
         <ReactLoading type={'bubbles'} color={colors.primary}/>
     </div>;
 };

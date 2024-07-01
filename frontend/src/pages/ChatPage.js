@@ -13,29 +13,31 @@ export const Chat = ({isSidebarOpen, toggleSidebar}) => {
         setRecipient(recipient);
     };
 
-    return (
-        <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
-            <Helmet>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
-                    rel="stylesheet"/>
-            </Helmet>
-            {isSidebarOpen && <SideMenu/>}
-            <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
-                <div style={{backgroundColor: colors.tertiary, display: 'flex', flexDirection: 'row', height: '10vh'}}>
-                    <div style={{alignItems: "center", display: "flex"}}>
-                        <img src={menu} alt="menu icon" width="60vh" height="52vh"
-                             onClick={toggleSidebar}/>
-                    </div>
+    return (<div className="chat-page-menu-container">
+        <Helmet>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
+                rel="stylesheet"/>
+        </Helmet>
+        {isSidebarOpen && <SideMenu/>}
+        <div className="chat-page-container">
+            <div className="chat-navigation-bar"
+                 style={{'--background-color': colors.tertiary}}>
+                <div className="chat-menu-container">
+                    <img src={menu} alt="menu icon" width="60vh" height="52vh"
+                         onClick={toggleSidebar}/>
                 </div>
+            </div>
 
-                <div style={{margin: '2vh', border: colors.tertiary, borderStyle:'dotted',  display: 'flex', flexDirection: 'row', flex: '1', backgroundColor: colors.pearl, maxHeight: '86vh'}}>
-                    <ChosenChat chosenRecipient={chosenRecipient} />
-                    <ConversationList chosenRecipient={chosenRecipient} chooseRecipient={chooseRecipient} />
-                </div>
-
+            <div className="full-chat-container"
+                 style={{
+                     '--border-color': colors.tertiary, '--background-color': colors.pearl
+                 }}>
+                <ChosenChat chosenRecipient={chosenRecipient}/>
+                <ConversationList chosenRecipient={chosenRecipient} chooseRecipient={chooseRecipient}/>
             </div>
 
         </div>
-    );
+
+    </div>);
 }

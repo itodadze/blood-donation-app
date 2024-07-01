@@ -29,52 +29,23 @@ export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
         }
     };
 
-    return (<div style={{
-        position: 'absolute',
-        bottom: '4vh',
-        width: '80%',
-        height: '65px',
-        overflowX: 'clip',
-        alignSelf: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    }}>
-        <div style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%'
-        }}>
+    return (<div className="chat-input-container">
+        <div className="chat-input-message-container">
             <input
+                className="chat-input-message"
                 placeholder="Type your message..."
                 value={message}
                 onChange={handleChangeMessage}
                 onKeyUp={handleKeyUp}
                 style={{
-                    backgroundColor: colors.tertiary,
-                    border: 'solid',
-                    borderColor: colors.primary_dark,
-                    borderRadius: '20px',
-                    padding: '15px',
-                    width: '100%',
-                    height: '100%',
-                    boxSizing: 'border-box',
-                    paddingRight: '77px'
+                    '--background-color': colors.tertiary, '--border-color': colors.primary_dark
                 }}
             />
             <button
                 onClick={handleSendMessage}
+                className="chat-input-send-btn"
                 style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    backgroundColor: colors.primary,
-                    color: colors.dark_pearl,
-                    borderRadius: '15px',
-                    height: '70%',
-                    width: '60px',
-                    cursor: 'pointer',
+                    'background-color': colors.primary, '--btn-color': colors.dark_pearl
                 }}
             >
                 Send

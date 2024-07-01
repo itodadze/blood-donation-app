@@ -12,7 +12,7 @@ export const ChosenChat = ({chosenRecipient}) => {
     const chatRef = useRef(null);
 
     useEffect(() => {
-        if(chosenRecipient !== null && chosenRecipient !== undefined) {
+        if (chosenRecipient !== null && chosenRecipient !== undefined) {
             setLoading(true);
             getConversation(3, chosenRecipient).then(data => {
                 console.log('Data:', data);
@@ -32,53 +32,40 @@ export const ChosenChat = ({chosenRecipient}) => {
 
     const renderMessages = () => {
         if (loading) {
-            return <LoadingIndicator />;
+            return <LoadingIndicator/>;
         }
         if (!conversation) return null;
 
         const messages = [];
         conversation.forEach((message) => {
-            messages.push(
-                <ChatMessage
-                    key={message.message_timestamp}
-                    messageContent={message.message_text}
-                    isSent={chosenRecipient !== message.sender_id}
-                />
-            );
+            messages.push(<ChatMessage
+                key={message.message_timestamp}
+                messageContent={message.message_text}
+                isSent={chosenRecipient !== message.sender_id}
+            />);
         });
-        messages.push(<span key={'space'} style={{ margin: '30px 0' }} />);
+        messages.push(<span key={'space'} style={{margin: '30px 0'}}/>);
         return messages;
     };
 
-    if(chosenRecipient === null || chosenRecipient === undefined) {
-        return (<div style={{display: 'flex', flexDirection: 'column', flex: '1', position: 'relative'}}/>);
+    if (chosenRecipient === null || chosenRecipient === undefined) {
+        return (<div key={'main_empty'} className="chat-container"/>);
     }
-    return (<div key={'main'} style={{display: 'flex', flexDirection: 'column', flex: '1', position: 'relative'}}>
-            <div key={'chat'} style={{
-                padding: '2%',
-                display: 'flex',
-                flex: '1',
-                flexDirection: 'column',
-                maxWidth: '100%',
-                width: '100%',
-                overflowY: 'scroll',
-                overflowX: 'clip',
-                maxHeight: '100%',
-                position: 'relative',
-            }} ref={chatRef}>
-                {renderMessages()}
-            </div>
+    return (<div key={'main'} className="chat-container">
+        <div key={'chat'} className="spec-chat-container" ref={chatRef}>
+            {renderMessages()}
+        </div>
 
-            <ChatInputField
-                chosenRecipient={chosenRecipient}
-                setMessageTime={setMessageTime}
-            />
-        </div>)
+        <ChatInputField
+            chosenRecipient={chosenRecipient}
+            setMessageTime={setMessageTime}
+        />
+    </div>)
 
 };
 
 const LoadingIndicator = () => {
-    return <div style={{alignSelf:'center'}}>
+    return <div style={{alignSelf: 'center'}}>
         <ReactLoading type={'bubbles'} color={colors.primary}/>
     </div>;
 };
