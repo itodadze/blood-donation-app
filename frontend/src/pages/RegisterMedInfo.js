@@ -41,7 +41,9 @@ export const RegisterMedInfo = () => {
         }}>
             {
                 showPopup && <div className={"request-item"}>
-                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon} className={"register-location"}/>
+                    <div className="close-button" onClick={onPopupClose}>X</div>
+                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon}
+                                  className={"register-location"} latitude={selectedLat} longitude={selectedLon}/>
                 </div>
             }
 

@@ -194,8 +194,8 @@
 }
 
 .register-location {
-    width: 90vh;
-    height: 66vh;
+    width: 100vh;
+    height: 80vh;
 
     @media (max-width: 1000px) {
         min-width: 240px;
