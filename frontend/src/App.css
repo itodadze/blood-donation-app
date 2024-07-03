@@ -193,11 +193,50 @@
     background-color: #ffffff;
 }
 
-.register-location {
-    width: 100vh;
-    height: 80vh;
+.weak-close-button {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1px;
+    outline-width: 4px;
+    outline-color: #000000;
+    background-color: #ffffff;
+}
+
+.register-popup-envelope {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.register-popup {
+    padding: 3vh;
+    min-width: 105vh;
+    min-height: 85vh;
+    position: relative;
+    border-style: solid;
+    border-color: #e6534e;
+    background-color: #f6f7f5;
+    border-width: 2px;
+    color: #000000;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
     @media (max-width: 1000px) {
-        min-width: 240px;
+        width: 280px;
+        height: 320px;
+    }
+}
+
+.register-location {
+    min-width: 100vh;
+    min-height: 80vh;
+    @media (max-width: 1000px) {
+        width: 260px;
+        height: 300px;
     }
 }

@@ -3,6 +3,7 @@ import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
 import {LocationPick} from "../components/map/LocationPick";
+import background from "../assets/background/background.png";
 
 export const RegisterMedInfo = () => {
     const [medInfo, setInputInfo] = useState(true);
@@ -37,22 +38,25 @@ export const RegisterMedInfo = () => {
             flexDirection: 'column',
             flex: '1',
             justifyContent: 'center',
-            position: 'relative'
+            position: 'relative',
+            backgroundImage: `url(${background})`
         }}>
             {
-                showPopup && <div className={"request-item"}>
-                    <div className="close-button" onClick={onPopupClose}>X</div>
-                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon}
-                                  className={"register-location"} latitude={selectedLat} longitude={selectedLon}/>
+                showPopup && <div className={"register-popup-envelope"}>
+                    <div className={"register-popup"}>
+                        <div className="weak-close-button" onClick={onPopupClose}>X</div>
+                        <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon}
+                                      className={"register-location"} latitude={selectedLat} longitude={selectedLon}/>
+                    </div>
                 </div>
             }
 
             {
                 !showPopup && <div style={{
-                        backgroundColor: colors.dark_pearl,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
+                    backgroundImage: `url(${background})`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
                         maxHeight: '100%',
                         maxWidth: '100%',
                         alignItems: 'center',
