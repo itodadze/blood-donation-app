@@ -4,7 +4,7 @@ import mapboxgl from '!mapbox-gl';
 
 import colors from "../../values/colors";
 
-export const LocationPick = ({setSelectedLat, setSelectedLon}) => {
+export const LocationPick = ({setSelectedLat, setSelectedLon, className}) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [lng] = useState(44.78);
@@ -12,31 +12,41 @@ export const LocationPick = ({setSelectedLat, setSelectedLon}) => {
     const [zoom] = useState(12);
 
     useEffect(() => {
-        if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: 'mapbox://styles/mapbox/outdoors-v12',
-            center: [lng, lat],
-            zoom: zoom
-        });
+        if (map.current) return;
 
-        let marker = null
-        map.current.on('click', function (e) {
-            if (marker == null) {
-                marker = new mapboxgl.Marker()
-                    .setLngLat(e.lngLat)
-                    .addTo(map.current);
-            } else {
-                marker.setLngLat(e.lngLat)
-            }
-            setSelectedLat(e.lngLat.lat)
-            setSelectedLon(e.lngLat.lng)
-        })
-    });
+        const initializeMap = () => {
+            map.current = new mapboxgl.Map({
+                container: mapContainer.current,
+                style: 'mapbox://styles/mapbox/outdoors-v12',
+                center: [lng, lat],
+                zoom: zoom
+            });
+
+            let marker = null;
+            map.current.on('click', function (e) {
+                const lngLat = e.lngLat;
+                if (marker == null) {
+                    marker = new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .addTo(map.current);
+                } else {
+                    marker.setLngLat(lngLat);
+                }
+                setSelectedLat(lngLat.lat);
+                setSelectedLon(lngLat.lng);
+            });
+
+            map.current.resize();
+        };
+
+        if (mapContainer.current) {
+            initializeMap();
+        }
+    }, [lng, lat, zoom, setSelectedLat, setSelectedLon]);
 
     return (
         <div>
-            <div ref={mapContainer} className={"request-location"}/>
+            <div ref={mapContainer} className={className}/>
         </div>
     );
 }

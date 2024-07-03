@@ -24,21 +24,24 @@ export const RegisterMedInfo = () => {
         setShowPopup(true)
     }
 
-    return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
+    return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh', position: 'relative'}}>
         <Helmet>
             <link
                 href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
                 rel="stylesheet"/>
+            <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+            <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
         </Helmet>
-        <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
-            <div style={{
-                backgroundColor: colors.pearl, display: 'flex', flexDirection: 'row', height: '10%'
-            }}>
-
-            </div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: '1',
+            justifyContent: 'center',
+            position: 'relative'
+        }}>
             {
                 showPopup && <div className={"request-item"}>
-                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon}/>
+                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon} className={"register-location"}/>
                 </div>
             }
 
@@ -47,8 +50,8 @@ export const RegisterMedInfo = () => {
                         backgroundColor: colors.dark_pearl,
                         display: 'flex',
                         flexDirection: 'column',
-                        height: '90%',
-                        maxHeight: '90%',
+                        height: '100%',
+                        maxHeight: '100%',
                         maxWidth: '100%',
                         alignItems: 'center',
                         justifyContent: 'center'

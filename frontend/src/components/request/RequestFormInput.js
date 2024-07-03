@@ -73,7 +73,7 @@ export const RequestFormInput = () => {
                     <text className={"request-item-desc"}>
                         აირჩიე ლოკაცია:
                     </text>
-                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon}/>
+                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon} className={"request-location"}/>
                 </div>
                 <div className={"request-item"}>
                     <text className={"request-item-desc"}>
