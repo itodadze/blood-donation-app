@@ -4,6 +4,7 @@ import colors from "../values/colors";
 import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
 import {LocationPick} from "../components/map/LocationPick";
 import background from "../assets/background/background.png";
+import {ClickableButton} from "../components/sign_system/ClickableButton";
 
 export const RegisterMedInfo = () => {
     const [medInfo, setInputInfo] = useState(true);
@@ -69,7 +70,7 @@ export const RegisterMedInfo = () => {
                             width: '80%',
                             maxWidth: '500px',
                             height: '80%',
-                            maxHeight: '500px',
+                            maxHeight: '370px',
                             borderStyle: 'solid',
                             borderColor: colors.secondary
                     }}>
@@ -84,8 +85,8 @@ export const RegisterMedInfo = () => {
                                 textJustify: 'center',
                                 fontSize: 'larger'
                         }}>
-                            <p style={{color: colors.primary_dark, marginBottom: '0px'}}> Medical Information
-                                    Form </p>
+                            <p style={{color: colors.primary_dark, marginBottom: '0px'}}>დონორობისთვის
+                            საჭირო ინფორმაცია</p>
                         </div>
 
                         <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
@@ -98,7 +99,7 @@ export const RegisterMedInfo = () => {
                                                marginLeft: '2%',
                                                marginRight: '2%'
                                 }}/>
-                                <span> Don't Include My Medical Information </span>
+                                <span>არ მსურს დონორობა</span>
                             </label>
                         </div>
 
@@ -107,16 +108,21 @@ export const RegisterMedInfo = () => {
                                     width: '100%',
                                     padding: '2%',
                                     display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
                                     justifyContent: 'center',
                                     boxSizing: 'border-box'
                             }}>
-                                {medInfo && <div>
+                                {medInfo && <div style={{width: '100%', height: '100%', alignItems: 'center',
+                                justifyContent: 'center', display: 'flex', flexDirection: 'column'}}>
                                     <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}
                                                            className={"med-dropdown-menu"}/>
-                                    <button onClick={onPopupOpen}>აირჩიე ლოკაცია</button>
+                                    <ClickableButton buttonText={"აირჩიე ლოკაცია"} onClick={onPopupOpen}/>
                                 </div>}
                                 {!medInfo &&
-                                    <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}> Without Specifying Medical Information, You Will Not Be Active As A Donor </span>}
+                                    <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}>
+                                        თქვენ არ დარეგისტირდებით დონორად, მომავალში ცვლილებისთვის შეგიძლიათ შეცვალოთ პროფილის გვერდზე</span>}
+                                <ClickableButton buttonText={"დარეგისტრირდი"} onClick={(e) => {}}/>
                             </label>
                         </div>
                         {/*<Map mapData={null}/>*/}

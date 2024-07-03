@@ -1,7 +1,7 @@
 import React from 'react'
 import colors from "../../values/colors";
 
-export const RegisterButton = ({buttonText}) => {
+export const ClickableButton = ({buttonText, onClick}) => {
 
     return (<button
         style={{
@@ -11,10 +11,11 @@ export const RegisterButton = ({buttonText}) => {
             alignSelf: 'center',
             backgroundColor: colors.primary,
             color: colors.dark_pearl,
-            marginBottom: '3%',
-            marginTop: '3%',
+            marginBottom: '4%',
+            marginTop: '4%',
             width: '90%'
         }}
+        onClick={onClick}
     >
         {buttonText}
     </button>);

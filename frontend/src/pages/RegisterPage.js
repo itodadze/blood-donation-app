@@ -4,7 +4,8 @@ import colors from "../values/colors";
 import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {DateChooser} from "../components/sign_system/DateChooser";
-import {RegisterButton} from "../components/sign_system/RegisterButton";
+import {ClickableButton} from "../components/sign_system/ClickableButton";
+import background from "../assets/background/background.png";
 
 export const Register = () => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -16,18 +17,13 @@ export const Register = () => {
                 rel="stylesheet"/>
         </Helmet>
         <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
-            <div style={{
-                backgroundColor: colors.pearl, display: 'flex', flexDirection: 'row', height: '10%'
-            }}>
-
-            </div>
 
             <div style={{
-                backgroundColor: colors.dark_pearl,
+                backgroundImage: `url(${background})`,
                 display: 'flex',
                 flexDirection: 'column',
-                height: '90%',
-                maxHeight: '90%',
+                height: '100%',
+                maxHeight: '100%',
                 maxWidth: '100%',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -45,17 +41,17 @@ export const Register = () => {
                     borderColor: colors.secondary
                 }}>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop:'2%'}}>
-                        <CredentialField fieldName={'First Name'}/>
-                        <CredentialField fieldName={'Last Name'}/>
+                        <CredentialField fieldName={'სახელი'}/>
+                        <CredentialField fieldName={'გვარი'}/>
                     </div>
-                    <CredentialField fieldName={'Email'}/>
+                    <CredentialField fieldName={'იმეილი'}/>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop: '2%'}}>
-                        <PasswordField/>
-                        <PasswordField fieldName={'Confirm Password'} placeholderText={'Confirm Your Password'}/>
+                        <PasswordField fieldName={'პაროლი'} placeholderText={'შეიყვანე პაროლი'}/>
+                        <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}/>
                     </div>
 
                     <DateChooser/>
-                        <RegisterButton buttonText={'Continue'}/>
+                        <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {}}/>
 
                 </div>
                 {/*<a href={'register'} style={{margin: '10px', color: colors.blood}}>*/}

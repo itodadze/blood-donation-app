@@ -20,7 +20,7 @@ export const CredentialField = ({fieldName}) => {
             width: '90%', height: '90%', maxHeight: '50px'
         }}>
             <input
-                placeholder={"Enter Your " + fieldName}
+                placeholder={"შეიყვანე " + fieldName}
                 style={{
                     borderStyle: 'solid',
                     borderColor: colors.primary,

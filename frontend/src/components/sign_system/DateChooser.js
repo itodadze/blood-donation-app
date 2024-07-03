@@ -64,7 +64,7 @@ export const DateChooser = () => {
             marginTop: '2%'
         }}>
         <p style={{display: 'flex', marginBottom: '2%', color: colors.gray}}>
-            Date Of Birth
+            დაბადების თარიღი
         </p>
 
 
@@ -85,7 +85,7 @@ export const DateChooser = () => {
                 borderRadius: '15px',
                 borderWidth: '2px'
             }}>
-                <option value="" style={{textAlign: 'center'}}>Year</option>
+                <option value="" style={{textAlign: 'center'}}>წელი</option>
                 {Array.from({length: 100}, (_, i) => new Date().getFullYear() - 13 - i).map((year) => (
                     <option key={year} value={year} style={{textAlign: 'center'}}>
                         {year}
@@ -101,7 +101,7 @@ export const DateChooser = () => {
                 borderRadius: '15px',
                 borderWidth: '2px'
             }}>
-                <option value="" style={{textAlign: 'center'}}>Month</option>
+                <option value="" style={{textAlign: 'center'}}>თვე</option>
                 {Array.from({length: 12}, (_, i) => i + 1).map((month) => (
                     <option key={month} value={month} style={{textAlign: 'center'}}>
                         {month}
@@ -117,7 +117,7 @@ export const DateChooser = () => {
                 borderRadius: '15px',
                 borderWidth: '2px'
             }}>
-                <option value="" style={{textAlign: 'center'}}>Day</option>
+                <option value="" style={{textAlign: 'center'}}>დღე</option>
                 {daysInMonth.map((day) => (<option key={day} value={day} style={{textAlign: 'center'}}>
                     {day}
                 </option>))}
