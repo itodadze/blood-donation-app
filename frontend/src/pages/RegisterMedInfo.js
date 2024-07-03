@@ -1,16 +1,15 @@
 import React, {useState} from 'react'
 import {Helmet} from "react-helmet";
 import colors from "../values/colors";
-import {Map} from "../components/map/Map"
-import {CredentialField} from "../components/sign_system/CredentialField";
-import {PasswordField} from "../components/sign_system/PasswordField";
-import {DateChooser} from "../components/sign_system/DateChooser";
-import {RegisterButton} from "../components/sign_system/RegisterButton";
 import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
+import {LocationPick} from "../components/map/LocationPick";
 
 export const RegisterMedInfo = () => {
     const [medInfo, setInputInfo] = useState(true);
     const [selectedBlood, setSelectedBlood] = useState(null);
+    const [selectedLat, setSelectedLat] = useState(null);
+    const [selectedLon, setSelectedLon] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleMedInfo = () => {
         setInputInfo(!medInfo)
@@ -18,6 +17,12 @@ export const RegisterMedInfo = () => {
     const handleSelect = (eventKey, event) => {
         setSelectedBlood(event.target.innerText);
     };
+    const onPopupClose = () => {
+        setShowPopup(false)
+    }
+    const onPopupOpen = () => {
+        setShowPopup(true)
+    }
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
@@ -31,65 +36,90 @@ export const RegisterMedInfo = () => {
             }}>
 
             </div>
+            {
+                showPopup && <div className={"request-item"}>
+                    <LocationPick setSelectedLat={setSelectedLat} setSelectedLon={setSelectedLon}/>
+                </div>
+            }
 
-            <div style={{
-                backgroundColor: colors.dark_pearl,
-                display: 'flex',
-                flexDirection: 'column',
-                height: '90%',
-                maxHeight: '90%',
-                maxWidth: '100%',
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}>
-                <div style={{
-                    backgroundColor: colors.pearl,
-                    display: 'flex',
-                    flexDirection: 'column', // justifyContent: 'center',
-                    width: '80%',
-                    maxWidth: '500px',
-                    height: '80%',
-                    maxHeight: '500px',
-                    borderStyle: 'solid',
-                    borderColor: colors.secondary
+            {
+                !showPopup && <div style={{
+                        backgroundColor: colors.dark_pearl,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '90%',
+                        maxHeight: '90%',
+                        maxWidth: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'center'
                 }}>
                     <div style={{
-                        display: 'flex',
-                        height: '20%',
-                        borderBottom: 'dotted',
-                        borderColor: colors.secondary,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                        textJustify: 'center',
-                        fontSize: 'larger'
+                            backgroundColor: colors.pearl,
+                            display: 'flex',
+                            flexDirection: 'column', // justifyContent: 'center',
+                            width: '80%',
+                            maxWidth: '500px',
+                            height: '80%',
+                            maxHeight: '500px',
+                            borderStyle: 'solid',
+                            borderColor: colors.secondary
                     }}>
-                        <p style={{color: colors.primary_dark, marginBottom: '0px'}}> Medical Information Form </p>
-                    </div>
+                        <div style={{
+                                display: 'flex',
+                                height: '20%',
+                                borderBottom: 'dotted',
+                                borderColor: colors.secondary,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                textAlign: 'center',
+                                textJustify: 'center',
+                                fontSize: 'larger'
+                        }}>
+                            <p style={{color: colors.primary_dark, marginBottom: '0px'}}> Medical Information
+                                    Form </p>
+                        </div>
 
-                    <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
-                        <label style={{width: '100%', padding: '2%', display: 'flex', justifyContent: 'center'}}>
-                            <input type={"checkbox"} onInput={handleMedInfo}
-                                   style={{width: '20px', height: '25px', marginLeft: '2%', marginRight: '2%'}}/>
-                            <span> Don't Include My Medical Information </span>
-                        </label>
-                    </div>
+                        <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
+                            <label
+                                style={{width: '100%', padding: '2%', display: 'flex', justifyContent: 'center'}}>
+                                <input type={"checkbox"} onInput={handleMedInfo}
+                                           style={{
+                                               width: '20px',
+                                               height: '25px',
+                                               marginLeft: '2%',
+                                               marginRight: '2%'
+                                }}/>
+                                <span> Don't Include My Medical Information </span>
+                            </label>
+                        </div>
 
-                    <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
-                        <label style={{width: '100%', padding: '2%', display: 'flex', justifyContent: 'center', boxSizing: 'border-box'}}>
-                            {medInfo && <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect} className={"med-dropdown-menu"}/>}
-                            {!medInfo && <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}> Without Specifying Medical Information, You Will Not Be Active As A Donor </span>}
-                        </label>
+                        <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
+                            <label style={{
+                                    width: '100%',
+                                    padding: '2%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    boxSizing: 'border-box'
+                            }}>
+                                {medInfo && <div>
+                                    <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}
+                                                           className={"med-dropdown-menu"}/>
+                                    <button onClick={onPopupOpen}>აირჩიე ლოკაცია</button>
+                                </div>}
+                                {!medInfo &&
+                                    <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}> Without Specifying Medical Information, You Will Not Be Active As A Donor </span>}
+                            </label>
+                        </div>
+                        {/*<Map mapData={null}/>*/}
                     </div>
-                    {/*<Map mapData={null}/>*/}
+                    {/*<a href={'register'} style={{margin: '10px', color: colors.blood}}>*/}
+                    {/*    Create New Account*/}
+                    {/*</a>*/}
                 </div>
-                {/*<a href={'register'} style={{margin: '10px', color: colors.blood}}>*/}
-                {/*    Create New Account*/}
-                {/*</a>*/}
-            </div>
+            }
 
-        </div>
+                    </div>
 
 
-    </div>);
-}
+                    </div>);
+                }
