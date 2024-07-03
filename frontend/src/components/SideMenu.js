@@ -45,7 +45,7 @@ export const SideMenu = ({current}) => {
 
             {(current !== strings.REQUEST) &&
                 <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
-                            onClick={() => navigate("/request")}/>}
+                            onClick={() => navigate("/request/broadcast")}/>}
 
             {(current !== strings.REQUESTS) && <MenuButton svg_file={help} height={"38vh"}
                                                            text={"თხოვნები"}/>}

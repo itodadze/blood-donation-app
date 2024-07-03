@@ -128,8 +128,9 @@
 }
 
 .request-confirm {
-    width: 130px;
+    width: 180px;
     height: 40px;
+    margin: 8px;
     border-radius: 2px;
     border-width: medium;
     border-color: #ffc2d1;

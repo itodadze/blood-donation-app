@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.db.models import Q
 from rest_framework.request import Request
@@ -6,9 +8,11 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from api.serializers.chat_serializers import ChatPeopleRequestSerializer, ChatPeopleResponseSerializer, \
-    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer
+    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer, \
+    ConversationCreateRequestSerializer, ConversationResponseSerializer, ConversationDeleteRequestSerializer
 from api.api_models.chat_models import (ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse,
-                                        ChatNewMessageRequest)
+                                        ChatNewMessageRequest, ConversationCreateRequest, ConversationResponse,
+                                        ConversationDeleteRequest)
 from api.models import User, Chat, Message
 
 
@@ -108,6 +112,62 @@ class ChatNewMessageView(APIView):
             new_message.save()
 
             return Response(None, status=status.HTTP_200_OK)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConversationCreateView(APIView):
+    def post(self, request: Request) -> Response:
+        serializer = ConversationCreateRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            conversation: ConversationCreateRequest = ConversationCreateRequest(**serializer.validated_data)
+            try:
+                chat = Chat.objects.get(
+                    donor=conversation.donor_id,
+                    receiver=conversation.receiver_id,
+                )
+
+                result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                return Response(result.data, status=status.HTTP_200_OK)
+            except Chat.DoesNotExist:
+
+                try:
+                    donor = User.objects.get(pk=conversation.donor_id)
+                    receiver = User.objects.get(pk=conversation.receiver_id)
+
+                    chat = Chat.objects.create(
+                        donor=donor,
+                        receiver=receiver,
+                        start_date=datetime.now(),
+                        valid_status=True
+                    )
+
+                    result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                    return Response(result.data, status=status.HTTP_201_CREATED)
+                except User.DoesNotExist:
+                    return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConversationDeleteView(APIView):
+    def delete(self, request: Request) -> Response:
+        serializer = ConversationDeleteRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            conversation: ConversationDeleteRequest = ConversationDeleteRequest(
+                **serializer.validated_data)
+
+            try:
+                chat = Chat.objects.get(pk=conversation.conversation_id)
+                Chat.objects.filter(pk=chat.pk).delete()
+
+                Message.objects.filter(chat=chat).delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+            except Chat.DoesNotExist:
+                return Response("Invalid chat", status=status.HTTP_400_BAD_REQUEST)
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

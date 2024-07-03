@@ -7,6 +7,7 @@ import {Chat} from "./pages/ChatPage";
 import {Login} from "./pages/LoginPage";
 import {Register} from "./pages/RegisterPage";
 import {RegisterMedInfo} from "./pages/RegisterMedInfo";
+import {Request} from "./pages/RequestPage";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,6 +24,9 @@ function App() {
                                                          toggleSidebar={toggleSidebar}/>}/>
             <Route path='/chat' element={<Chat isSidebarOpen={isSidebarOpen}
                                                toggleSidebar={toggleSidebar}/>}/>
+            <Route path="/request/:request_id" element = {
+                <Request isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
+            }/>
             <Route path='/login' element={<Login isSidebarOpen={isSidebarOpen}
                                                  toggleSidebar={toggleSidebar}/>}/>
             <Route path='/register' element={<Register isSidebarOpen={isSidebarOpen}
