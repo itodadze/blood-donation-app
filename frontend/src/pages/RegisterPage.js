@@ -28,18 +28,7 @@ export const Register = () => {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <div style={{
-                    backgroundColor: colors.pearl,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    width: '80%',
-                    maxWidth: '500px',
-                    height: '80%',
-                    maxHeight: '500px',
-                    borderStyle: 'solid',
-                    borderColor: colors.secondary
-                }}>
+                <div className={"register-box"}>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop:'2%'}}>
                         <CredentialField fieldName={'სახელი'}/>
                         <CredentialField fieldName={'გვარი'}/>
@@ -54,9 +43,6 @@ export const Register = () => {
                         <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {}}/>
 
                 </div>
-                {/*<a href={'register'} style={{margin: '10px', color: colors.blood}}>*/}
-                {/*    Create New Account*/}
-                {/*</a>*/}
             </div>
 
         </div>

@@ -240,3 +240,58 @@
         height: 300px;
     }
 }
+
+.register-box {
+    background-color: #f6f7f5;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 500px;
+    height: 80%;
+    max-height: 500px;
+    border-style: solid;
+    border-color: #d5b895;
+
+    @media (max-width: 1000px) {
+        width: 300px;
+        height: 400px;
+    }
+}
+
+.register-med-box {
+    background-color: #f6f7f5;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 500px;
+    height: 80%;
+    max-height: 370px;
+    border-style: solid;
+    border-color: #d5b895;
+
+    @media (max-width: 1000px) {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+.register-box-head {
+    display: flex;
+    height: 20%;
+    border-bottom: dotted;
+    border-color: #d5b895;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: larger;
+}
+
+.register-box-inner {
+    width: 100%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}

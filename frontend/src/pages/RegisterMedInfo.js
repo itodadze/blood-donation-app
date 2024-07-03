@@ -58,33 +58,13 @@ export const RegisterMedInfo = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
-                        maxHeight: '100%',
-                        maxWidth: '100%',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                    maxHeight: '100%',
+                    maxWidth: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}>
-                    <div style={{
-                            backgroundColor: colors.pearl,
-                            display: 'flex',
-                            flexDirection: 'column', // justifyContent: 'center',
-                            width: '80%',
-                            maxWidth: '500px',
-                            height: '80%',
-                            maxHeight: '370px',
-                            borderStyle: 'solid',
-                            borderColor: colors.secondary
-                    }}>
-                        <div style={{
-                                display: 'flex',
-                                height: '20%',
-                                borderBottom: 'dotted',
-                                borderColor: colors.secondary,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                textAlign: 'center',
-                                textJustify: 'center',
-                                fontSize: 'larger'
-                        }}>
+                    <div className={"register-med-box"}>
+                        <div className={"register-box-head"}>
                             <p style={{color: colors.primary_dark, marginBottom: '0px'}}>დონორობისთვის
                             საჭირო ინფორმაცია</p>
                         </div>
@@ -104,15 +84,7 @@ export const RegisterMedInfo = () => {
                         </div>
 
                         <div style={{height: '50px', marginTop: '5px', width: '100%'}}>
-                            <label style={{
-                                    width: '100%',
-                                    padding: '2%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    boxSizing: 'border-box'
-                            }}>
+                            <label className={"register-box-inner"}>
                                 {medInfo && <div style={{width: '100%', height: '100%', alignItems: 'center',
                                 justifyContent: 'center', display: 'flex', flexDirection: 'column'}}>
                                     <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}
@@ -125,16 +97,12 @@ export const RegisterMedInfo = () => {
                                 <ClickableButton buttonText={"დარეგისტრირდი"} onClick={(e) => {}}/>
                             </label>
                         </div>
-                        {/*<Map mapData={null}/>*/}
                     </div>
-                    {/*<a href={'register'} style={{margin: '10px', color: colors.blood}}>*/}
-                    {/*    Create New Account*/}
-                    {/*</a>*/}
                 </div>
             }
 
-                    </div>
+        </div>
 
 
-                    </div>);
-                }
+    </div>);
+}
