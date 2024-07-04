@@ -2,8 +2,8 @@ import React from 'react';
 import {SideMenu} from "../SideMenu";
 import strings from "../../values/strings";
 
-export const RequestFormPageMenu = () => {
+export const RequestFormPageMenu = ({currentUSer}) => {
     return (
-        <SideMenu current={strings.REQUEST}/>
+        <SideMenu current={strings.REQUEST} currentUser={currentUSer}/>
     );
 }

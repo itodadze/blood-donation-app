@@ -5,6 +5,7 @@ import menu from "../assets/icons/menu.svg";
 import {ChosenChat} from "../components/chat/ChosenChat";
 import {ConversationList} from "../components/chat/ChatConversationList";
 import {SideMenu} from "../components/SideMenu";
+import strings from "../values/strings";
 
 export const Chat = ({isSidebarOpen, toggleSidebar, currentUser}) => {
     const [chosenRecipient, setRecipient] = useState(null);
@@ -19,7 +20,7 @@ export const Chat = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Serif+Georgian:wght@100..900&display=swap"
                 rel="stylesheet"/>
         </Helmet>
-        {isSidebarOpen && <SideMenu/>}
+        {isSidebarOpen && <SideMenu current={strings.CHATS} currentUser={currentUser}/>}
         <div className="chat-page-container">
             <div className="chat-navigation-bar"
                  style={{'--background-color': colors.tertiary}}>

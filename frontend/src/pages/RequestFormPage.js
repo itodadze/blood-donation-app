@@ -17,7 +17,7 @@ export const RequestForm = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <RequestFormPageMenu/>}
+            {isSidebarOpen && <RequestFormPageMenu currentUSer={currentUser}/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
                 <RequestFormInput />

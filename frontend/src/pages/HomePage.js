@@ -25,7 +25,7 @@ export const Home = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <HomePageMenu/>}
+            {isSidebarOpen && <HomePageMenu currentUser={currentUser}/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <HomePageSearchBar toggleSidebar={toggleSidebar} bloodOverUsers={bloodOverUsers}
                 toggleFilterButton={toggleFilterButton} setMapRequestData={setMapRequestData}

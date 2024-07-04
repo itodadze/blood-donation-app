@@ -12,7 +12,7 @@ import support from "../assets/icons/support.svg";
 import React from "react";
 import strings from "../values/strings";
 
-export const SideMenu = ({current}) => {
+export const SideMenu = ({current, currentUser}) => {
     const navigate = useNavigate();
 
     return (
@@ -34,18 +34,18 @@ export const SideMenu = ({current}) => {
             </div>
             {(current !== strings.HOME) &&
                 <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
-                            onClick={() => navigate("/")}/>}
+                            onClick={() => navigate("/", {currentUser: currentUser})}/>}
 
             {(current !== strings.PROFILE) && <MenuButton svg_file={profile} height={"38vh"}
                                                           text={"პროფილი"}/>}
 
             {(current !== strings.CHATS) &&
                 <MenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
-                            onClick={() => navigate("/chat")}/>}
+                            onClick={() => navigate("/chat", {currentUser: currentUser})}/>}
 
             {(current !== strings.REQUEST) &&
                 <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
-                            onClick={() => navigate("/request/broadcast")}/>}
+                            onClick={() => navigate("/request/broadcast", {currentUser: currentUser})}/>}
 
             {(current !== strings.REQUESTS) && <MenuButton svg_file={help} height={"38vh"}
                                                            text={"თხოვნები"}/>}
