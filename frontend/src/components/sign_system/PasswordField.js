@@ -21,7 +21,7 @@ export const PasswordField = ({fieldName, placeholderText}) => {
             marginBottom: '2%'
         }}>
         <p style={{display: 'flex', marginBottom: '2%', color: colors.gray}}>
-            {fieldName ? fieldName : 'Password'}
+            {fieldName ? fieldName : 'პაროლი'}
         </p>
         <div
             style={{
@@ -32,7 +32,7 @@ export const PasswordField = ({fieldName, placeholderText}) => {
             }}
         >
             <input
-                placeholder={placeholderText ? placeholderText : 'Enter Your Password'}
+                placeholder={placeholderText ? placeholderText : 'შეიყვანე პაროლი'}
                 type={showPassword ? 'text' : 'password'}
                 style={{
                     borderStyle: 'solid',

@@ -42,13 +42,13 @@ export const Login = () => {
                     borderStyle: 'solid',
                     borderColor: colors.secondary
                 }}>
-                    <CredentialField fieldName={'Email'}/>
+                    <CredentialField fieldName={'იმეილი'}/>
                     <PasswordField/>
-                    <SignButton buttonText={'Log In'}/>
+                    <SignButton buttonText={'ავტორიზაცია'}/>
 
                 </div>
                 <a href={'register'} style={{margin: '10px', color: colors.blood}}>
-                    Create New Account
+                    არ ხარ დარეგისტრირებული? დარეგისტრირდი
                 </a>
             </div>
         </div>
