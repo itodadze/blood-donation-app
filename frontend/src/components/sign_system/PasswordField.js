@@ -4,12 +4,16 @@ import hide_pass from "../../assets/icons/hide_pass.svg";
 import show_pass from "../../assets/icons/show_pass.svg";
 
 
-export const PasswordField = ({fieldName, placeholderText}) => {
+export const PasswordField = ({fieldName, placeholderText, setValue}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
+
+    function handleChange(e) {
+        setValue(e.target.value);
+    }
 
     return (<div
         style={{
@@ -44,6 +48,7 @@ export const PasswordField = ({fieldName, placeholderText}) => {
                     height: '100%',
                     boxSizing: 'border-box'
                 }}
+                onChange={handleChange}
             />
             <button
                 onClick={toggleShowPassword}

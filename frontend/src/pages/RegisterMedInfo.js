@@ -6,7 +6,8 @@ import {LocationPick} from "../components/map/LocationPick";
 import background from "../assets/background/background.png";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 
-export const RegisterMedInfo = () => {
+export const RegisterMedInfo = ({selectedFirstName, selectedLastName, selectedEmail,
+                                selectedPassword, selectedPasswordConfirm, selectedDate}) => {
     const [medInfo, setInputInfo] = useState(true);
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);

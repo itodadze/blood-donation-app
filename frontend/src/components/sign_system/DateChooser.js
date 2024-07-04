@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import colors from "../../values/colors";
 
-export const DateChooser = () => {
+export const DateChooser = ({setValue}) => {
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
@@ -10,6 +10,10 @@ export const DateChooser = () => {
     const isLeapYear = (year) => {
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     };
+
+    function handleChange(e) {
+        setValue(day + "/" + month + "/" + year);
+    }
 
     useEffect(() => {
         const getDaysInMonth = (month, year) => {
@@ -44,14 +48,17 @@ export const DateChooser = () => {
 
     const handleDayChange = (e) => {
         setDay(e.target.value);
+        handleChange(e)
     };
 
     const handleMonthChange = (e) => {
         setMonth(e.target.value);
+        handleChange(e)
     };
 
     const handleYearChange = (e) => {
         setYear(e.target.value);
+        handleChange(e)
     };
 
     return (<div

@@ -1,8 +1,10 @@
 import colors from "../../values/colors";
-import React, {useState} from "react";
+import React from "react";
 
-export const CredentialField = ({fieldName}) => {
-
+export const CredentialField = ({fieldName, setValue}) => {
+    function handleChange(e) {
+        setValue(e.target.value);
+    }
     return (<div
         style={{
             display: 'flex',
@@ -30,6 +32,7 @@ export const CredentialField = ({fieldName}) => {
                     height: '100%',
                     boxSizing: 'border-box'
                 }}
+                onChange={handleChange}
             />
         </div>
     </div>);

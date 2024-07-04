@@ -1,6 +1,6 @@
+import {useNavigate} from "react-router-dom";
 import React, {useState} from 'react'
 import {Helmet} from "react-helmet";
-import colors from "../values/colors";
 import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {DateChooser} from "../components/sign_system/DateChooser";
@@ -9,6 +9,13 @@ import background from "../assets/background/background.png";
 
 export const Register = () => {
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedFirstName, setSelectedFirstName] = useState(null);
+    const [selectedLastName, setSelectedLastName] = useState(null);
+    const [selectedPassword, setSelectedPassword] = useState(null);
+    const [selectedPasswordConfirm, setSelectedPasswordConfirm] = useState(null);
+    const [selectedEmail, setSelectedEmail] = useState(null);
+
+    const navigate = useNavigate();
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
@@ -30,21 +37,30 @@ export const Register = () => {
             }}>
                 <div className={"register-box"}>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop:'2%'}}>
-                        <CredentialField fieldName={'სახელი'}/>
-                        <CredentialField fieldName={'გვარი'}/>
+                        <CredentialField fieldName={'სახელი'} setValue={setSelectedFirstName}/>
+                        <CredentialField fieldName={'გვარი'} setValue={setSelectedLastName}/>
                     </div>
-                    <CredentialField fieldName={'იმეილი'}/>
+                    <CredentialField fieldName={'იმეილი'} setValue={setSelectedEmail}/>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop: '2%'}}>
-                        <PasswordField fieldName={'პაროლი'} placeholderText={'შეიყვანე პაროლი'}/>
-                        <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}/>
+                        <PasswordField fieldName={'პაროლი'} placeholderText={'შეიყვანე პაროლი'}
+                        setValue={setSelectedPassword}/>
+                        <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}
+                        setValue={setSelectedPasswordConfirm}/>
                     </div>
-                    <DateChooser/>
-                        <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {}}/>
+                    <DateChooser setValue={setSelectedDate}/>
+                        <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
+                            navigate("/registerMed", {
+                                selectedFirstName: selectedFirstName,
+                                selectedLastName: selectedLastName,
+                                selectedEmail: selectedEmail,
+                                selectedPassword: selectedPassword,
+                                selectedPasswordConfirm: selectedPasswordConfirm,
+                                selectedDate: selectedDate
+                            })
+                        }}/>
                 </div>
             </div>
 
         </div>
-
-
     </div>);
 }
