@@ -38,10 +38,8 @@ export const Register = () => {
                         <PasswordField fieldName={'პაროლი'} placeholderText={'შეიყვანე პაროლი'}/>
                         <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}/>
                     </div>
-
                     <DateChooser/>
                         <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {}}/>
-
                 </div>
             </div>
 

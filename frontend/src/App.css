@@ -295,3 +295,20 @@
     justify-content: center;
     box-sizing: border-box;
 }
+
+.login-box {
+    background-color: #f6f7f5;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 300px;
+    height: 80%;
+    max-height: 300px;
+    border-style: solid;
+    border-color: #d5b895;
+
+    @media (max-width: 1000px) {
+        width: 250px;
+        height: 300px;
+    }
+}

@@ -3,7 +3,8 @@ import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
-import {SignButton} from "../components/sign_system/SignButton";
+import {ClickableButton} from "../components/sign_system/ClickableButton";
+import background from "../assets/background/background.png";
 
 export const Login = () => {
 
@@ -14,41 +15,25 @@ export const Login = () => {
                 rel="stylesheet"/>
         </Helmet>
         <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
-            <div style={{
-                backgroundColor: colors.pearl, display: 'flex', flexDirection: 'row', height: '10%'
-            }}>
-
-            </div>
 
             <div style={{
-                backgroundColor: colors.dark_pearl,
+                backgroundImage: `url(${background})`,
                 display: 'flex',
                 flexDirection: 'column',
-                height: '90%',
-                maxHeight: '90%',
+                height: '100%',
+                maxHeight: '100%',
                 maxWidth: '100%',
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <div style={{
-                    backgroundColor: colors.pearl,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    width: '80%',
-                    maxWidth: '300px',
-                    height: '60%',
-                    maxHeight: '300px',
-                    borderStyle: 'solid',
-                    borderColor: colors.secondary
-                }}>
+                <div className={"login-box"}>
                     <CredentialField fieldName={'იმეილი'}/>
                     <PasswordField/>
-                    <SignButton buttonText={'ავტორიზაცია'}/>
+                    <ClickableButton buttonText={'ავტორიზაცია'} onClick={(e) => {}}/>
 
                 </div>
-                <a href={'register'} style={{margin: '10px', color: colors.blood}}>
-                    არ ხარ დარეგისტრირებული? დარეგისტრირდი
+                <a href={'register'} style={{margin: '15px', color: colors.pearl, fontWeight: 'bolder'}}>
+                    დარეგისტრირდი
                 </a>
             </div>
         </div>
