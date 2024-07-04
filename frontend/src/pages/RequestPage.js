@@ -23,7 +23,7 @@ export const Request = ({isSidebarOpen, toggleSidebar, currentUser}) => {
             {isSidebarOpen && <RequestFormPageMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
-                <RequestInfo request_id={request_id}/>
+                <RequestInfo request_id={request_id} currentUser={currentUser}/>
             </div>
         </div>
     )

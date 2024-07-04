@@ -6,8 +6,9 @@ import colors from "../../values/colors";
 import {DonorDropdownMenu} from "./DonorDropdownMenu";
 import {getDonors} from "../../services/UserService";
 import {donate} from "../../services/DonationService";
+import {connectUsers} from "../../services/ChatCreateService";
 
-export const RequestInfo = ({request_id}) => {
+export const RequestInfo = ({request_id, currentUser}) => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
@@ -16,7 +17,6 @@ export const RequestInfo = ({request_id}) => {
     const [description, setDescription] = useState('');
     const [showPopup, setShowPopup] = useState(true);
     const [popupMessage, setPopupMessage] = useState('იძებნება');
-    const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([])
 
@@ -54,6 +54,10 @@ export const RequestInfo = ({request_id}) => {
         )
         deleteRequest({requestId: request_id})
             .then().catch()
+    }
+
+    const handleConnect = () => {
+        connectUsers({donor: currentUser, receiver: receiver})
     }
 
     useEffect(() => {
@@ -99,7 +103,7 @@ export const RequestInfo = ({request_id}) => {
                         </div>
                     </div>
                 </div>
-                {user != null && user.id === receiver &&
+                {currentUser != null && currentUser.id === receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                         <button className={"request-confirm"} onClick={handleDelete}>
                             წაშლა
@@ -110,9 +114,9 @@ export const RequestInfo = ({request_id}) => {
                         <DonorDropdownMenu users={users} className={"home-dropdown-menu"}
                                            selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
                 </div>}
-                {user != null && user.id !== receiver &&
+                {currentUser != null && currentUser.id !== receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                    <button className={"request-confirm"}>
+                    <button className={"request-confirm"} onClick={handleConnect}>
                         დაკავშირება
                     </button>
                 </div>}
