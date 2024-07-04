@@ -9,8 +9,10 @@ import blood from "../assets/icons/blood.svg";
 import help from "../assets/icons/help.svg";
 import settings from "../assets/icons/settings.svg";
 import support from "../assets/icons/support.svg";
+import logo from "../assets/icons/logo.svg"
 import React from "react";
 import strings from "../values/strings";
+import {IconButton} from "./IconButton";
 
 export const SideMenu = ({current, currentUser}) => {
     const navigate = useNavigate();
@@ -27,11 +29,7 @@ export const SideMenu = ({current, currentUser}) => {
             initial={{x: '-100%'}}
             animate={{x: 0}}
             transition={{type: 'tween', ease: 'easeOut', duration: 0}}>
-            <div className={"home-menu-button"} style={{backgroundColor: colors.pearl}}>
-                <text className={"noto-sans-georgian-elegant"} style={{color: colors.secondary_dark}}>
-                    APP NAME AND LOGO HERE; DIFFERENT DIV AROUND IT AS WELL
-                </text>
-            </div>
+            <IconButton svg_file={logo} height={"60vh"} text={"DonorHonor"} onClick={() => {}}/>
             {(current !== strings.HOME) &&
                 <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
                             onClick={() => navigate("/", {currentUser: currentUser})}/>}
