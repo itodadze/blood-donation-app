@@ -7,7 +7,7 @@ import {ClickableButton} from "../components/sign_system/ClickableButton";
 import background from "../assets/background/background.png";
 import {login} from "../services/LoginService";
 
-export const Login = () => {
+export const Login = ({setCurrentUser}) => {
     const [selectedEmail, setSelectedEmail] = useState(null);
     const [selectedPassword, setSelectedPassword] = useState(null);
 

@@ -6,7 +6,7 @@ import {ChosenChat} from "../components/chat/ChosenChat";
 import {ConversationList} from "../components/chat/ChatConversationList";
 import {SideMenu} from "../components/SideMenu";
 
-export const Chat = ({isSidebarOpen, toggleSidebar}) => {
+export const Chat = ({isSidebarOpen, toggleSidebar, currentUser}) => {
     const [chosenRecipient, setRecipient] = useState(null);
 
     const chooseRecipient = (recipient) => {

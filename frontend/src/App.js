@@ -11,6 +11,7 @@ import {Request} from "./pages/RequestPage";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -19,19 +20,25 @@ function App() {
     return (
         <Routes>
             <Route path='/' element={<Home isSidebarOpen={isSidebarOpen}
-                                           toggleSidebar={toggleSidebar}/>}/>
+                                           toggleSidebar={toggleSidebar}
+                                            currentUser={currentUser}/>}/>
             <Route path='/request/broadcast' element={<RequestForm isSidebarOpen={isSidebarOpen}
-                                                         toggleSidebar={toggleSidebar}/>}/>
+                                                         toggleSidebar={toggleSidebar}
+                                                        currentUser={currentUser}/>}/>
             <Route path='/chat' element={<Chat isSidebarOpen={isSidebarOpen}
-                                               toggleSidebar={toggleSidebar}/>}/>
+                                               toggleSidebar={toggleSidebar}
+                                                currentUser={currentUser}/>}/>
             <Route path="/request/:request_id" element = {
-                <Request isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
+                <Request isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}
+                currentUser={currentUser}/>
             }/>
             <Route path='/login' element={<Login isSidebarOpen={isSidebarOpen}
-                                                 toggleSidebar={toggleSidebar}/>}/>
+                                                 toggleSidebar={toggleSidebar}
+                                                setCurrentUser={setCurrentUser}/>}/>
             <Route path='/register' element={<Register isSidebarOpen={isSidebarOpen}
-                                                       toggleSidebar={toggleSidebar}/>}/>
-            <Route path='/registerMed' element={<RegisterMedInfo/>}/>
+                                                       toggleSidebar={toggleSidebar}
+                                                       setCurrentUser={setCurrentUser}/>}/>
+            <Route path='/registerMed' element={<RegisterMedInfo setCurrentUser={setCurrentUser}/>}/>
         </Routes>
     );
 }

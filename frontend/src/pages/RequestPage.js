@@ -5,7 +5,7 @@ import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar
 import {RequestInfo} from "../components/request/RequestInfo";
 import {Helmet} from "react-helmet";
 
-export const Request = ({isSidebarOpen, toggleSidebar}) => {
+export const Request = ({isSidebarOpen, toggleSidebar, currentUser}) => {
     let { request_id } = useParams();
 
     return (

@@ -7,7 +7,7 @@ import {DateChooser} from "../components/sign_system/DateChooser";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import background from "../assets/background/background.png";
 
-export const Register = () => {
+export const Register = ({setCurrentUser}) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedFirstName, setSelectedFirstName] = useState(null);
     const [selectedLastName, setSelectedLastName] = useState(null);
@@ -55,7 +55,8 @@ export const Register = () => {
                                 selectedEmail: selectedEmail,
                                 selectedPassword: selectedPassword,
                                 selectedPasswordConfirm: selectedPasswordConfirm,
-                                selectedDate: selectedDate
+                                selectedDate: selectedDate,
+                                setCurrentUser: setCurrentUser
                             })
                         }}/>
                 </div>

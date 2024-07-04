@@ -4,7 +4,7 @@ import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar
 import {RequestFormInput} from "../components/request/RequestFormInput";
 import React from "react";
 
-export const RequestForm = ({isSidebarOpen, toggleSidebar}) => {
+export const RequestForm = ({isSidebarOpen, toggleSidebar, currentUser}) => {
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
             <Helmet>

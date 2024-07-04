@@ -4,7 +4,7 @@ import {HomePageMenu} from "../components/home/HomePageMenu";
 import {Helmet} from "react-helmet";
 import {HomePageSearchBar} from "../components/home/HomePageSearchBar";
 
-export const Home = ({isSidebarOpen, toggleSidebar}) => {
+export const Home = ({isSidebarOpen, toggleSidebar, currentUser}) => {
     const [bloodOverUsers, setBloodOverUsers] = useState(true);
     const [mapRequestData, setMapRequestData] = useState([])
     const [mapUserData, setMapUserData] = useState([])

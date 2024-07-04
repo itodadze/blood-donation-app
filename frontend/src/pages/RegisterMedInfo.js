@@ -8,7 +8,8 @@ import {ClickableButton} from "../components/sign_system/ClickableButton";
 import {register} from "../services/RegistrationService"
 
 export const RegisterMedInfo = ({selectedFirstName, selectedLastName, selectedEmail,
-                                selectedPassword, selectedPasswordConfirm, selectedDate}) => {
+                                selectedPassword, selectedPasswordConfirm, selectedDate,
+                                    setCurrentUser}) => {
     const [medInfo, setInputInfo] = useState(true);
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
