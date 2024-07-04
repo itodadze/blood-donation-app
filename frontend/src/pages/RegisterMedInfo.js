@@ -5,6 +5,7 @@ import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
 import {LocationPick} from "../components/map/LocationPick";
 import background from "../assets/background/background.png";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
+import {register} from "../services/RegistrationService"
 
 export const RegisterMedInfo = ({selectedFirstName, selectedLastName, selectedEmail,
                                 selectedPassword, selectedPasswordConfirm, selectedDate}) => {
@@ -95,7 +96,11 @@ export const RegisterMedInfo = ({selectedFirstName, selectedLastName, selectedEm
                                 {!medInfo &&
                                     <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}>
                                         თქვენ არ დარეგისტირდებით დონორად, მომავალში ცვლილებისთვის შეგიძლიათ შეცვალოთ პროფილის გვერდზე</span>}
-                                <ClickableButton buttonText={"დარეგისტრირდი"} onClick={(e) => {}}/>
+                                <ClickableButton buttonText={"დარეგისტრირდი"} onClick={(e) => {
+                                    register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword,
+                                    selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood,
+                                    medInfo);
+                                }}/>
                             </label>
                         </div>
                     </div>

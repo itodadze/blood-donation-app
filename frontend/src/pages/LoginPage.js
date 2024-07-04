@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import background from "../assets/background/background.png";
+import {login} from "../services/LoginService";
 
 export const Login = () => {
+    const [selectedEmail, setSelectedEmail] = useState(null);
+    const [selectedPassword, setSelectedPassword] = useState(null);
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
@@ -27,10 +30,11 @@ export const Login = () => {
                 justifyContent: 'center'
             }}>
                 <div className={"login-box"}>
-                    <CredentialField fieldName={'იმეილი'}/>
-                    <PasswordField/>
-                    <ClickableButton buttonText={'ავტორიზაცია'} onClick={(e) => {}}/>
-
+                    <CredentialField fieldName={'იმეილი'} setValue={setSelectedEmail}/>
+                    <PasswordField setValue={setSelectedPassword}/>
+                    <ClickableButton buttonText={'ავტორიზაცია'} onClick={(e) => {
+                        login(selectedEmail, selectedPassword);
+                    }}/>
                 </div>
                 <a href={'register'} style={{margin: '15px', color: colors.pearl, fontWeight: 'bolder'}}>
                     დარეგისტრირდი
