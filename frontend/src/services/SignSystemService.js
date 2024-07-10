@@ -6,3 +6,7 @@ export const register = (firstName, lastName, email, password, passwordConfirm, 
 export const login = (email, password) => {
 
 }
+
+export const existsUser = (email) => {
+
+}
