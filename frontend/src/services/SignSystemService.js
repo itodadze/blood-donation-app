@@ -2,3 +2,7 @@ export const register = (firstName, lastName, email, password, passwordConfirm, 
                          lat, lon, blood, donor) => {
     
 }
+
+export const login = (email, password) => {
+
+}

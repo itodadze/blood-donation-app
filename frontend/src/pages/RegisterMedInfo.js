@@ -5,7 +5,7 @@ import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
 import {LocationPick} from "../components/map/LocationPick";
 import background from "../assets/background/background.png";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
-import {register} from "../services/RegistrationService"
+import {register} from "../services/SignSystemService"
 
 export const RegisterMedInfo = ({selectedFirstName, selectedLastName, selectedEmail,
                                 selectedPassword, selectedPasswordConfirm, selectedDate,

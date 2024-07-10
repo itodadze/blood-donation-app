@@ -5,7 +5,7 @@ import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import background from "../assets/background/background.png";
-import {login} from "../services/LoginService";
+import {login} from "../services/SignSystemService";
 
 export const Login = ({setCurrentUser}) => {
     const [selectedEmail, setSelectedEmail] = useState(null);
