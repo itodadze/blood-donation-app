@@ -49,15 +49,16 @@ export const Register = ({setCurrentUser}) => {
                     </div>
                     <DateChooser setValue={setSelectedDate}/>
                         <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
-                            navigate("/registerMed", {
+                            console.log(selectedDate)
+
+                            navigate("/registerMed", { state: {
                                 selectedFirstName: selectedFirstName,
                                 selectedLastName: selectedLastName,
                                 selectedEmail: selectedEmail,
                                 selectedPassword: selectedPassword,
                                 selectedPasswordConfirm: selectedPasswordConfirm,
-                                selectedDate: selectedDate,
-                                setCurrentUser: setCurrentUser
-                            })
+                                selectedDate: selectedDate
+                            }})
                         }}/>
                 </div>
             </div>
