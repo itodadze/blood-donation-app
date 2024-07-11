@@ -85,17 +85,17 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blood_donation_db',
-        'USER': 'root',
-        'PASSWORD': 'rootroot',
+        'NAME': 'blood_donation_db',  # tugindat tqvenc ase daarqvit
+        'USER': '',  # am orshi tqvenebi
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     },
     'test': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blood_donation_test_db',
-        'USER': 'root',
-        'PASSWORD': 'rootroot',
+        'NAME': 'blood_donation_test_db',  # tugindat tqvenc ase daarqvit
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -149,3 +149,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'api.User'
