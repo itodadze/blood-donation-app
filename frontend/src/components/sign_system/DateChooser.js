@@ -11,27 +11,23 @@ export const DateChooser = ({setValue}) => {
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     };
 
-    function handleChange(e) {
-        setValue(day + "/" + month + "/" + year);
-    }
-
     useEffect(() => {
         const getDaysInMonth = (month, year) => {
             switch (month) {
-                case '1':
-                case '3':
-                case '5':
-                case '7':
-                case '8':
+                case '01':
+                case '03':
+                case '05':
+                case '07':
+                case '08':
                 case '10':
                 case '12':
                     return 31;
-                case '4':
-                case '6':
-                case '9':
+                case '04':
+                case '06':
+                case '09':
                 case '11':
                     return 30;
-                case '2':
+                case '02':
                     return isLeapYear(year) ? 29 : 28;
                 default:
                     return 31;
@@ -48,17 +44,17 @@ export const DateChooser = ({setValue}) => {
 
     const handleDayChange = (e) => {
         setDay(e.target.value);
-        handleChange(e)
+        setValue(e.target.value + "/"  + month + "/" + year)
     };
 
     const handleMonthChange = (e) => {
         setMonth(e.target.value);
-        handleChange(e)
+        setValue(day + "/"  + e.target.value + "/" + year)
     };
 
     const handleYearChange = (e) => {
         setYear(e.target.value);
-        handleChange(e)
+        setValue(day + "/"  + month + "/" + e.target.value)
     };
 
     return (<div
@@ -110,8 +106,10 @@ export const DateChooser = ({setValue}) => {
             }}>
                 <option value="" style={{textAlign: 'center'}}>თვე</option>
                 {Array.from({length: 12}, (_, i) => i + 1).map((month) => (
-                    <option key={month} value={month} style={{textAlign: 'center'}}>
-                        {month}
+                    <option key={month < 10? '0' + month : month}
+                            value={month < 10? '0' + month : month}
+                            style={{textAlign: 'center'}}>
+                        {month < 10? '0' + month : month}
                     </option>))}
             </select>
 
@@ -125,8 +123,10 @@ export const DateChooser = ({setValue}) => {
                 borderWidth: '2px'
             }}>
                 <option value="" style={{textAlign: 'center'}}>დღე</option>
-                {daysInMonth.map((day) => (<option key={day} value={day} style={{textAlign: 'center'}}>
-                    {day}
+                {daysInMonth.map((day) => (<option key={day < 10? '0' + day : day}
+                                                   value={day < 10? '0' + day : day}
+                                                   style={{textAlign: 'center'}}>
+                    {day < 10? '0' + day : day}
                 </option>))}
             </select>
         </div>
