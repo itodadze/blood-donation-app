@@ -103,7 +103,7 @@ export const RequestInfo = ({request_id, currentUser}) => {
                         </div>
                     </div>
                 </div>
-                {currentUser != null && currentUser.id === receiver &&
+                {currentUser != null && currentUser === receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                         <button className={"request-confirm"} onClick={handleDelete}>
                             წაშლა
@@ -114,7 +114,7 @@ export const RequestInfo = ({request_id, currentUser}) => {
                         <DonorDropdownMenu users={users} className={"home-dropdown-menu"}
                                            selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
                 </div>}
-                {currentUser != null && currentUser.id !== receiver &&
+                {currentUser != null && currentUser !== receiver &&
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                     <button className={"request-confirm"} onClick={handleConnect}>
                         დაკავშირება
