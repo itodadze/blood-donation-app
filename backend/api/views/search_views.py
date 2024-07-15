@@ -50,7 +50,7 @@ class BroadcastSearchView(APIView):
             search: BroadcastSearchRequest = BroadcastSearchRequest(**serializer.validated_data)
             user: User = User.objects.get(pk=search.user_id)
             blood_type: BloodType = BloodType.objects.get(narrative=search.narrative)
-            ReceiverRequest.objects.create(
+            receiver_request = ReceiverRequest.objects.create(
                 user=user, blood_type=blood_type, description=search.description,
                 search_status=True, emergency_status=search.emergency_status,
                 loc_longitude=search.loc_longitude, loc_latitude=search.loc_latitude,
@@ -61,23 +61,18 @@ class BroadcastSearchView(APIView):
                 blood_type__in=blood_types, donor_status=True
             ).exclude(pk=user.pk))
             for user_to in DonorPriorityRanker(search).rank(users):
-                self.email(search, user, user_to)
+                self.email(search, user, user_to, receiver_request)
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def email(self, search: BroadcastSearchRequest, user_from: User, user_to: User) -> None:
-        try:
-            ChatRequest.objects.get(initiator=user_from, recipient=user_to)
-        except Exception:
-            ChatRequest.objects.create(
-                initiator=user_from, recipient=user_to, accept_status=False
-            )
-        link_url = "http://localhost:3000/chats/" + str(user_from.pk) + "/" + str(user_to.pk)
+    def email(self, search: BroadcastSearchRequest, user_from: User, user_to: User,
+              request: ReceiverRequest) -> None:
+        link_url = "http://localhost:3000/request/" + str(request.id)
         email_body = ('სისხლი ესაჭიროება მომხმარებელს: ' + user_from.first_name + ' '
                       + user_from.last_name + '-ს. \n' + 'ეძებს დონორს სისხლისთვის: '
                       + search.narrative + '.\n' + 'აღწერა: ' + search.description + '\n'
-                      + 'მიმოწერის ლინკი: ' + link_url + '\n')
+                      + 'მოთხოვნის ლინკი: ' + link_url + '\n')
         email = EmailMessage(subject='სისხლის დონაცია',
                              body=email_body,
                              to=[user_to.email])
