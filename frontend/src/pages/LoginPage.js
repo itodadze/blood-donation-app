@@ -4,7 +4,7 @@ import colors from "../values/colors";
 import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
-import background from "../assets/background/background.png";
+import chaos_background from "../assets/background/chaos_background.png";
 import {login} from "../services/SignSystemService";
 
 export const Login = ({setCurrentUser}) => {
@@ -20,7 +20,7 @@ export const Login = ({setCurrentUser}) => {
         <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
 
             <div style={{
-                backgroundImage: `url(${background})`,
+                backgroundImage: `url(${chaos_background})`,
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
