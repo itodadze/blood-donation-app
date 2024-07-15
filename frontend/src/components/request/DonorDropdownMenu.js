@@ -3,10 +3,10 @@ import {DropdownDonorOption} from "./DropdownDonorOption";
 
 export const DonorDropdownMenu = ({users, className, selectedUsers, setSelectedUsers}) => {
     const handleDonor = ({user, check}) => {
-        if (check) {
-            setSelectedUsers(selectedUsers + user)
+        if (!check) {
+            setSelectedUsers([...selectedUsers, user]);
         } else {
-            setSelectedUsers(selectedUsers.filter(function(e) { return e !== user }))
+            setSelectedUsers(selectedUsers.filter(e => e !== user));
         }
     }
 

@@ -48,10 +48,9 @@ export const RequestInfo = ({request_id, currentUser}) => {
     }
 
     const handleAccept = () => {
-        selectedUsers.map(
-            (selectedUser) =>
-                donate({id: selectedUser})
-        )
+        selectedUsers.forEach(selectedUser => {
+            donate(selectedUser);
+        });
         deleteRequest({requestId: request_id})
             .then().catch()
     }
