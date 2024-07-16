@@ -7,6 +7,7 @@ import {DonorDropdownMenu} from "./DonorDropdownMenu";
 import {getDonors} from "../../services/UserService";
 import {donate} from "../../services/DonationService";
 import {connectUsers} from "../../services/ChatCreateService";
+import {deleteConversation} from "../../services/ChatDeleteService";
 
 export const RequestInfo = ({request_id, currentUser}) => {
 
@@ -50,6 +51,7 @@ export const RequestInfo = ({request_id, currentUser}) => {
     const handleAccept = () => {
         selectedUsers.forEach(selectedUser => {
             donate(selectedUser);
+            deleteConversation(selectedUser, currentUser);
         });
         deleteRequest({requestId: request_id})
             .then().catch()
