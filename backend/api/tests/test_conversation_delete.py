@@ -30,7 +30,7 @@ class ConversationDeleteTestCase(TestCase):
 
     def test_delete_conversation_invalid_chat(self) -> None:
         request = MagicMock(spec=Request)
-        request.data = ConversationDeleteRequest(999).as_dictionary()
+        request.data = ConversationDeleteRequest(999, 899).as_dictionary()
         response: Response = ConversationDeleteView().delete(request)
         self.assertEquals(response.status_code, 400)
 
@@ -39,6 +39,6 @@ class ConversationDeleteTestCase(TestCase):
             donor=self.user_1, receiver=self.user_2, start_date=datetime.now(), valid_status=True
         )
         request = MagicMock(spec=Request)
-        request.data = ConversationDeleteRequest(chat.pk).as_dictionary()
+        request.data = ConversationDeleteRequest(self.user_1.pk, self.user_2.pk).as_dictionary()
         response: Response = ConversationDeleteView().delete(request)
         self.assertEquals(response.status_code, 204)

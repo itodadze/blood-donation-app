@@ -36,11 +36,13 @@ class ConversationCreateRequest:
 
 @dataclass
 class ConversationDeleteRequest:
-    conversation_id: int
+    receiver_id: int
+    donor_id: int
 
     def as_dictionary(self) -> dict:
         return {
-            "conversation_id": self.conversation_id
+            "receiver_id": self.receiver_id,
+            "donor_id": self.donor_id
         }
 
 

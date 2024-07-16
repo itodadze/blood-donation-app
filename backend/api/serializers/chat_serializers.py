@@ -22,7 +22,8 @@ class ConversationCreateRequestSerializer(serializers.Serializer):
 
 
 class ConversationDeleteRequestSerializer(serializers.Serializer):
-    conversation_id = serializers.IntegerField(allow_null=False)
+    receiver_id = serializers.IntegerField(allow_null=False)
+    donor_id = serializers.IntegerField(allow_null=False)
 
 
 class ChatPeopleResponseSerializer(serializers.Serializer):

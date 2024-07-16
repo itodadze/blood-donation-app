@@ -154,20 +154,16 @@ class ConversationCreateView(APIView):
 
 class ConversationDeleteView(APIView):
     def delete(self, request: Request) -> Response:
-        serializer = ConversationDeleteRequestSerializer(data=request.data)
+        donor_id = request.query_params.get("donor_id")
+        receiver_id = request.query_params.get("receiver_id")
 
-        if serializer.is_valid():
-            conversation: ConversationDeleteRequest = ConversationDeleteRequest(
-                **serializer.validated_data)
+        try:
+            donor = User.objects.get(pk=donor_id)
+            receiver = User.objects.get(pk=receiver_id)
+            chat = Chat.objects.get(donor=donor, receiver=receiver)
+            Chat.objects.filter(pk=chat.pk).delete()
+            Message.objects.filter(chat=chat).delete()
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+        except Chat.DoesNotExist:
+            return Response("Invalid chat", status=status.HTTP_400_BAD_REQUEST)
 
-            try:
-                chat = Chat.objects.get(pk=conversation.conversation_id)
-                Chat.objects.filter(pk=chat.pk).delete()
-
-                Message.objects.filter(chat=chat).delete()
-                return Response(None, status=status.HTTP_204_NO_CONTENT)
-            except Chat.DoesNotExist:
-                return Response("Invalid chat", status=status.HTTP_400_BAD_REQUEST)
-
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
