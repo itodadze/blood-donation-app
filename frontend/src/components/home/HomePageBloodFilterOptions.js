@@ -24,7 +24,7 @@ export const HomePageBloodFilterOptions = ({handleHeightChange, setMapRequestDat
     ]
 
     const handleSelect = (eventKey, event) => {
-        setSelectedBlood(event.target.innerText);
+        setSelectedBlood(eventKey.id);
     };
 
     const handleMatch = (eventKey, event) => {
@@ -33,7 +33,7 @@ export const HomePageBloodFilterOptions = ({handleHeightChange, setMapRequestDat
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-            <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect} className={"home-dropdown-menu"}/>
+            <BloodDropdownMenu handleSelect={handleSelect} className={"home-dropdown-menu"}/>
             <MatchDropdownMenu matches={matches} selectedMatch={selectedMatch} handleMatch={handleMatch}/>
         </div>
     );

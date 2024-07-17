@@ -28,7 +28,7 @@ class FilterDonorsView(APIView):
     @staticmethod
     def _blood_types(search: FilterRequest) -> list[UUID]:
         try:
-            curr_id = BloodType.objects.get(narrative=search.narrative).pk
+            curr_id = search.id
             if search.exact_match:
                 return [curr_id]
             else:

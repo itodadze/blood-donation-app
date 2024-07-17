@@ -34,7 +34,7 @@ class FilterSearchRequestsView(APIView):
     @staticmethod
     def _blood_types(search: FilterRequest) -> list[UUID]:
         try:
-            curr_id = BloodType.objects.get(narrative=search.narrative).pk
+            curr_id = search.id
             if search.exact_match:
                 return [curr_id]
             else:
@@ -49,7 +49,7 @@ class BroadcastSearchView(APIView):
         if serializer.is_valid():
             search: BroadcastSearchRequest = BroadcastSearchRequest(**serializer.validated_data)
             user: User = User.objects.get(pk=search.user_id)
-            blood_type: BloodType = BloodType.objects.get(narrative=search.narrative)
+            blood_type: BloodType = search.blood_type
             receiver_request = ReceiverRequest.objects.create(
                 user=user, blood_type=blood_type, description=search.description,
                 search_status=True, emergency_status=search.emergency_status,

@@ -7,6 +7,7 @@ import background from "../assets/background/background.png";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import {register} from "../services/SignSystemService"
 import {useLocation} from "react-router-dom";
+import chaos_background from "../assets/background/chaos_background.png";
 
 export const RegisterMedInfo = ({setCurrentUser}) => {
 
@@ -30,7 +31,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
         setInputInfo(!medInfo)
     }
     const handleSelect = (eventKey, event) => {
-        setSelectedBlood(event.target.innerText);
+        setSelectedBlood(eventKey.id);
     };
     const onPopupClose = () => {
         setShowPopup(false)
@@ -53,7 +54,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
             flex: '1',
             justifyContent: 'center',
             position: 'relative',
-            backgroundImage: `url(${background})`
+            backgroundImage: `url(${chaos_background})`
         }}>
             {
                 showPopup && <div className={"register-popup-envelope"}>
@@ -67,7 +68,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
 
             {
                 !showPopup && <div style={{
-                    backgroundImage: `url(${background})`,
+                    backgroundImage: `url(${chaos_background})`,
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
@@ -100,7 +101,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
                             <label className={"register-box-inner"}>
                                 {medInfo && <div style={{width: '100%', height: '100%', alignItems: 'center',
                                 justifyContent: 'center', display: 'flex', flexDirection: 'column'}}>
-                                    <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}
+                                    <BloodDropdownMenu handleSelect={handleSelect}
                                                            className={"med-dropdown-menu"}/>
                                     <ClickableButton buttonText={"აირჩიე ლოკაცია"} onClick={onPopupOpen}/>
                                 </div>}

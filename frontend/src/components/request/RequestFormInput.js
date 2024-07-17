@@ -25,7 +25,7 @@ export const RequestFormInput = () => {
     };
 
     const handleSelect = (eventKey, event) => {
-        setSelectedBlood(event.target.innerText);
+        setSelectedBlood(eventKey.id);
     };
 
     const handleSuccess = () => {
@@ -66,7 +66,7 @@ export const RequestFormInput = () => {
                 <text className={"request-item-desc"}>
                         მჭირდება:
                     </text>
-                    <BloodDropdownMenu selectedBlood={selectedBlood} handleSelect={handleSelect}
+                    <BloodDropdownMenu handleSelect={handleSelect}
                                        className={"request-dropdown-menu"}/>
                 </div>
                 <div className={"request-item"}>

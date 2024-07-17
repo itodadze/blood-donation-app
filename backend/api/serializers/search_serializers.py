@@ -24,13 +24,13 @@ class SearchSerializer(serializers.ModelSerializer):
 
 
 class FilterRequestSerializer(serializers.Serializer):
-    narrative = serializers.CharField(allow_null=True)
+    id = serializers.UUIDField(allow_null=True)
     exact_match = serializers.BooleanField(default=False)
 
 
 class BroadcastSearchSerializer(serializers.Serializer):
     user_id = serializers.UUIDField()
-    narrative = serializers.CharField()
+    blood_id = serializers.UUIDField()
     description = serializers.CharField()
     emergency_status = serializers.BooleanField()
     loc_longitude = serializers.FloatField()

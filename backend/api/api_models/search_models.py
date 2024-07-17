@@ -4,12 +4,12 @@ from uuid import UUID
 
 @dataclass
 class FilterRequest:
-    narrative: str | None
+    id: UUID | None
     exact_match: bool
 
     def as_dictionary(self) -> dict:
         return {
-            "narrative": self.narrative,
+            "id": self.id,
             "exact_match": self.exact_match
         }
 
@@ -17,7 +17,7 @@ class FilterRequest:
 @dataclass
 class BroadcastSearchRequest:
     user_id: UUID
-    narrative: str
+    blood_id: UUID
     description: str
     emergency_status: bool
     loc_longitude: float
@@ -26,7 +26,7 @@ class BroadcastSearchRequest:
     def as_dictionary(self) -> dict:
         return {
             "user_id": self.user_id,
-            "narrative": self.narrative,
+            "blood_id": self.blood_id,
             "description": self.description,
             "emergency_status": self.emergency_status,
             "loc_longitude": self.loc_longitude,

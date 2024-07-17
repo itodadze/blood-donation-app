@@ -4,19 +4,22 @@ import {useEffect, useState} from "react";
 import {getBloodTypes} from "../services/BloodTypeService";
 import {bloodTypeToSvg} from "../services/BloodTypeToSvg";
 
-export const BloodDropdownMenu = ({selectedBlood, handleSelect, className}) => {
+export const BloodDropdownMenu = ({handleSelect, className}) => {
     const [bloodTypes, setBloodTypes] = useState([]);
+    const [selectedBloodNarrative, setNarrative] = useState('სისხლის ტიპი');
+
 
     useEffect(() => {
         getBloodTypes().then(data => {
             setBloodTypes(data);
+            console.log(data);
         });
     }, []);
 
     return (
         <Dropdown>
             <Dropdown.Toggle as={Button} variant="outline-dark" className={className}>
-                {selectedBlood ? selectedBlood : 'სისხლის ტიპი'}
+                {selectedBloodNarrative}
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {
@@ -27,7 +30,9 @@ export const BloodDropdownMenu = ({selectedBlood, handleSelect, className}) => {
                                 < DropdownBloodOption
                             svg_file = {bloodTypeToSvg({path})}
                             description = {bloodType.narrative}
+                            id = {bloodType.id}
                             action = {handleSelect}
+                            setDescription={setNarrative}
                             />
                         );
                         }

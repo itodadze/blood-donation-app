@@ -2,7 +2,7 @@ import api from "../AxiosInstance"
 
 export const getUsers = ({selectedBlood, selectedMatch}) => {
     const requestData = {
-        narrative: selectedBlood,
+        id: selectedBlood,
         exact_match: selectedMatch === "მხოლოდ მონიშნული"
     };
 
