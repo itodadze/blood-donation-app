@@ -6,7 +6,7 @@ import {LocationPick} from "../components/map/LocationPick";
 import background from "../assets/background/background.png";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import {register} from "../services/SignSystemService"
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import chaos_background from "../assets/background/chaos_background.png";
 
 export const RegisterMedInfo = ({setCurrentUser}) => {
@@ -27,11 +27,27 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
     const [selectedLon, setSelectedLon] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleMedInfo = () => {
         setInputInfo(!medInfo)
     }
     const handleSelect = (eventKey, event) => {
         setSelectedBlood(eventKey.id);
+    };
+    const handleRegister =  async (e) => {
+        e.preventDefault();
+        try {
+            const user = await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword,
+                selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood,
+                medInfo)
+            setCurrentUser(user);
+            navigate('/');
+        } catch (error) {
+            console.error('Registration error', error);
+            // error message
+        }
+
     };
     const onPopupClose = () => {
         setShowPopup(false)
@@ -109,9 +125,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
                                     <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}>
                                         თქვენ არ დარეგისტირდებით დონორად, მომავალში ცვლილებისთვის შეგიძლიათ შეცვალოთ პროფილის გვერდზე</span>}
                                 <ClickableButton buttonText={"დარეგისტრირდი"} onClick={(e) => {
-                                    register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword,
-                                    selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood,
-                                    medInfo);
+                                    handleRegister(e)
                                 }}/>
                             </label>
                         </div>
