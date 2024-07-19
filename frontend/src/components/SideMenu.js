@@ -6,7 +6,6 @@ import feed from "../assets/icons/feed.svg"
 import profile from "../assets/icons/profile.svg";
 import chat from "../assets/icons/chat.svg";
 import blood from "../assets/icons/blood.svg";
-import help from "../assets/icons/help.svg";
 import settings from "../assets/icons/settings.svg";
 import support from "../assets/icons/support.svg";
 import logo from "../assets/icons/logo.svg"
@@ -45,8 +44,6 @@ export const SideMenu = ({current, currentUser}) => {
                 <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
                             onClick={() => navigate("/request/broadcast", {currentUser: currentUser})}/>}
 
-            {(current !== strings.REQUESTS) && <MenuButton svg_file={help} height={"38vh"}
-                                                           text={"თხოვნები"}/>}
 
             <div style={{marginTop: "auto"}}>
                 <MenuButton svg_file={settings} height={"50vh"} text={"პარამეტრები"}/>

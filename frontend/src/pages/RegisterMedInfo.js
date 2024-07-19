@@ -3,7 +3,6 @@ import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
 import {LocationPick} from "../components/map/LocationPick";
-import background from "../assets/background/background.png";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import {register} from "../services/SignSystemService"
 import {useLocation, useNavigate} from "react-router-dom";
