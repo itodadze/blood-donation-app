@@ -51,7 +51,9 @@ export const SideMenu = ({current, currentUser}) => {
             <div style={{marginTop: "auto"}}>
                 <MenuButton svg_file={settings} height={"50vh"} text={"პარამეტრები"}/>
             </div>
-            <MenuButton svg_file={support} height={"40vh"} text={"დახმარება"}/>
+            {(current !== strings.HELP) &&
+                <MenuButton svg_file={support} height={"40vh"}
+                            text={"დახმარება"} onClick={() => navigate("/help", {currentUser: currentUser})}/>}
         </motion.div>
     );
 }
