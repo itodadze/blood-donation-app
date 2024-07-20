@@ -7,5 +7,5 @@ class ReceiverRequestId:
 
     def as_dictionary(self) -> dict:
         return {
-            "id": self.id
+            "request_id": self.id
         }
