@@ -7,14 +7,12 @@ from rest_framework.response import Response
 
 from api.api_models.search_models import FilterRequest
 from api.models import ReceiverRequest, User, BloodType, UserIcon
-from api.tests.test_blood_matcher import fill_blood_types
 from api.tests.test_filter_users import insert_default_user
 from api.views.search_views import FilterSearchRequestsView
 
 
 class FilterSearchRequestsTestCase(TestCase):
     def setUp(self) -> None:
-        fill_blood_types()
         self.o_minus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=False)
         self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
         self.ab_minus: BloodType = BloodType.objects.get(blood_type="AB", rhesus_factor=False)
@@ -45,7 +43,7 @@ class FilterSearchRequestsTestCase(TestCase):
         self.assertEquals(response.status_code, 400)
 
     def test_filter_search_wrong_blood(self) -> None:
-        search = FilterRequest(self.ab_plus.narrative, False).as_dictionary()
+        search = FilterRequest(self.ab_plus.pk, False).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search
         response: Response = FilterSearchRequestsView().post(request)
@@ -53,7 +51,7 @@ class FilterSearchRequestsTestCase(TestCase):
         self.assertEquals(len(list(response.data)), 0)
 
     def test_filter_search_ignores_inactive(self) -> None:
-        search = FilterRequest(self.ab_minus.narrative, False).as_dictionary()
+        search = FilterRequest(self.ab_minus.pk, False).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search
         response: Response = FilterSearchRequestsView().post(request)
@@ -61,7 +59,7 @@ class FilterSearchRequestsTestCase(TestCase):
         self.assertEquals(len(list(response.data)), 1)
 
     def test_filter_search_exact_match(self) -> None:
-        search = FilterRequest(self.o_minus.narrative, True).as_dictionary()
+        search = FilterRequest(self.o_minus.pk, True).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search
         response: Response = FilterSearchRequestsView().post(request)
