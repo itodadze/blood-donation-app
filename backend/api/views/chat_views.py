@@ -134,20 +134,32 @@ class ConversationCreateView(APIView):
             except Chat.DoesNotExist:
 
                 try:
-                    donor = User.objects.get(pk=conversation.donor_id)
-                    receiver = User.objects.get(pk=conversation.receiver_id)
-
-                    chat = Chat.objects.create(
-                        donor=donor,
-                        receiver=receiver,
-                        start_date=datetime.now(),
-                        valid_status=True
+                    chat = Chat.objects.get(
+                        donor=conversation.receiver_id,
+                        receiver=conversation.donor_id,
                     )
 
                     result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
-                    return Response(result.data, status=status.HTTP_201_CREATED)
-                except User.DoesNotExist:
-                    return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
+                    return Response(result.data, status=status.HTTP_200_OK)
+
+                except Chat.DoesNotExist:
+
+                    try:
+                        donor = User.objects.get(pk=conversation.donor_id)
+                        receiver = User.objects.get(pk=conversation.receiver_id)
+
+                        chat = Chat.objects.create(
+                            donor=donor,
+                            receiver=receiver,
+                            start_date=datetime.now(),
+                            valid_status=True
+                        )
+
+                        result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                        return Response(result.data, status=status.HTTP_201_CREATED)
+                    except User.DoesNotExist:
+                        return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
+
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
