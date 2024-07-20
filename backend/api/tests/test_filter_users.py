@@ -7,7 +7,6 @@ from rest_framework.response import Response
 
 from api.api_models.search_models import FilterRequest
 from api.models import UserIcon, BloodType, User
-from api.tests.test_blood_matcher import fill_blood_types
 from api.views.user_views import FilterDonorsView
 
 
@@ -25,7 +24,6 @@ def insert_default_user(icon: UserIcon, blood: BloodType,
 class FilterUsersRequestsTestCase(TestCase):
     def setUp(self) -> None:
         self.icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-        fill_blood_types()
         self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
         self.a_minus: BloodType = BloodType.objects.get(blood_type="A", rhesus_factor=False)
         insert_default_user(self.icon, self.o_plus, "Test", "Subject1")
@@ -40,7 +38,7 @@ class FilterUsersRequestsTestCase(TestCase):
         self.assertEquals(response.status_code, 400)
 
     def test_filter_users_blood(self) -> None:
-        search = FilterRequest(self.o_plus.narrative, True).as_dictionary()
+        search = FilterRequest(self.o_plus.pk, True).as_dictionary()
         request = MagicMock(spec=Request)
         request.data = search
         response: Response = FilterDonorsView().post(request)
