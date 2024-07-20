@@ -13,7 +13,7 @@ def insert_user_by_location(icon: UserIcon, blood: BloodType,
                             loc_latitude: float, loc_longitude: float) -> User:
     email = "test" + str(loc_latitude) + "_" + str(loc_longitude) + "@gmail.com"
     return User.objects.create(
-        email=email, first_name="Test", last_name="Subject", password_hash="1",
+        email=email, first_name="Test", last_name="Subject",
         birthday=datetime(1995, 12, 12), loc_longitude=loc_longitude,
         loc_latitude=loc_latitude, blood_type=blood, donor_status=True, icon=icon,
         description="Test Subject", register_date=datetime.now()
@@ -31,7 +31,6 @@ def default_broadcast_search_request(user: User, blood: BloodType, loc_latitude:
 class DonorPriorityRankerTestCase(TestCase):
     def setUp(self) -> None:
         self.icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-        fill_blood_types()
         self.a_minus: BloodType = BloodType.objects.get(blood_type="A", rhesus_factor=False)
         self.user = insert_default_user(self.icon, self.a_minus, "Test", "Recipient")
         self.user_1 = insert_user_by_location(self.icon, self.a_minus, 11.0, 9.0)
