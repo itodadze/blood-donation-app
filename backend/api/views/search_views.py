@@ -60,7 +60,9 @@ class BroadcastSearchView(APIView):
             users: list[User] = list(User.objects.filter(
                 blood_type__in=blood_types, donor_status=True
             ).exclude(pk=user.pk))
-            for user_to in DonorPriorityRanker(search).rank(users):
+            for i, user_to in enumerate(DonorPriorityRanker(search).rank(users)):
+                if not search.emergency_status and i > 20:
+                    break
                 self.email(search, blood_type, user, user_to, receiver_request)
             return Response(status=status.HTTP_200_OK)
         else:
