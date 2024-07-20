@@ -166,4 +166,6 @@ class ConversationDeleteView(APIView):
             return Response(None, status=status.HTTP_204_NO_CONTENT)
         except Chat.DoesNotExist:
             return Response("Invalid chat", status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
 
