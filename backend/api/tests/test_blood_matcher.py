@@ -18,9 +18,6 @@ def fill_blood_types() -> None:
 
 
 class BloodMatcherTestCase(TestCase):
-    def setUp(self) -> None:
-        fill_blood_types()
-
     def test_all_blood_types(self) -> None:
         result: list[UUID] = all_blood_types()
         self.assertEqual(len(result), 8, "Does not gather all blood types")
