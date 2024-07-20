@@ -15,7 +15,7 @@ def insert_default_user(icon: UserIcon, blood: BloodType,
                         first_name: str, last_name: str) -> User:
     email: str = first_name + "_" + last_name + "@gmail.com"
     return User.objects.create(
-        email=email, first_name=first_name, last_name=last_name, password_hash="1",
+        email=email, first_name=first_name, last_name=last_name,
         birthday=datetime(1995, 12, 12), loc_longitude=11.1, loc_latitude=5.5,
         blood_type=blood, donor_status=True, description="Test Subject", icon=icon,
         register_date=datetime.now()
