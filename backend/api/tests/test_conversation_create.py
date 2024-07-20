@@ -8,14 +8,12 @@ from rest_framework.response import Response
 from api.api_models.chat_models import ConversationCreateRequest
 from api.models import UserIcon, BloodType, User, Chat
 from api.views.chat_views import ConversationCreateView
-from test_blood_matcher import fill_blood_types
 from test_filter_users import insert_default_user
 
 
 class ConversationCreateTestCase(TestCase):
     def setUp(self) -> None:
         self.icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-        fill_blood_types()
         self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
         self.user_1: User = insert_default_user(
             self.icon, self.o_plus, "Test", "Subject1")
