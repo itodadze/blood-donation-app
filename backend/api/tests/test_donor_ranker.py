@@ -5,7 +5,6 @@ from django.test import TestCase
 from api.api_models.search_models import BroadcastSearchRequest
 from api.core.donor_ranker import DonorPriorityRanker
 from api.models import UserIcon, BloodType, User
-from test_blood_matcher import fill_blood_types
 from test_filter_users import insert_default_user
 
 

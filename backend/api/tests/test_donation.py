@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from api.api_models.donation_models import Donor
 from api.models import UserIcon, BloodType, User, Donation
 from api.views.donation_views import DonationView, DonationAmountView
-from test_blood_matcher import fill_blood_types
 from test_filter_users import insert_default_user
 
 
