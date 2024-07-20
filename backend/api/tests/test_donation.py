@@ -14,7 +14,6 @@ from test_filter_users import insert_default_user
 class DonationTestCase(TestCase):
     def setUp(self) -> None:
         self.icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-        fill_blood_types()
         self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
         self.user: User = insert_default_user(
             self.icon, self.o_plus, "Test", "Subject1")
