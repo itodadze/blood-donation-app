@@ -106,6 +106,8 @@ export const Register = ({setCurrentUser}) => {
                          justifyContent: 'center',
                          alignItems: 'center',
                          backgroundColor: errorTxt ? colors.dark_pearl : 'transparent',
+                         borderStyle: 'solid',
+                         borderColor: errorTxt ? colors.primary : 'transparent',
                          borderRadius: '20px',
                          padding: '2px'
                      }}>

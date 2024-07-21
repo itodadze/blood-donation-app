@@ -79,7 +79,7 @@ export const DateChooser = ({handleFunc}) => {
             width: '90%',
             height: '90%', maxHeight: '50px'
         }}>
-            <select value={year} onChange={handleYearChange} style={{
+            <select value={year} onChange={handleYearChange}  onBlur={handleYearChange} style={{
                 width: '30%',
                 height: '100%',
                 boxSizing: 'border-box',
@@ -95,7 +95,7 @@ export const DateChooser = ({handleFunc}) => {
                     </option>))}
             </select>
 
-            <select value={month} onChange={handleMonthChange} style={{
+            <select value={month} onChange={handleMonthChange} onBlur={handleMonthChange} style={{
                 width: '30%',
                 height: '100%',
                 boxSizing: 'border-box',
@@ -113,7 +113,7 @@ export const DateChooser = ({handleFunc}) => {
                     </option>))}
             </select>
 
-            <select value={day} onChange={handleDayChange} style={{
+            <select value={day} onChange={handleDayChange} onBlur={handleDayChange} style={{
                 width: '30%',
                 height: '100%',
                 boxSizing: 'border-box',
