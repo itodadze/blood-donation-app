@@ -19,6 +19,12 @@ class ChatMessagesRequest:
     logged_in_user_id: int
     chat_user_id: int
 
+    def as_dictionary(self) -> dict:
+        return {
+            "logged_in_user_id": self.logged_in_user_id,
+            "chat_user_id": self.chat_user_id
+        }
+
 
 @dataclass
 class ChatNewMessageRequest:
@@ -85,6 +91,14 @@ class ChatMessageResponse:
         return ChatMessageResponse(
             sender_id=message.sender.id, message_text=message.message_text, message_status=message.message_status,
             message_timestamp=message.message_timestamp)
+
+    def as_dictionary(self) -> dict:
+        return {
+            "sender_id": self.sender_id,
+            "message_text": self.message_text,
+            "message_status": self.message_status,
+            "message_timestamp": self.message_timestamp
+        }
 
 
 @dataclass
