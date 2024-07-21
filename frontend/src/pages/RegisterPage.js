@@ -20,6 +20,34 @@ export const Register = ({setCurrentUser}) => {
     const navigate = useNavigate();
     const validator = require('validator');
 
+    const stateVariables = [
+        selectedDate,
+        selectedFirstName,
+        selectedLastName,
+        selectedPassword,
+        selectedPasswordConfirm,
+        selectedEmail
+    ];
+
+    const handleContinue = () => {
+        if (stateVariables.some(variable => !variable)) {
+            setErrorTxt('გთხოვთ შეავსოთ ყველა ველი სწორად');
+        } else {
+            setErrorTxt('');
+
+            navigate("/registerMed", {
+                state: {
+                    selectedFirstName: selectedFirstName,
+                    selectedLastName: selectedLastName,
+                    selectedEmail: selectedEmail,
+                    selectedPassword: selectedPassword,
+                    selectedPasswordConfirm: selectedPasswordConfirm,
+                    selectedDate: selectedDate
+                }
+            })
+        }
+    }
+
     const handleFirstNameChange = (e) => {
         if (!(e.target.value.trim())) {
             setSelectedFirstName(null);
@@ -67,7 +95,7 @@ export const Register = ({setCurrentUser}) => {
     }
 
     const handleDateChange = (value) => {
-        if(!validator.isDate(value, {format: 'DD/MM/YYYY'})) {
+        if (!validator.isDate(value, {format: 'DD/MM/YYYY'})) {
             setSelectedDate(null);
             setErrorTxt('თარიღი არ არის სწორად შეყვანილი');
         } else {
@@ -118,18 +146,7 @@ export const Register = ({setCurrentUser}) => {
                     </div>
                     <DateChooser handleFunc={handleDateChange}/>
                     <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
-                        console.log(selectedDate)
-
-                        navigate("/registerMed", {
-                            state: {
-                                selectedFirstName: selectedFirstName,
-                                selectedLastName: selectedLastName,
-                                selectedEmail: selectedEmail,
-                                selectedPassword: selectedPassword,
-                                selectedPasswordConfirm: selectedPasswordConfirm,
-                                selectedDate: selectedDate
-                            }
-                        })
+                        handleContinue()
                     }}/>
                 </div>
             </div>
