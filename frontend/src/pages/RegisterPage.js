@@ -48,60 +48,72 @@ export const Register = ({setCurrentUser}) => {
         }
     }
 
-    const handleFirstNameChange = (e) => {
+    const handleFirstNameChange = (e, setError) => {
+        let error;
         if (!(e.target.value.trim())) {
             setSelectedFirstName(null);
-            setErrorTxt('სახელის ველი არ უნდა იყოს ცარიელი');
+            error = 'სახელის ველი არ უნდა იყოს ცარიელი';
         } else if (!/^[a-zA-Z\-'’]+$/.test(e.target.value)) {
             setSelectedFirstName(null);
-            setErrorTxt('სახელის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებსა და \'-\'-ის სიმბოლოს');
+            error = 'სახელის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებსა და \'-\'-ის სიმბოლოს'
         } else if (e.target.value.length > 50) {
             setSelectedLastName(null);
-            setErrorTxt('სახელის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს');
+            error = 'სახელის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს';
         } else {
             setSelectedFirstName(e.target.value);
-            setErrorTxt('');
+            error = '';
         }
+        setError(error);
+        setErrorTxt(error);
     }
 
-    const handleLastNameChange = (e) => {
+    const handleLastNameChange = (e, setError) => {
+        let error;
         if (!(e.target.value.trim())) {
             setSelectedFirstName(null);
-            setErrorTxt('გვარის ველი არ უნდა იყოს ცარიელი');
+            error = 'გვარის ველი არ უნდა იყოს ცარიელი';
         } else if (!/^[a-zA-Z'’]+$/.test(e.target.value)) {
             setSelectedLastName(null);
-            setErrorTxt('გვარის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებს');
+            error = 'გვარის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებს';
         } else if (e.target.value.length > 50) {
             setSelectedLastName(null);
-            setErrorTxt('გვარის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს');
+            error = 'გვარის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს';
         } else {
             setSelectedLastName(e.target.value);
-            setErrorTxt('');
+            error = '';
         }
+        setError(error);
+        setErrorTxt(error);
 
     }
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e, setError) => {
+        let error;
         if (!(e.target.value.trim())) {
             setSelectedEmail(null);
-            setErrorTxt('იმეილის ველი არ უნდა იყოს ცარიელი');
+            error = 'იმეილის ველი არ უნდა იყოს ცარიელი';
         } else if (!validator.isEmail(e.target.value)) {
             setSelectedEmail(null);
-            setErrorTxt('იმეილის ფორმატი არასწორია');
+            error = 'იმეილის ფორმატი არასწორია';
         } else {
             setSelectedEmail(e.target.value);
-            setErrorTxt('');
+            error = '';
         }
+        setError(error);
+        setErrorTxt(error);
     }
 
-    const handleDateChange = (value) => {
+    const handleDateChange = (value, setError) => {
+        let error;
         if (!validator.isDate(value, {format: 'DD/MM/YYYY'})) {
             setSelectedDate(null);
-            setErrorTxt('თარიღი არ არის სწორად შეყვანილი');
+            error = 'თარიღი არ არის სწორად შეყვანილი';
         } else {
             setSelectedDate(value);
-            setErrorTxt('');
+            error = '';
         }
+        setError(error);
+        setErrorTxt(error);
     }
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>

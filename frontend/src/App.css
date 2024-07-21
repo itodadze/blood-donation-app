@@ -333,3 +333,34 @@
     font-weight: bold;
     color: #ee1f25;
 }
+
+.credential-field-warning-box {
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    display: var(--display);
+}
+
+.credential-field-warning {
+    width: 20px;
+    height: 20px;
+}
+
+.credential-warning-hover {
+    position: absolute;
+    max-width: 120px;
+    transform: translateX(-50%);
+    padding: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 14px;
+    border-radius: 4px;
+    display: none;
+
+}
+
+.credential-field-warning-box:hover .credential-warning-hover{
+    display: flex;
+}
