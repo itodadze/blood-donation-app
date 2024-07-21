@@ -18,6 +18,7 @@ export const Register = ({setCurrentUser}) => {
     const [errorTxt, setErrorTxt] = useState('');
 
     const navigate = useNavigate();
+    const validator = require('validator');
 
     const handleFirstNameChange = (e) => {
         if (!(e.target.value.trim())) {
@@ -26,7 +27,7 @@ export const Register = ({setCurrentUser}) => {
         } else if (!/^[a-zA-Z\-'’]+$/.test(e.target.value)) {
             setSelectedFirstName(null);
             setErrorTxt('სახელის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებსა და \'-\'-ის სიმბოლოს');
-        } else if(e.target.value.length > 50) {
+        } else if (e.target.value.length > 50) {
             setSelectedLastName(null);
             setErrorTxt('სახელის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს');
         } else {
@@ -42,7 +43,7 @@ export const Register = ({setCurrentUser}) => {
         } else if (!/^[a-zA-Z'’]+$/.test(e.target.value)) {
             setSelectedLastName(null);
             setErrorTxt('გვარის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებს');
-        } else if(e.target.value.length > 50) {
+        } else if (e.target.value.length > 50) {
             setSelectedLastName(null);
             setErrorTxt('გვარის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს');
         } else {
@@ -53,7 +54,16 @@ export const Register = ({setCurrentUser}) => {
     }
 
     const handleEmailChange = (e) => {
-        setSelectedEmail(e.target.value)
+        if (!(e.target.value.trim())) {
+            setSelectedEmail(null);
+            setErrorTxt('იმეილის ველი არ უნდა იყოს ცარიელი');
+        } else if (!validator.isEmail(e.target.value)) {
+            setSelectedEmail(null);
+            setErrorTxt('იმეილის ფორმატი არასწორია');
+        } else {
+            setSelectedEmail(e.target.value);
+            setErrorTxt('');
+        }
     }
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
@@ -85,7 +95,7 @@ export const Register = ({setCurrentUser}) => {
                          flexDirection: 'row',
                          justifyContent: 'center',
                          alignItems: 'center',
-                         backgroundColor: errorTxt? colors.dark_pearl : 'transparent',
+                         backgroundColor: errorTxt ? colors.dark_pearl : 'transparent',
                          borderRadius: '20px',
                          padding: '2px'
                      }}>
