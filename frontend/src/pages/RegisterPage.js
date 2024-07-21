@@ -66,6 +66,16 @@ export const Register = ({setCurrentUser}) => {
         }
     }
 
+    const handleDateChange = (value) => {
+        if(!validator.isDate(value, {format: 'DD/MM/YYYY'})) {
+            setSelectedDate(null);
+            setErrorTxt('თარიღი არ არის სწორად შეყვანილი');
+        } else {
+            setSelectedDate(value);
+            setErrorTxt('');
+        }
+    }
+
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
             <link
@@ -115,7 +125,7 @@ export const Register = ({setCurrentUser}) => {
                         <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}
                                        setValue={setSelectedPasswordConfirm}/>
                     </div>
-                    <DateChooser setValue={setSelectedDate}/>
+                    <DateChooser handleFunc={handleDateChange}/>
                     <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
                         console.log(selectedDate)
 

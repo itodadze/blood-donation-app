@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import colors from "../../values/colors";
 
-export const DateChooser = ({setValue}) => {
+export const DateChooser = ({handleFunc}) => {
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
@@ -44,17 +44,17 @@ export const DateChooser = ({setValue}) => {
 
     const handleDayChange = (e) => {
         setDay(e.target.value);
-        setValue(e.target.value + "/"  + month + "/" + year)
+        handleFunc(e.target.value + "/"  + month + "/" + year)
     };
 
     const handleMonthChange = (e) => {
         setMonth(e.target.value);
-        setValue(day + "/"  + e.target.value + "/" + year)
+        handleFunc(day + "/"  + e.target.value + "/" + year)
     };
 
     const handleYearChange = (e) => {
         setYear(e.target.value);
-        setValue(day + "/"  + month + "/" + e.target.value)
+        handleFunc(day + "/"  + month + "/" + e.target.value)
     };
 
     return (<div
