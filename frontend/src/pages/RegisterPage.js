@@ -95,21 +95,10 @@ export const Register = ({setCurrentUser}) => {
                 justifyContent: 'center'
             }}>
                 <div id={'register-error-box'}
+                     className="register-error-box"
                      style={{
-                         display: 'flex',
-                         flex: 0.2,
-                         height: '10%',
-                         width: '80%',
-                         maxWidth: '500px',
-                         marginBottom: '2%',
-                         flexDirection: 'row',
-                         justifyContent: 'center',
-                         alignItems: 'center',
-                         backgroundColor: errorTxt ? colors.dark_pearl : 'transparent',
-                         borderStyle: 'solid',
-                         borderColor: errorTxt ? colors.primary : 'transparent',
-                         borderRadius: '20px',
-                         padding: '2px'
+                         '--background-color': errorTxt ? colors.dark_pearl : 'transparent',
+                         '--border-color': errorTxt ? colors.primary : 'transparent'
                      }}>
                     <span style={{textAlign: 'center', color: colors.blood, fontWeight: 'bold'}}>
                         {errorTxt}
