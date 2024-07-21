@@ -32,6 +32,7 @@ export const CredentialField = ({fieldName, handleFunc}) => {
                     height: '100%',
                     boxSizing: 'border-box'
                 }}
+                onBlur={handleChange}
                 onChange={handleChange}
             />
         </div>

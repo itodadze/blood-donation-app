@@ -15,19 +15,41 @@ export const Register = ({setCurrentUser}) => {
     const [selectedPassword, setSelectedPassword] = useState(null);
     const [selectedPasswordConfirm, setSelectedPasswordConfirm] = useState(null);
     const [selectedEmail, setSelectedEmail] = useState(null);
+    const [errorTxt, setErrorTxt] = useState('');
 
     const navigate = useNavigate();
 
     const handleFirstNameChange = (e) => {
-        if (e.target.value === null || e.target.value === "")
-        {
-            setSelectedFirstName(null)
+        if (!(e.target.value.trim())) {
+            setSelectedFirstName(null);
+            setErrorTxt('სახელის ველი არ უნდა იყოს ცარიელი');
+        } else if (!/^[a-zA-Z\-'’]+$/.test(e.target.value)) {
+            setSelectedFirstName(null);
+            setErrorTxt('სახელის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებსა და \'-\'-ის სიმბოლოს');
+        } else if(e.target.value.length > 50) {
+            setSelectedLastName(null);
+            setErrorTxt('სახელის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს');
+        } else {
+            setSelectedFirstName(e.target.value);
+            setErrorTxt('');
         }
-
     }
 
     const handleLastNameChange = (e) => {
-        setSelectedLastName(e.target.value)
+        if (!(e.target.value.trim())) {
+            setSelectedFirstName(null);
+            setErrorTxt('გვარის ველი არ უნდა იყოს ცარიელი');
+        } else if (!/^[a-zA-Z'’]+$/.test(e.target.value)) {
+            setSelectedLastName(null);
+            setErrorTxt('გვარის ველი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებს');
+        } else if(e.target.value.length > 50) {
+            setSelectedLastName(null);
+            setErrorTxt('გვარის ველი უნდა შეიცავდეს მაქსიმუმ 50 სიმბოლოს');
+        } else {
+            setSelectedLastName(e.target.value);
+            setErrorTxt('');
+        }
+
     }
 
     const handleEmailChange = (e) => {
@@ -52,34 +74,52 @@ export const Register = ({setCurrentUser}) => {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                {/*<div style={{display: 'flex', flex: 0.2, height: '5%', width: '80%', maxWidth: '500px', marginBottom: '2%', flexDirection: 'row', backgroundColor: colors.blood}}>*/}
-
-                {/*</div>*/}
+                <div id={'register-error-box'}
+                     style={{
+                         display: 'flex',
+                         flex: 0.2,
+                         height: '10%',
+                         width: '80%',
+                         maxWidth: '500px',
+                         marginBottom: '2%',
+                         flexDirection: 'row',
+                         justifyContent: 'center',
+                         alignItems: 'center',
+                         backgroundColor: errorTxt? colors.dark_pearl : 'transparent',
+                         borderRadius: '20px',
+                         padding: '2px'
+                     }}>
+                    <span style={{textAlign: 'center', color: colors.blood, fontWeight: 'bold'}}>
+                        {errorTxt}
+                    </span>
+                </div>
                 <div className='register-box'>
-                    <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop:'2%'}}>
+                    <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop: '2%'}}>
                         <CredentialField fieldName={'სახელი'} handleFunc={handleFirstNameChange}/>
                         <CredentialField fieldName={'გვარი'} handleFunc={handleLastNameChange}/>
                     </div>
                     <CredentialField fieldName={'იმეილი'} handleFunc={handleEmailChange}/>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop: '2%'}}>
                         <PasswordField fieldName={'პაროლი'} placeholderText={'შეიყვანე პაროლი'}
-                        setValue={setSelectedPassword}/>
+                                       setValue={setSelectedPassword}/>
                         <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}
-                        setValue={setSelectedPasswordConfirm}/>
+                                       setValue={setSelectedPasswordConfirm}/>
                     </div>
                     <DateChooser setValue={setSelectedDate}/>
-                        <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
-                            console.log(selectedDate)
+                    <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
+                        console.log(selectedDate)
 
-                            navigate("/registerMed", { state: {
+                        navigate("/registerMed", {
+                            state: {
                                 selectedFirstName: selectedFirstName,
                                 selectedLastName: selectedLastName,
                                 selectedEmail: selectedEmail,
                                 selectedPassword: selectedPassword,
                                 selectedPasswordConfirm: selectedPasswordConfirm,
                                 selectedDate: selectedDate
-                            }})
-                        }}/>
+                            }
+                        })
+                    }}/>
                 </div>
             </div>
 
