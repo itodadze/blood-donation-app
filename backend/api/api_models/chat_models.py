@@ -8,6 +8,11 @@ from datetime import datetime
 class ChatPeopleRequest:
     user_id: int
 
+    def as_dictionary(self) -> dict:
+        return {
+            "user_id": self.user_id
+        }
+
 
 @dataclass
 class ChatMessagesRequest:
@@ -58,6 +63,14 @@ class ChatPeopleResponse:
         return ChatPeopleResponse(
             id=user.id, email=user.email, first_name=user.first_name, last_name=user.last_name,
         )
+
+    def as_dictionary(self) -> dict:
+        return {
+            "id": self.id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name
+        }
 
 
 @dataclass
