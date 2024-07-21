@@ -4,9 +4,10 @@ from unittest.mock import MagicMock, ANY
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.api_models.chat_models import ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse
+from api.api_models.chat_models import ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse, \
+    ChatNewMessageRequest
 from api.models import UserIcon, BloodType, User, Chat, Message
-from api.views.chat_views import ChatPeopleView, ChatMessagesView
+from api.views.chat_views import ChatPeopleView, ChatMessagesView, ChatNewMessageView
 from test_filter_users import insert_default_user
 
 
@@ -55,4 +56,17 @@ class ChatTestCase(TestCase):
         expected = ChatMessageResponse.from_message(message).as_dictionary()
         expected["message_timestamp"] = ANY
         self.assertEquals(response.data, [expected])
+
+    def test_new_message_incorrect_data(self) -> None:
+        request = MagicMock(spec=Request)
+        request.data = 3
+        response: Response = ChatNewMessageView().post(request)
+        self.assertEquals(response.status_code, 400)
+
+    def test_new_message_valid_message(self) -> None:
+        request = MagicMock(spec=Request)
+        Chat.objects.create(donor=self.user_1, receiver=self.user_2, valid_status=True)
+        request.data = ChatNewMessageRequest(self.user_2.pk, self.user_1.pk, "test").as_dictionary()
+        response: Response = ChatNewMessageView().post(request)
+        self.assertEquals(response.status_code, 200)
 

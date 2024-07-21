@@ -32,6 +32,13 @@ class ChatNewMessageRequest:
     receiver_id: int
     message_text: str
 
+    def as_dictionary(self) -> dict:
+        return {
+            "sender_id": self.sender_id,
+            "receiver_id": self.receiver_id,
+            "message_text": self.message_text
+        }
+
 
 @dataclass
 class ConversationCreateRequest:
