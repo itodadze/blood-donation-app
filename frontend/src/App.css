@@ -252,10 +252,6 @@
     border-style: solid;
     border-color: #d5b895;
 
-    @media (max-width: 1000px) {
-        width: 300px;
-        height: 400px;
-    }
 }
 
 .register-med-box {
@@ -269,10 +265,6 @@
     border-style: solid;
     border-color: #d5b895;
 
-    @media (max-width: 1000px) {
-        width: 300px;
-        height: 300px;
-    }
 }
 
 .register-box-head {
@@ -307,10 +299,6 @@
     border-style: solid;
     border-color: #d5b895;
 
-    @media (max-width: 1000px) {
-        width: 250px;
-        height: 300px;
-    }
 }
 
 .help-text {

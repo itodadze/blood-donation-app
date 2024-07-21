@@ -1,9 +1,9 @@
 import colors from "../../values/colors";
 import React from "react";
 
-export const CredentialField = ({fieldName, setValue}) => {
+export const CredentialField = ({fieldName, handleFunc}) => {
     function handleChange(e) {
-        setValue(e.target.value);
+        handleFunc(e);
     }
     return (<div
         style={{
