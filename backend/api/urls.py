@@ -18,7 +18,7 @@ urlpatterns = [
     path("chats/delete/", chat_views.ConversationDeleteView.as_view(), name='delete-conversation'),
     path("donation/", donation_views.DonationView.as_view(), name='donation'),
     path("donation/count/", donation_views.DonationAmountView().as_view(), name='donation-count'),
-    path("register/", auth_views.RegisterUser.as_view(), name='register_user'),
+    path("register/", auth_views.RegisterUser.as_view(), name='register-user'),
     path("icons/", icon_views.UserIconView.as_view(), name='get-user-icons'),
     path("icons/user/", icon_views.SetUserIconView.as_view(), name="update-user-icon")
 ]
