@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import sys
 from pathlib import Path
 
@@ -69,11 +70,11 @@ TEMPLATES = [
     },
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'blood.donation.app.testing@gmail.com'
-EMAIL_HOST_PASSWORD = 'trjbzeryjrtftoyf'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "blood.donation.app.testing@gmail.com"
+EMAIL_HOST_PASSWORD = "trjbzeryjrtftoyf"
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
@@ -83,22 +84,22 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blood_donation_db',  # tugindat tqvenc ase daarqvit
-        'USER': '',  # am orshi tqvenebi
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "blood_donation_db",  # tugindat tqvenc ase daarqvit
+        "USER": "root",  # am orshi tqvenebi
+        "PASSWORD": "rootroot",
+        "HOST": "localhost",
+        "PORT": "5432",
     },
-    'test': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blood_donation_test_db',  # tugindat tqvenc ase daarqvit
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    "test": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "blood_donation_test_db",  # tugindat tqvenc ase daarqvit
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "localhost",
+        "PORT": "5432",
+    },
 }
 
 # Password validation
@@ -119,12 +120,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-)
+CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    "http://localhost:3000",
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -150,4 +149,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = "api.User"

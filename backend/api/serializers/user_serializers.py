@@ -1,21 +1,22 @@
 from rest_framework import serializers
+
 from ..models import *
 
 
 class UserIconSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserIcon
-        fields = '__all__'
+        fields = "__all__"
 
 
 class UserSerializer(serializers.ModelSerializer):
     loc_longitude = serializers.FloatField()
     loc_latitude = serializers.FloatField()
-    blood_txt = serializers.SerializerMethodField('get_blood_str')
+    blood_txt = serializers.SerializerMethodField("get_blood_str")
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = "__all__"
 
     def get_blood_str(self, obj) -> serializers.CharField:
         result = obj.blood_type.blood_type

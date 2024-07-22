@@ -6,6 +6,4 @@ class ReceiverRequestId:
     id: int
 
     def as_dictionary(self) -> dict:
-        return {
-            "request_id": self.id
-        }
+        return {"request_id": self.id}

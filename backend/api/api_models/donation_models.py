@@ -6,6 +6,4 @@ class Donor:
     donor: int
 
     def as_dictionary(self) -> dict:
-        return {
-            "donor": self.donor
-        }
+        return {"donor": self.donor}

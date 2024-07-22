@@ -1,22 +1,20 @@
-
 from unittest.mock import MagicMock
 
 from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
+from test_filter_users import insert_default_user
 
 from api.api_models.icon_models import IconSet
-from api.models import UserIcon, BloodType
-from api.views.icon_views import UserIconView, SetUserIconView
-from test_filter_users import insert_default_user
+from api.models import BloodType, UserIcon
+from api.views.icon_views import SetUserIconView, UserIconView
 
 
 class UserIconsTestCase(TestCase):
     def setUp(self):
         self.icon = UserIcon.objects.get(file_address="icon_1")
         self.blood = BloodType.objects.get(narrative="პირველი უარყოფითი")
-        self.user = insert_default_user(self.icon, self.blood,
-                                        "Test", "Subject")
+        self.user = insert_default_user(self.icon, self.blood, "Test", "Subject")
 
     def test_icons_get(self) -> None:
         request = MagicMock(spec=Request)

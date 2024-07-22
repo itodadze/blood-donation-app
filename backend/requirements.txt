@@ -1,0 +1,5 @@
+django
+djangorestframework
+black
+flake8
+isort

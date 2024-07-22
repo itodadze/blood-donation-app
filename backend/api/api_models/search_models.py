@@ -8,10 +8,7 @@ class FilterRequest:
     exact_match: bool
 
     def as_dictionary(self) -> dict:
-        return {
-            "id": self.id,
-            "exact_match": self.exact_match
-        }
+        return {"id": self.id, "exact_match": self.exact_match}
 
 
 @dataclass
@@ -30,5 +27,5 @@ class BroadcastSearchRequest:
             "description": self.description,
             "emergency_status": self.emergency_status,
             "loc_longitude": self.loc_longitude,
-            "loc_latitude": self.loc_latitude
+            "loc_latitude": self.loc_latitude,
         }

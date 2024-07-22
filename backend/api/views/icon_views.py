@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.api_models.icon_models import IconSet
-from api.models import UserIcon, User
+from api.models import User, UserIcon
 from api.serializers.icon_serializers import UserIconSerializer
 
 

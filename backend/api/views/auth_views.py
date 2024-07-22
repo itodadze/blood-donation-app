@@ -1,12 +1,12 @@
 from django.contrib.auth import login
-from rest_framework import status, generics
-
-from api.serializers.auth_serializers import RegisterUserSerializer
-from api.api_models.auth_models import RegisterUserRequest
-from api.models import User
+from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+
+from api.api_models.auth_models import RegisterUserRequest
+from api.models import User
+from api.serializers.auth_serializers import RegisterUserSerializer
 
 
 class RegisterUser(generics.CreateAPIView):

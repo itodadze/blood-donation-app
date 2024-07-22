@@ -3,19 +3,22 @@ from unittest.mock import MagicMock
 from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
+from test_filter_users import insert_default_user
 
 from api.api_models.donation_models import Donor
-from api.models import UserIcon, BloodType, User, Donation
-from api.views.donation_views import DonationView, DonationAmountView
-from test_filter_users import insert_default_user
+from api.models import BloodType, Donation, User, UserIcon
+from api.views.donation_views import DonationAmountView, DonationView
 
 
 class DonationTestCase(TestCase):
     def setUp(self) -> None:
         self.icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-        self.o_plus: BloodType = BloodType.objects.get(blood_type="O", rhesus_factor=True)
+        self.o_plus: BloodType = BloodType.objects.get(
+            blood_type="O", rhesus_factor=True
+        )
         self.user: User = insert_default_user(
-            self.icon, self.o_plus, "Test", "Subject1")
+            self.icon, self.o_plus, "Test", "Subject1"
+        )
 
     def test_create_donation_incorrect_data(self) -> None:
         request = MagicMock(spec=Request)

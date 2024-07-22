@@ -1,4 +1,8 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 
 
@@ -16,7 +20,7 @@ class UserIcon(models.Model):
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError('The Email field must be set')
+            raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -24,8 +28,8 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
         return self.create_user(email, password, **extra_fields)
 
@@ -37,7 +41,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     birthday = models.DateField()
     loc_longitude = models.FloatField(null=True, blank=True)
     loc_latitude = models.FloatField(null=True, blank=True)
-    blood_type = models.ForeignKey(BloodType, on_delete=models.CASCADE, null=True, blank=True)
+    blood_type = models.ForeignKey(
+        BloodType, on_delete=models.CASCADE, null=True, blank=True
+    )
     donor_status = models.BooleanField(default=False)
     description = models.TextField(null=True, blank=True)
     icon = models.ForeignKey(UserIcon, on_delete=models.CASCADE, null=True, blank=True)
@@ -47,25 +53,33 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'birthday']
+    USERNAME_FIELD = "email"
+    EMAIL_FIELD = "email"
+    REQUIRED_FIELDS = ["first_name", "last_name", "birthday"]
 
     def __str__(self):
         return self.email
 
 
 class ChatRequest(models.Model):
-    initiator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chats_initiated')
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chats_received')
+    initiator = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="chats_initiated"
+    )
+    recipient = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="chats_received"
+    )
     initiated_date = models.DateField(auto_now_add=True)
     accept_status = models.BooleanField(default=False)
     description = models.TextField(null=True, blank=True)
 
 
 class Chat(models.Model):
-    donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donor_chats')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver_chats')
+    donor = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="donor_chats"
+    )
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="receiver_chats"
+    )
     start_date = models.DateField(auto_now_add=True)
     valid_status = models.BooleanField(default=True)
 

@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from api.api_models.search_models import FilterRequest
 from api.core.blood_matcher import all_blood_types, all_donors
-from api.models import User, BloodType, Chat
+from api.models import BloodType, Chat, User
 from api.serializers.search_serializers import FilterRequestSerializer
 from api.serializers.user_serializers import UserSerializer
 
@@ -19,7 +19,9 @@ class FilterDonorsView(APIView):
         if serializer.is_valid():
             search: FilterRequest = FilterRequest(**serializer.validated_data)
             blood_types = self._blood_types(search)
-            queryset: QuerySet = User.objects.filter(blood_type__in=blood_types, donor_status=True)
+            queryset: QuerySet = User.objects.filter(
+                blood_type__in=blood_types, donor_status=True
+            )
             result_serializer = UserSerializer(queryset, many=True)
             return Response(result_serializer.data, status=status.HTTP_200_OK)
         else:
@@ -42,7 +44,7 @@ class ReceiverDonorUsersView(APIView):
         identifier = request.query_params.get("id")
         try:
             user = User.objects.get(pk=identifier)
-            chats = Chat.objects.filter(receiver=user).values('donor')
+            chats = Chat.objects.filter(receiver=user).values("donor")
             serializer = UserSerializer(User.objects.filter(pk__in=chats), many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:

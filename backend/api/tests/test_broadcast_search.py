@@ -3,17 +3,19 @@ from unittest.mock import MagicMock
 from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
+from test_filter_users import insert_default_user
 
 from api.api_models.search_models import BroadcastSearchRequest
-from api.models import UserIcon, BloodType, User, ReceiverRequest
+from api.models import BloodType, ReceiverRequest, User, UserIcon
 from api.views.search_views import BroadcastSearchView
-from test_filter_users import insert_default_user
 
 
 class BroadcastSearchTestCase(TestCase):
     def setUp(self) -> None:
         icon: UserIcon = UserIcon.objects.create(file_address="path/to/icon")
-        self.b_plus: BloodType = BloodType.objects.get(blood_type="B", rhesus_factor=True)
+        self.b_plus: BloodType = BloodType.objects.get(
+            blood_type="B", rhesus_factor=True
+        )
         self.user: User = insert_default_user(icon, self.b_plus, "Test", "Subject")
 
     def test_broadcast_search_adds_invalid(self) -> None:

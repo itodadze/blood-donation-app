@@ -2,18 +2,32 @@ from datetime import datetime
 
 from django.db import models
 from django.db.models import Q
+from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
 
-from api.serializers.chat_serializers import ChatPeopleRequestSerializer, ChatPeopleResponseSerializer, \
-    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer, ChatNewMessageRequestSerializer, \
-    ConversationCreateRequestSerializer, ConversationResponseSerializer, ConversationDeleteRequestSerializer
-from api.api_models.chat_models import (ChatPeopleRequest, ChatPeopleResponse, ChatMessagesRequest, ChatMessageResponse,
-                                        ChatNewMessageRequest, ConversationCreateRequest, ConversationResponse,
-                                        ConversationDeleteRequest)
-from api.models import User, Chat, Message
+from api.api_models.chat_models import (
+    ChatMessageResponse,
+    ChatMessagesRequest,
+    ChatNewMessageRequest,
+    ChatPeopleRequest,
+    ChatPeopleResponse,
+    ConversationCreateRequest,
+    ConversationDeleteRequest,
+    ConversationResponse,
+)
+from api.models import Chat, Message, User
+from api.serializers.chat_serializers import (
+    ChatMessagesRequestSerializer,
+    ChatMessagesResponseSerializer,
+    ChatNewMessageRequestSerializer,
+    ChatPeopleRequestSerializer,
+    ChatPeopleResponseSerializer,
+    ConversationCreateRequestSerializer,
+    ConversationDeleteRequestSerializer,
+    ConversationResponseSerializer,
+)
 
 
 class ChatPeopleView(APIView):
@@ -26,7 +40,9 @@ class ChatPeopleView(APIView):
             try:
                 user = User.objects.get(id=user_id)
 
-                user_chats = Chat.objects.filter(models.Q(donor=user.id) | models.Q(receiver=user.id))
+                user_chats = Chat.objects.filter(
+                    models.Q(donor=user.id) | models.Q(receiver=user.id)
+                )
 
                 chat_people_ids = set()
                 for chat in user_chats:
@@ -38,9 +54,13 @@ class ChatPeopleView(APIView):
                 chat_people_info: list[ChatPeopleResponse] = []
                 for person_id in chat_people_ids:
                     current_person = User.objects.get(id=person_id)
-                    chat_people_info.append(ChatPeopleResponse.from_user(current_person))
+                    chat_people_info.append(
+                        ChatPeopleResponse.from_user(current_person)
+                    )
 
-                result_serializer = ChatPeopleResponseSerializer(chat_people_info, many=True)
+                result_serializer = ChatPeopleResponseSerializer(
+                    chat_people_info, many=True
+                )
                 return Response(result_serializer.data, status=status.HTTP_200_OK)
 
             except User.DoesNotExist:
@@ -55,20 +75,24 @@ class ChatMessagesView(APIView):
         serializer = ChatMessagesRequestSerializer(data=request.query_params)
 
         if serializer.is_valid():
-            users_info: ChatMessagesRequest = ChatMessagesRequest(**serializer.validated_data)
+            users_info: ChatMessagesRequest = ChatMessagesRequest(
+                **serializer.validated_data
+            )
             logged_in_user_id = users_info.logged_in_user_id
             chat_user_id = users_info.chat_user_id
 
             chat = Chat.objects.filter(
-                Q(donor_id=logged_in_user_id, receiver_id=chat_user_id) |
-                Q(donor_id=chat_user_id, receiver_id=logged_in_user_id)
+                Q(donor_id=logged_in_user_id, receiver_id=chat_user_id)
+                | Q(donor_id=chat_user_id, receiver_id=logged_in_user_id)
             ).first()
 
             if chat is None:
                 return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
             chat_id = chat.id
-            messages = Message.objects.filter(chat_id=chat_id).order_by('message_timestamp')
+            messages = Message.objects.filter(chat_id=chat_id).order_by(
+                "message_timestamp"
+            )
             messages_list = list(messages)
 
             messages_response_info: list[ChatMessageResponse] = []
@@ -76,7 +100,9 @@ class ChatMessagesView(APIView):
                 new_message_response = ChatMessageResponse.from_message(message_info)
                 messages_response_info.append(new_message_response)
 
-            result_serializer = ChatMessagesResponseSerializer(messages_response_info, many=True)
+            result_serializer = ChatMessagesResponseSerializer(
+                messages_response_info, many=True
+            )
             return Response(result_serializer.data, status=status.HTTP_200_OK)
 
         else:
@@ -88,14 +114,16 @@ class ChatNewMessageView(APIView):
         serializer = ChatNewMessageRequestSerializer(data=request.data)
 
         if serializer.is_valid():
-            new_message_info: ChatNewMessageRequest = ChatNewMessageRequest(**serializer.validated_data)
+            new_message_info: ChatNewMessageRequest = ChatNewMessageRequest(
+                **serializer.validated_data
+            )
             sender_id = new_message_info.sender_id
             receiver_id = new_message_info.receiver_id
             message_text = new_message_info.message_text
 
             chat = Chat.objects.filter(
-                Q(donor_id=sender_id, receiver_id=receiver_id) |
-                Q(donor_id=receiver_id, receiver_id=sender_id)
+                Q(donor_id=sender_id, receiver_id=receiver_id)
+                | Q(donor_id=receiver_id, receiver_id=sender_id)
             ).first()
 
             if chat is None:
@@ -106,7 +134,7 @@ class ChatNewMessageView(APIView):
                 chat_id=chat_id,
                 sender_id=sender_id,
                 message_text=message_text,
-                message_status='Sent'
+                message_status="Sent",
             )
 
             new_message.save()
@@ -122,14 +150,18 @@ class ConversationCreateView(APIView):
         serializer = ConversationCreateRequestSerializer(data=request.data)
 
         if serializer.is_valid():
-            conversation: ConversationCreateRequest = ConversationCreateRequest(**serializer.validated_data)
+            conversation: ConversationCreateRequest = ConversationCreateRequest(
+                **serializer.validated_data
+            )
             try:
                 chat = Chat.objects.get(
                     donor=conversation.donor_id,
                     receiver=conversation.receiver_id,
                 )
 
-                result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                result = ConversationResponseSerializer(
+                    ConversationResponse.from_chat(chat)
+                )
                 return Response(result.data, status=status.HTTP_200_OK)
             except Chat.DoesNotExist:
 
@@ -139,7 +171,9 @@ class ConversationCreateView(APIView):
                         receiver=conversation.donor_id,
                     )
 
-                    result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                    result = ConversationResponseSerializer(
+                        ConversationResponse.from_chat(chat)
+                    )
                     return Response(result.data, status=status.HTTP_200_OK)
 
                 except Chat.DoesNotExist:
@@ -152,13 +186,17 @@ class ConversationCreateView(APIView):
                             donor=donor,
                             receiver=receiver,
                             start_date=datetime.now(),
-                            valid_status=True
+                            valid_status=True,
                         )
 
-                        result = ConversationResponseSerializer(ConversationResponse.from_chat(chat))
+                        result = ConversationResponseSerializer(
+                            ConversationResponse.from_chat(chat)
+                        )
                         return Response(result.data, status=status.HTTP_201_CREATED)
                     except User.DoesNotExist:
-                        return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
+                        return Response(
+                            "Invalid user", status=status.HTTP_400_BAD_REQUEST
+                        )
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -180,4 +218,3 @@ class ConversationDeleteView(APIView):
             return Response("Invalid chat", status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist:
             return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
-
