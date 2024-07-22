@@ -3,3 +3,7 @@ djangorestframework
 black
 flake8
 isort
+django-cors-headers
+django-environ
+gunicorn
+psycopg2-binary
