@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import blood_views, search_views, user_views, chat_views, request_views, donation_views, auth_views
+from .views import blood_views, search_views, user_views, chat_views, request_views, donation_views, auth_views, \
+    icon_views
 
 urlpatterns = [
     path("blood/", blood_views.BloodTypesView.as_view(), name='get-blood-types'),
@@ -17,6 +18,7 @@ urlpatterns = [
     path("chats/delete/", chat_views.ConversationDeleteView.as_view(), name='delete-conversation'),
     path("donation/", donation_views.DonationView.as_view(), name='donation'),
     path("donation/count/", donation_views.DonationAmountView().as_view(), name='donation-count'),
-
-    path("register/", auth_views.RegisterUser.as_view(), name='register_user')
+    path("register/", auth_views.RegisterUser.as_view(), name='register_user'),
+    path("icons/", icon_views.UserIconView.as_view(), name='get-user-icons'),
+    path("icons/user/", icon_views.SetUserIconView.as_view(), name="update-user-icon")
 ]
