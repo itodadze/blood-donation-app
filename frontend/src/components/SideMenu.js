@@ -28,7 +28,7 @@ export const SideMenu = ({current, currentUser}) => {
             initial={{x: '-100%'}}
             animate={{x: 0}}
             transition={{type: 'tween', ease: 'easeOut', duration: 0}}>
-            <IconButton svg_file={logo} height={"60vh"} text={"DonorHonor"} onClick={() => {}}/>
+            <IconButton svg_file={logo} height={"60vh"} text={"DonorStream"} onClick={() => {}}/>
             {(current !== strings.HOME) &&
                 <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
                             onClick={() => navigate("/", {currentUser: currentUser})}/>}
