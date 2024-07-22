@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import *
+from api.models import User, UserIcon
 
 
 class UserIconSerializer(serializers.ModelSerializer):
@@ -29,13 +29,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserResponseSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    first_name = models.CharField()
-    last_name = models.CharField()
-    loc_longitude = models.FloatField()
-    loc_latitude = models.FloatField()
-    blood_type = models.CharField()
-    rhesus_factor = models.BooleanField()
-    blood_narrative = models.CharField()
-    donor_status = models.BooleanField()
-    description = models.TextField()
-    icon_path = models.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    loc_longitude = serializers.FloatField()
+    loc_latitude = serializers.FloatField()
+    blood_type = serializers.CharField()
+    rhesus_factor = serializers.BooleanField()
+    blood_narrative = serializers.CharField()
+    donor_status = serializers.BooleanField()
+    description = serializers.CharField()
+    icon_path = serializers.CharField()

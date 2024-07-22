@@ -31,7 +31,7 @@ class ConversationDeleteTestCase(TestCase):
         self.assertEquals(response.status_code, 400)
 
     def test_delete_conversation_existing_conversation(self) -> None:
-        chat = Chat.objects.create(
+        Chat.objects.create(
             donor=self.user_1,
             receiver=self.user_2,
             start_date=datetime.now(),

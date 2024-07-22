@@ -1,15 +1,7 @@
 from django.urls import path
 
-from .views import (
-    auth_views,
-    blood_views,
-    chat_views,
-    donation_views,
-    icon_views,
-    request_views,
-    search_views,
-    user_views,
-)
+from .views import (auth_views, blood_views, chat_views, donation_views,
+                    icon_views, request_views, search_views, user_views)
 
 urlpatterns = [
     path("blood/", blood_views.BloodTypesView.as_view(), name="get-blood-types"),

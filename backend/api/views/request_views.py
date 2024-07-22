@@ -3,9 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.api_models.request_models import ReceiverRequestId
 from api.models import ReceiverRequest
-from api.serializers.request_serializers import ReceiverRequestIdSerializer
 from api.serializers.search_serializers import SearchSerializer
 
 

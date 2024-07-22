@@ -11,12 +11,10 @@ from rest_framework.views import APIView
 from api.api_models.search_models import BroadcastSearchRequest, FilterRequest
 from api.core.blood_matcher import all_blood_types, all_donors, all_recipients
 from api.core.donor_ranker import DonorPriorityRanker
-from api.models import BloodType, ChatRequest, ReceiverRequest, User
-from api.serializers.search_serializers import (
-    BroadcastSearchSerializer,
-    FilterRequestSerializer,
-    SearchSerializer,
-)
+from api.models import BloodType, ReceiverRequest, User
+from api.serializers.search_serializers import (BroadcastSearchSerializer,
+                                                FilterRequestSerializer,
+                                                SearchSerializer)
 
 
 class FilterSearchRequestsView(APIView):
@@ -41,7 +39,7 @@ class FilterSearchRequestsView(APIView):
                 return [curr_id]
             else:
                 return all_recipients(curr_id)
-        except:
+        except BloodType.DoesNotExist:
             return all_blood_types()
 
 

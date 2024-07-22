@@ -5,15 +5,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from test_filter_users import insert_default_user
 
-from api.api_models.chat_models import (
-    ChatMessageResponse,
-    ChatMessagesRequest,
-    ChatNewMessageRequest,
-    ChatPeopleRequest,
-    ChatPeopleResponse,
-)
+from api.api_models.chat_models import (ChatMessageResponse,
+                                        ChatMessagesRequest,
+                                        ChatNewMessageRequest,
+                                        ChatPeopleRequest, ChatPeopleResponse)
 from api.models import BloodType, Chat, Message, User, UserIcon
-from api.views.chat_views import ChatMessagesView, ChatNewMessageView, ChatPeopleView
+from api.views.chat_views import (ChatMessagesView, ChatNewMessageView,
+                                  ChatPeopleView)
 
 
 class ChatTestCase(TestCase):

@@ -15,6 +15,6 @@ class DonorPriorityRanker:
     search: BroadcastSearchRequest
 
     def rank(self, users: list[User]) -> list[User]:
-        # currently only location is taken into account, later take into account
-        # documents.
+        # currently only location is taken into account, later take into
+        # account documents.
         return sorted(users, key=lambda x: dist_squared(self.search, x))

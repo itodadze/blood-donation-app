@@ -35,7 +35,7 @@ class FilterDonorsView(APIView):
                 return [curr_id]
             else:
                 return all_donors(curr_id)
-        except:
+        except BloodType.DoesNotExist:
             return all_blood_types()
 
 

@@ -7,27 +7,18 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.api_models.chat_models import (
-    ChatMessageResponse,
-    ChatMessagesRequest,
-    ChatNewMessageRequest,
-    ChatPeopleRequest,
-    ChatPeopleResponse,
-    ConversationCreateRequest,
-    ConversationDeleteRequest,
-    ConversationResponse,
-)
+from api.api_models.chat_models import (ChatMessageResponse,
+                                        ChatMessagesRequest,
+                                        ChatNewMessageRequest,
+                                        ChatPeopleRequest, ChatPeopleResponse,
+                                        ConversationCreateRequest,
+                                        ConversationResponse)
 from api.models import Chat, Message, User
 from api.serializers.chat_serializers import (
-    ChatMessagesRequestSerializer,
-    ChatMessagesResponseSerializer,
-    ChatNewMessageRequestSerializer,
-    ChatPeopleRequestSerializer,
-    ChatPeopleResponseSerializer,
-    ConversationCreateRequestSerializer,
-    ConversationDeleteRequestSerializer,
-    ConversationResponseSerializer,
-)
+    ChatMessagesRequestSerializer, ChatMessagesResponseSerializer,
+    ChatNewMessageRequestSerializer, ChatPeopleRequestSerializer,
+    ChatPeopleResponseSerializer, ConversationCreateRequestSerializer,
+    ConversationResponseSerializer)
 
 
 class ChatPeopleView(APIView):

@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 
 from api.api_models.donation_models import Donor
 from api.models import Donation, User
-from api.serializers.donation_serializers import AmountSerializer, DonorSerializer
+from api.serializers.donation_serializers import (AmountSerializer,
+                                                  DonorSerializer)
 
 
 class DonationView(APIView):
