@@ -44,6 +44,9 @@ export const RequestInfo = ({request_id, currentUser}) => {
     }
 
     const handleDelete = () => {
+        users.forEach(user => {
+            deleteConversation(user.id, currentUser)
+        })
         deleteRequest({requestId: request_id})
             .then().catch()
     }
@@ -51,8 +54,10 @@ export const RequestInfo = ({request_id, currentUser}) => {
     const handleAccept = () => {
         selectedUsers.forEach(selectedUser => {
             donate(selectedUser);
-            deleteConversation(selectedUser, currentUser);
         });
+        users.forEach(user => {
+            deleteConversation(user.id, currentUser)
+        })
         deleteRequest({requestId: request_id})
             .then().catch()
     }
