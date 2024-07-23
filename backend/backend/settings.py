@@ -22,7 +22,7 @@ env = environ.Env(
     DEBUG=(bool, True)  # change to false in production
 )
 
-environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -152,6 +152,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+# Directory where static files will be collected
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "frontend/src/assets")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
