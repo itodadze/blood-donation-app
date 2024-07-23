@@ -116,6 +116,41 @@ export const Register = ({setCurrentUser}) => {
         setErrorTxt(error);
     }
 
+    const handlePasswordChange = (e, setError) => {
+        let error;
+        if (!(e.target.value.trim())) {
+            setSelectedPassword(null);
+            error = 'პაროლის ველი არ უნდა იყოს ცარიელი';
+        } else if (e.target.value.length > 50 || e.target.value.length < 8) {
+            setSelectedPassword(null);
+            error = 'პაროლი უნდა შეიცავდეს მინიმუმ 8 და მაქსიმუმ 50 სიმბოლოს';
+        } else if (selectedPasswordConfirm && selectedPasswordConfirm !== e.target.value) {
+            setSelectedPassword(null);
+            error = 'პაროლები არ ემთხვევა ერთმანეთს';
+        } else {
+            setSelectedPassword(e.target.value);
+            error = '';
+        }
+        setError(error);
+        setErrorTxt(error);
+    }
+
+    const handlePasswordConfirmChange = (e, setError) => {
+        let error;
+        if (!(e.target.value.trim())) {
+            setSelectedPasswordConfirm(null);
+            error = 'პაროლის დადასტურების ველი არ უნდა იყოს ცარიელი';
+        } else if (e.target.value !== selectedPassword) {
+            setSelectedPasswordConfirm(null);
+            error = 'პაროლები არ ემთხვევა ერთმანეთს';
+        } else {
+            setSelectedPasswordConfirm(e.target.value);
+            error = '';
+        }
+        setError(error);
+        setErrorTxt(error);
+    }
+
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
             <link
@@ -152,9 +187,9 @@ export const Register = ({setCurrentUser}) => {
                     <CredentialField fieldName={'იმეილი'} handleFunc={handleEmailChange}/>
                     <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginTop: '2%'}}>
                         <PasswordField fieldName={'პაროლი'} placeholderText={'შეიყვანე პაროლი'}
-                                       setValue={setSelectedPassword}/>
-                        <PasswordField fieldName={'გაიმეორე პაროლი'} placeholderText={'გაიმეორე პაროლი'}
-                                       setValue={setSelectedPasswordConfirm}/>
+                                       handleFunc={handlePasswordChange}/>
+                        <PasswordField fieldName={'დადასტურება'} placeholderText={'გაიმეორე პაროლი'}
+                                       handleFunc={handlePasswordConfirmChange} disableField={!selectedPassword}/>
                     </div>
                     <DateChooser handleFunc={handleDateChange}/>
                     <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {

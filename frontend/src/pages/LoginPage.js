@@ -15,6 +15,9 @@ export const Login = ({setCurrentUser}) => {
         setSelectedEmail(e.target.value)
     }
 
+    const handlePasswordChange = (e) => {
+        setSelectedPassword(e.target.value);
+    }
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
             <link
@@ -35,7 +38,7 @@ export const Login = ({setCurrentUser}) => {
             }}>
                 <div className={"login-box"}>
                     <CredentialField fieldName={'იმეილი'} handleFunc={handleEmailChange}/>
-                    <PasswordField setValue={setSelectedPassword}/>
+                    <PasswordField handleFunc={handlePasswordChange}/>
                     <ClickableButton buttonText={'ავტორიზაცია'} onClick={(e) => {
                         login(selectedEmail, selectedPassword);
                     }}/>

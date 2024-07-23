@@ -364,3 +364,16 @@
 .credential-field-warning-box:hover .credential-warning-hover{
     display: flex;
 }
+
+.password-input-field {
+    border-style: solid;
+    border-color: var(--border-color);
+    border-radius: 15px;
+    padding: 10px 40px 10px 10px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+.password-input-field:disabled {
+    border-color: var(--dis-border-color);
+}
