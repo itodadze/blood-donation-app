@@ -4,7 +4,7 @@ from uuid import UUID
 
 @dataclass
 class FilterRequest:
-    id: UUID | None
+    id: int | None
     exact_match: bool
 
     def as_dictionary(self) -> dict:

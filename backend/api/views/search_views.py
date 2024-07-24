@@ -1,5 +1,4 @@
 from datetime import datetime
-from uuid import UUID
 
 from django.core.mail import EmailMessage
 from django.db.models import QuerySet
@@ -13,26 +12,22 @@ from api.core.blood_matcher import all_blood_types, all_donors, all_recipients
 from api.core.donor_ranker import DonorPriorityRanker
 from api.models import BloodType, ReceiverRequest, User
 from api.serializers.search_serializers import (BroadcastSearchSerializer,
-                                                FilterRequestSerializer,
                                                 SearchSerializer)
 
 
 class FilterSearchRequestsView(APIView):
-    def post(self, request: Request) -> Response:
-        serializer = FilterRequestSerializer(data=request.data)
-        if serializer.is_valid():
-            search: FilterRequest = FilterRequest(**serializer.validated_data)
-            recipient_blood_types = self._blood_types(search)
-            queryset: QuerySet = ReceiverRequest.objects.filter(
-                blood_type__in=recipient_blood_types, search_status=True
-            )
-            result_serializer = SearchSerializer(queryset, many=True)
-            return Response(result_serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request: Request) -> Response:
+        search: FilterRequest = FilterRequest(int(request.query_params["id"]),
+                                              request.query_params["exact_match"] == "true")
+        recipient_blood_types = self._blood_types(search)
+        queryset: QuerySet = ReceiverRequest.objects.filter(
+            blood_type__in=recipient_blood_types, search_status=True
+        )
+        result_serializer = SearchSerializer(queryset, many=True)
+        return Response(result_serializer.data, status=status.HTTP_200_OK)
 
     @staticmethod
-    def _blood_types(search: FilterRequest) -> list[UUID]:
+    def _blood_types(search: FilterRequest) -> list[int]:
         try:
             curr_id = search.id
             if search.exact_match:

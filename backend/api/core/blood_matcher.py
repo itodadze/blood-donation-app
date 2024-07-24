@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from django.db.models import Q
 
 from api.models import BloodType
@@ -19,11 +17,11 @@ RECEPTION: dict[str, list[str]] = {
 }
 
 
-def all_blood_types() -> list[UUID]:
+def all_blood_types() -> list[int]:
     return list(BloodType.objects.values_list("id", flat=True))
 
 
-def all_recipients(identifier: UUID) -> list[UUID]:
+def all_recipients(identifier: int) -> list[int]:
     donor: BloodType = BloodType.objects.get(pk=identifier)
     return list(
         BloodType.objects.filter(
@@ -33,7 +31,7 @@ def all_recipients(identifier: UUID) -> list[UUID]:
     )
 
 
-def all_donors(identifier: UUID) -> list[UUID]:
+def all_donors(identifier: int) -> list[int]:
     recipient: BloodType = BloodType.objects.get(pk=identifier)
     return list(
         BloodType.objects.filter(

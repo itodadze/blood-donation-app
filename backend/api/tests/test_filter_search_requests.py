@@ -68,32 +68,26 @@ class FilterSearchRequestsTestCase(TestCase):
             request_date=datetime.now(),
         )
 
-    def test_filter_search_incorrect_data(self) -> None:
-        request = MagicMock(spec=Request)
-        request.data = 5
-        response: Response = FilterSearchRequestsView().post(request)
-        self.assertEquals(response.status_code, 400)
-
     def test_filter_search_wrong_blood(self) -> None:
         search = FilterRequest(self.ab_plus.pk, False).as_dictionary()
         request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterSearchRequestsView().post(request)
+        request.query_params = search
+        response: Response = FilterSearchRequestsView().get(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(len(list(response.data)), 0)
 
     def test_filter_search_ignores_inactive(self) -> None:
         search = FilterRequest(self.ab_minus.pk, False).as_dictionary()
         request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterSearchRequestsView().post(request)
+        request.query_params = search
+        response: Response = FilterSearchRequestsView().get(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(len(list(response.data)), 1)
 
     def test_filter_search_exact_match(self) -> None:
         search = FilterRequest(self.o_minus.pk, True).as_dictionary()
         request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterSearchRequestsView().post(request)
+        request.query_params = search
+        response: Response = FilterSearchRequestsView().get(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(len(list(response.data)), 1)
