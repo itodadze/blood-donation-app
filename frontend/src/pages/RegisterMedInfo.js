@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import {BloodDropdownMenu} from "../components/BloodDropdownMenu";
@@ -24,6 +24,15 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
 
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!selectedFirstName || !selectedLastName || !selectedEmail ||
+            !selectedPassword || !selectedPasswordConfirm || !selectedDate) {
+            navigate('/register');
+        }
+    }, [selectedFirstName, selectedLastName, selectedEmail,
+              selectedPassword, selectedPasswordConfirm, selectedDate]);
+
 
     const handleMedInfo = () => {
         setInputInfo(!medInfo)
