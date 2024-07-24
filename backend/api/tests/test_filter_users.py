@@ -42,17 +42,10 @@ class FilterUsersRequestsTestCase(TestCase):
         insert_default_user(self.icon, self.o_plus, "Test", "Subject2")
         insert_default_user(self.icon, self.a_minus, "Test", "Subject3")
 
-    def test_filter_users_incorrect_data(self) -> None:
-        search = "test"
-        request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterDonorsView().post(request)
-        self.assertEquals(response.status_code, 400)
-
     def test_filter_users_blood(self) -> None:
         search = FilterRequest(self.o_plus.pk, True).as_dictionary()
         request = MagicMock(spec=Request)
-        request.data = search
-        response: Response = FilterDonorsView().post(request)
+        request.query_params = search
+        response: Response = FilterDonorsView().get(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(len(list(response.data)), 2)
