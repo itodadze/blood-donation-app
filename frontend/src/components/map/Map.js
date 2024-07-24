@@ -47,7 +47,7 @@ export const Map = ({mapData}) => {
     }, [mapData]);
     return (
         <div>
-            <div ref={mapContainer} style={{minWidth: "100vh", minHeight: "90vh", textAlign: "center"}}/>
+            <div ref={mapContainer} style={{minWidth: "100vh", minHeight: "85vh", textAlign: "center"}}/>
         </div>
     );
 }
