@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (auth_views, blood_views, chat_views, donation_views,
                     icon_views, request_views, search_views, user_views)
+from .views.auth_views import LoginUser
 
 urlpatterns = [
     path("blood/", blood_views.BloodTypesView.as_view(), name="get-blood-types"),
@@ -50,6 +51,7 @@ urlpatterns = [
         name="donation-count",
     ),
     path("register/", auth_views.RegisterUser.as_view(), name="register-user"),
+    path("login/", LoginUser.as_view(), name="login"),
     path("icons/", icon_views.UserIconView.as_view(), name="get-user-icons"),
     path("icons/user/", icon_views.SetUserIconView.as_view(), name="update-user-icon"),
 ]

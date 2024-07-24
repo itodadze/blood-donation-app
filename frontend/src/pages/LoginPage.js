@@ -5,7 +5,7 @@ import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import chaos_background from "../assets/background/chaos_background.png";
-import {login} from "../services/SignSystemService";
+import {login, register} from "../services/SignSystemService";
 
 export const Login = ({setCurrentUser}) => {
     const [selectedEmail, setSelectedEmail] = useState(null);
@@ -18,6 +18,16 @@ export const Login = ({setCurrentUser}) => {
     const handlePasswordChange = (e) => {
         setSelectedPassword(e.target.value);
     }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const user = await login(selectedEmail, selectedPassword)
+            setCurrentUser(user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
         <Helmet>
             <link
@@ -40,7 +50,7 @@ export const Login = ({setCurrentUser}) => {
                     <CredentialField fieldName={'იმეილი'} handleFunc={handleEmailChange}/>
                     <PasswordField handleFunc={handlePasswordChange}/>
                     <ClickableButton buttonText={'ავტორიზაცია'} onClick={(e) => {
-                        login(selectedEmail, selectedPassword);
+                        handleLogin(e);
                     }}/>
                 </div>
                 <a href={'register'} style={{margin: '15px', color: colors.pearl, fontWeight: 'bolder'}}>

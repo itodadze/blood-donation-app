@@ -23,8 +23,19 @@ export const register = async (firstName, lastName, email, password, passwordCon
     }
 }
 
-export const login = (email, password) => {
+export const login = async (email, password) => {
+    const data = {
+        email: email,
+        password: password
+    };
 
+    try {
+        const response = await api.post('/login/', data);
+        return response.data;
+    } catch (error) {
+        console.error('Error signing a user:', error);
+        throw error;
+    }
 }
 
 export const existsUser = (email) => {
