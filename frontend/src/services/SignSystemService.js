@@ -30,7 +30,9 @@ export const login = async (email, password) => {
     };
 
     try {
-        const response = await api.post('/login/', data);
+        const response = await api.post('/login/', data, {
+            withCredentials: true
+        });
         return response.data;
     } catch (error) {
         console.error('Error signing a user:', error);
