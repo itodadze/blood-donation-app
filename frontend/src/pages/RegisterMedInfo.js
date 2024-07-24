@@ -35,6 +35,9 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
 
 
     const handleMedInfo = () => {
+        if (errorTxt) {
+            setErrorTxt('');
+        }
         setInputInfo(!medInfo)
     }
     const handleSelect = (eventKey, event) => {
@@ -54,7 +57,13 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
                 setCurrentUser(user);
                 navigate('/');
             } catch (error) {
-                setErrorTxt(error);
+                if (error.response.data.email[0].includes('exists')) {
+                    setErrorTxt('მომხმარებელი ასეთი იმეილით უკვე არსებობს')
+                } else if (error.response.data.password) {
+                    setErrorTxt('შეყვანილი პაროლი არ აკმაყოფილებს მოთხოვნებს');
+                } else {
+                    setErrorTxt('დაფიქსირდა შეცდომა, ვერ ხერხდება რეგისტრაცია');
+                }
             }
         }
 

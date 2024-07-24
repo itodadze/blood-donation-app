@@ -6,6 +6,7 @@ export const register = async (firstName, lastName, email, password, passwordCon
         last_name: lastName,
         email: email,
         password: password,
+        password_confirm: passwordConfirm,
         birthday: date,
         loc_latitude: lat,
         loc_longitude: lon,
