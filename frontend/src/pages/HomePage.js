@@ -31,8 +31,8 @@ export const Home = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 toggleFilterButton={toggleFilterButton} setMapRequestData={setMapRequestData}
                 setMapUserData={setMapUserData}/>
                 <div style={{flex: '1', position: 'relative', width: "100%"}}>
-                    {bloodOverUsers && <Map mapData={mapRequestData}/>}
-                    {!bloodOverUsers && <Map mapData={mapUserData}/>}
+                    {bloodOverUsers && <Map mapData={mapRequestData} isBlood={true} currentUser={currentUser}/>}
+                    {!bloodOverUsers && <Map mapData={mapUserData} isBlood={false} currentUser={currentUser}/>}
                 </div>
             </div>
         </div>

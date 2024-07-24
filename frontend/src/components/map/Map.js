@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXRvZGFkemUiLCJhIjoiY2x1bWdveHpnMG4zdjJrb2F2bXN3ZWx6YiJ9.-yIhnR6oioGEsaa2U1vgsQ';
 
-export const Map = ({mapData}) => {
+export const Map = ({mapData, isBlood, currentUser}) => {
     const navigate = useNavigate();
 
     const mapContainer = useRef(null);
@@ -39,9 +39,12 @@ export const Map = ({mapData}) => {
             let id = marker.id
             marker = getPinMarker(marker.blood_txt, marker.loc_longitude, marker.loc_latitude)
             marker.addTo(map.current)
-            marker.getElement().addEventListener('click', () => {
-                navigate("/request/" + id);
-            });
+            if (isBlood) {
+                marker.getElement().addEventListener('click', () => {
+                    navigate("/request/" + id, {currentUser: currentUser});
+                });
+            } else {
+            }
             currentMarkers.push(marker);
         });
     }, [mapData]);
