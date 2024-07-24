@@ -8,8 +8,10 @@ import {getDonors} from "../../services/UserService";
 import {donate} from "../../services/DonationService";
 import {connectUsers} from "../../services/ChatCreateService";
 import {deleteConversation} from "../../services/ChatDeleteService";
+import {useNavigate} from "react-router-dom";
 
 export const RequestInfo = ({request_id, currentUser}) => {
+    const navigate = useNavigate();
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
@@ -64,6 +66,7 @@ export const RequestInfo = ({request_id, currentUser}) => {
 
     const handleConnect = () => {
         connectUsers({donor: currentUser, receiver: receiver})
+        navigate("/chat", {currentUser: currentUser})
     }
 
     useEffect(() => {

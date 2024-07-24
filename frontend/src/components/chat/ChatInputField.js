@@ -2,7 +2,7 @@ import colors from "../../values/colors";
 import React, {useState} from "react";
 import {sendMessage} from "../../services/ChosenChatService";
 
-export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
+export const ChatInputField = ({chosenRecipient, setMessageTime, currentUser}) => {
     const [message, setMessage] = useState("");
 
     const handleChangeMessage = (input) => {
@@ -11,7 +11,7 @@ export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
 
     const handleSendMessage = () => {
         if (message.trim() !== "") {
-            sendMessage(3, chosenRecipient, message)
+            sendMessage(currentUser, chosenRecipient, message)
                 .then(() => {
                     setMessage("");
                     setMessageTime(Date.now())

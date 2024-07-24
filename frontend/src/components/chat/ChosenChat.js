@@ -5,7 +5,7 @@ import {getConversation} from "../../services/ChosenChatService"
 import {ChatInputField} from "./ChatInputField";
 import ReactLoading from 'react-loading';
 
-export const ChosenChat = ({chosenRecipient}) => {
+export const ChosenChat = ({chosenRecipient, currentUser}) => {
     const [conversation, fillConversation] = useState(null);
     const [loading, setLoading] = useState(false);
     const [lastMessageTime, setMessageTime] = useState(null);
@@ -14,7 +14,7 @@ export const ChosenChat = ({chosenRecipient}) => {
     useEffect(() => {
         if (chosenRecipient !== null && chosenRecipient !== undefined) {
             setLoading(true);
-            getConversation(3, chosenRecipient).then(data => {
+            getConversation(currentUser, chosenRecipient).then(data => {
                 console.log('Data:', data);
                 fillConversation(data);
                 setTimeout(() => {
@@ -59,6 +59,7 @@ export const ChosenChat = ({chosenRecipient}) => {
         <ChatInputField
             chosenRecipient={chosenRecipient}
             setMessageTime={setMessageTime}
+            currentUser={currentUser}
         />
     </div>)
 

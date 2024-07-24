@@ -5,13 +5,13 @@ import ReactLoading from "react-loading";
 import "../../styles/chat_page.css"
 
 
-export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
+export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}) => {
     const [conversations, fillConversations] = useState(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        getConversationList(3).then(data => {
+        getConversationList(currentUser).then(data => {
             fillConversations(data);
         }).catch(error => {
             console.error('Error fetching conversation list:', error);

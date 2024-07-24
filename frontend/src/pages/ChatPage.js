@@ -34,8 +34,9 @@ export const Chat = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                  style={{
                      '--border-color': colors.tertiary, '--background-color': colors.pearl
                  }}>
-                <ChosenChat chosenRecipient={chosenRecipient}/>
-                <ConversationList chosenRecipient={chosenRecipient} chooseRecipient={chooseRecipient}/>
+                <ChosenChat chosenRecipient={chosenRecipient} currentUser={currentUser}/>
+                <ConversationList chosenRecipient={chosenRecipient} chooseRecipient={chooseRecipient}
+                        currentUser={currentUser}/>
             </div>
 
         </div>
