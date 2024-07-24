@@ -254,9 +254,9 @@
 
 }
 
-.register-error-box {
+.register-error-box,
+.register-med-error-box {
     display: flex;
-    flex: 0.2;
     height: 10%;
     width: 80%;
     max-width: 500px;
@@ -269,6 +269,14 @@
     border-color: var(--border-color);
     border-radius: 20px;
     padding: 2px;
+}
+
+.register-error-box {
+    flex: 0.2;
+}
+
+.register-med-error-box {
+    flex: 0.15;
 }
 
 .register-med-box {
