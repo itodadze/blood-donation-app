@@ -58,18 +58,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class ChatRequest(models.Model):
-    initiator = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="chats_initiated"
-    )
-    recipient = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="chats_received"
-    )
-    initiated_date = models.DateField(auto_now_add=True)
-    accept_status = models.BooleanField(default=False)
-    description = models.TextField(null=True, blank=True)
-
-
 class Chat(models.Model):
     donor = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="donor_chats"
@@ -87,10 +75,6 @@ class Message(models.Model):
     message_text = models.TextField()
     message_status = models.CharField(max_length=20)
     message_timestamp = models.DateTimeField(auto_now_add=True)
-
-
-class Instruction(models.Model):
-    instruction_text = models.TextField()
 
 
 class MedicalDocument(models.Model):
