@@ -5,7 +5,7 @@ import {LocationPick} from "../map/LocationPick";
 import colors from "../../values/colors";
 import {broadcastRequest} from "../../services/BroadcastRequestService";
 
-export const RequestFormInput = () => {
+export const RequestFormInput = ({currentUser}) => {
 
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
@@ -43,7 +43,7 @@ export const RequestFormInput = () => {
     }
 
     const handleConfirm = () => {
-        broadcastRequest({selectedBlood, description,
+        broadcastRequest({currentUser, selectedBlood, description,
         emergency, selectedLat, selectedLon}).then(handleSuccess).catch(handleFailure);
     }
 
