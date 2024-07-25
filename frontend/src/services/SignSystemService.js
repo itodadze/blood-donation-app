@@ -50,13 +50,3 @@ export const logout = async () => {
     }
 }
 
-const fetchCsrfToken = async () => {
-    try {
-        const response = await api.get('/csrf-token/');
-        Cookies.set('csrftoken', response.data.csrfToken);
-    } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-    }
-};
-
-fetchCsrfToken();
