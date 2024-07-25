@@ -82,7 +82,8 @@ export const Login = ({setCurrentUser}) => {
                 maxHeight: '100%',
                 maxWidth: '100%',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                textAlign: 'center'
             }}>
                 <div id={'login-error-box'}
                      className="login-error-box"
