@@ -14,22 +14,55 @@ export const Login = ({setCurrentUser}) => {
     const [errorTxt, setErrorTxt] = useState('');
 
     const navigate = useNavigate();
+    const validator = require('validator');
 
-    const handleEmailChange = (e) => {
-        setSelectedEmail(e.target.value)
+    const handleEmailChange = (e, setError) => {
+        let error;
+        if (!e.target.value) {
+            setSelectedEmail(null);
+            error = 'იმეილის ველი ვერ იქნება ცარიელი';
+        } else if (!validator.isEmail(e.target.value)) {
+            setSelectedEmail(null);
+            error = 'იმეილის ფორმატი არასწორია';
+        } else {
+            setSelectedEmail(e.target.value);
+            error = ''
+        }
+        setError(error);
+        setErrorTxt(error);
     }
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = (e, setError) => {
+        let error;
+        if (!e.target.value) {
+            error = 'პაროლის ველი ვერ იქნება ცარიელი';
+        } else {
+            error = ''
+        }
         setSelectedPassword(e.target.value);
+        setError(error);
+        setErrorTxt(error);
     }
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const user = await login(selectedEmail, selectedPassword)
-            setCurrentUser(user);
-            navigate('/');
-        } catch (error) {
-            console.log(error);
+        if (!selectedEmail || !selectedPassword) {
+            setErrorTxt('გთხოვთ შეავსოთ ყველა ველი');
+        } else {
+            try {
+                const user = await login(selectedEmail, selectedPassword)
+                setCurrentUser(user);
+                navigate('/');
+            } catch (error) {
+                if(error.response.data.detail) {
+                    if(error.response.data.detail.includes('CSRF')) {
+                        setErrorTxt('თავიდან ავტორიზაციისთის გთხოვთ ჯერ გამოხვიდეთ');
+                    }
+                } else if(error.response.data.non_field_errors) {
+                    setErrorTxt(error.response.data.non_field_errors);
+                } else {
+                    setErrorTxt('დაფიქსირდა შეცდომა, ავტორიზაცია ვერ ხერხდება');
+                }
+            }
         }
     };
 
