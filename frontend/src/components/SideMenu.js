@@ -47,7 +47,8 @@ export const SideMenu = ({current, currentUser}) => {
 
 
             <div style={{marginTop: "auto"}}>
-                <MenuButton svg_file={logout} height={"44vh"} text={"გასვლა"}/>
+                <MenuButton svg_file={logout} height={"44vh"} text={"გასვლა"}
+                            onClick={() => navigate("/logout", {currentUser: currentUser})}/>
             </div>
             {(current !== strings.HELP) &&
                 <MenuButton svg_file={support} height={"40vh"}

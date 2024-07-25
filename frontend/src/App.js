@@ -43,6 +43,9 @@ function App() {
             <Route path="/help" element = {<Help isSidebarOpen={isSidebarOpen}
                                                  toggleSidebar={toggleSidebar}
                                                  setCurrentUser={setCurrentUser}/>}/>
+            <Route path="/logout" element={<Login isSidebarOpen={isSidebarOpen}
+                                                  toggleSidebar={toggleSidebar}
+                                                  setCurrentUser={setCurrentUser}/>}/>
         </Routes>
     );
 }
