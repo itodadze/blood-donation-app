@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {getConversationList} from "../../services/ChatConversationListService";
 import ReactLoading from "react-loading";
 import "../../styles/chat_page.css"
+import "../../assets/user_icons/icons.css"
 
 
 export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}) => {
@@ -27,16 +28,18 @@ export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}
         if (!conversations) return null;
 
         return conversations.map(conversation => (<button
-                key={conversation.id}
-                className={"chat-header"}
-                style={{
-                    '--background-color': chosenRecipient === conversation.id ? colors.primary : colors.white,
-                    '--border-color': colors.primary_dark
-                }}
-                onClick={() => chooseRecipient(conversation.id)}
-            >
-                <div>{conversation.first_name + ' ' + conversation.last_name}</div>
-            </button>));
+            key={conversation.id}
+            className={"chat-header"}
+            style={{
+                '--background-color': chosenRecipient === conversation.id ? colors.primary : colors.white,
+                '--border-color': colors.primary_dark
+            }}
+            onClick={() => chooseRecipient(conversation.id)}
+        >
+            <div className={"icon_1"} style={{width: "7vh", height: "7vh", borderRadius: "50%",
+            borderWidth: "2px", borderColor: colors.white, borderStyle: "solid", marginRight: "1vh"}}/>
+            <div>{conversation.first_name + ' ' + conversation.last_name}</div>
+        </button>));
     };
 
     return (<div
