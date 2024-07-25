@@ -2,10 +2,6 @@ import api from "../AxiosInstance"
 import Cookies from 'js-cookie';
 
 
-const getCsrfToken = () => {
-    return Cookies.get('csrftoken');
-};
-
 export const register = async (firstName, lastName, email, password, passwordConfirm, date, lat, lon, blood, donor) => {
     const data = {
         first_name: firstName,
@@ -21,9 +17,7 @@ export const register = async (firstName, lastName, email, password, passwordCon
     };
 
     try {
-        const response = await api.post('/register/', data, {
-            withCredentials: true
-        });
+        const response = await api.post('/register/', data);
         return response.data;
     } catch (error) {
         console.error('Error creating a user:', error);
@@ -38,12 +32,7 @@ export const login = async (email, password) => {
     };
 
     try {
-        const response = await api.post('/login/', data, {
-            withCredentials: true,
-            headers: {
-                'X-CSRFToken': getCsrfToken(),
-            }
-        });
+        const response = await api.post('/login/', data);
         return response.data;
     } catch (error) {
         console.error('Error signing a user:', error);
@@ -53,12 +42,7 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
     try {
-        const response = await api.post('/logout/', {},{
-            withCredentials: true,
-            headers: {
-                'X-CSRFToken': getCsrfToken(),
-            }
-        });
+        const response = await api.post('/logout/');
         return response.data;
     } catch (error) {
         console.error('Error logging out a user:', error);
