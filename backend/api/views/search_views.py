@@ -17,7 +17,7 @@ from api.serializers.search_serializers import (BroadcastSearchSerializer,
 
 class FilterSearchRequestsView(APIView):
     def get(self, request: Request) -> Response:
-        search: FilterRequest = FilterRequest(int(request.query_params["id"]),
+        search: FilterRequest = FilterRequest(request.query_params.get("id", None),
                                               request.query_params["exact_match"] == "true")
         recipient_blood_types = self._blood_types(search)
         queryset: QuerySet = ReceiverRequest.objects.filter(
@@ -28,13 +28,16 @@ class FilterSearchRequestsView(APIView):
 
     @staticmethod
     def _blood_types(search: FilterRequest) -> list[int]:
-        try:
-            curr_id = search.id
-            if search.exact_match:
-                return [curr_id]
-            else:
-                return all_recipients(curr_id)
-        except BloodType.DoesNotExist:
+        if search.id:
+            try:
+                BloodType.objects.get(pk=search.id)
+                if search.exact_match:
+                    return [search.id]
+                else:
+                    return all_recipients(search.id)
+            except BloodType.DoesNotExist:
+                return all_blood_types()
+        else:
             return all_blood_types()
 
 
