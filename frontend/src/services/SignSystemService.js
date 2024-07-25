@@ -15,7 +15,9 @@ export const register = async (firstName, lastName, email, password, passwordCon
     };
 
     try {
-        const response = await api.post('/register/', data);
+        const response = await api.post('/register/', data, {
+            withCredentials: true
+        });
         return response.data;
     } catch (error) {
         console.error('Error creating a user:', error);

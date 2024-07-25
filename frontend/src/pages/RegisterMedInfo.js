@@ -26,12 +26,10 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!selectedFirstName || !selectedLastName || !selectedEmail ||
-            !selectedPassword || !selectedPasswordConfirm || !selectedDate) {
+        if (!selectedFirstName || !selectedLastName || !selectedEmail || !selectedPassword || !selectedPasswordConfirm || !selectedDate) {
             navigate('/register');
         }
-    }, [selectedFirstName, selectedLastName, selectedEmail,
-              selectedPassword, selectedPasswordConfirm, selectedDate]);
+    }, [selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate]);
 
 
     const handleMedInfo = () => {
@@ -57,8 +55,14 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
                 setCurrentUser(user);
                 navigate('/');
             } catch (error) {
-                if (error.response.data.email[0].includes('exists')) {
-                    setErrorTxt('მომხმარებელი ასეთი იმეილით უკვე არსებობს')
+                if (error.response.data.detail) {
+                    if (error.response.data.detail.includes('CSRF')) {
+                        setErrorTxt('რეგისტრაციის გასავლელად გთხოვთ ჯერ გამოხვიდეთ');
+                    }
+                } else if (error.response.data.email) {
+                    if (error.response.data.email[0].includes('exists')) {
+                        setErrorTxt('მომხმარებელი ასეთი იმეილით უკვე არსებობს')
+                    }
                 } else if (error.response.data.password) {
                     setErrorTxt('შეყვანილი პაროლი არ აკმაყოფილებს მოთხოვნებს');
                 } else {
