@@ -6,10 +6,14 @@ import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import chaos_background from "../assets/background/chaos_background.png";
 import {login, register} from "../services/SignSystemService";
+import {useNavigate} from "react-router-dom";
 
 export const Login = ({setCurrentUser}) => {
     const [selectedEmail, setSelectedEmail] = useState(null);
     const [selectedPassword, setSelectedPassword] = useState(null);
+    const [errorTxt, setErrorTxt] = useState('');
+
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         setSelectedEmail(e.target.value)
@@ -23,6 +27,7 @@ export const Login = ({setCurrentUser}) => {
         try {
             const user = await login(selectedEmail, selectedPassword)
             setCurrentUser(user);
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
@@ -46,6 +51,17 @@ export const Login = ({setCurrentUser}) => {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
+                <div id={'login-error-box'}
+                     className="login-error-box"
+                     style={{
+                         '--background-color': errorTxt ? colors.dark_pearl : 'transparent',
+                         '--border-color': errorTxt ? colors.primary : 'transparent'
+                     }}>
+                    <span style={{textAlign: 'center', color: colors.blood, fontWeight: 'bold'}}>
+                        {errorTxt}
+                    </span>
+                </div>
+
                 <div className={"login-box"}>
                     <CredentialField fieldName={'იმეილი'} handleFunc={handleEmailChange}/>
                     <PasswordField handleFunc={handlePasswordChange}/>

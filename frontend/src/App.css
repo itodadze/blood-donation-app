@@ -254,12 +254,12 @@
 
 }
 
+.login-error-box,
 .register-error-box,
 .register-med-error-box {
     display: flex;
     height: 10%;
     width: 80%;
-    max-width: 500px;
     margin-bottom: 1%;
     flex-direction: row;
     justify-content: center;
@@ -273,10 +273,17 @@
 
 .register-error-box {
     flex: 0.2;
+    max-width: 500px;
 }
 
 .register-med-error-box {
     flex: 0.15;
+    max-width: 500px;
+}
+
+.login-error-box {
+    flex: 0.15;
+    max-width: 300px;
 }
 
 .register-med-box {
