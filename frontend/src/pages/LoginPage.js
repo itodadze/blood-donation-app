@@ -56,6 +56,9 @@ export const Login = ({setCurrentUser}) => {
                 <a href={'register'} style={{margin: '15px', color: colors.pearl, fontWeight: 'bolder'}}>
                     დარეგისტრირდი
                 </a>
+                <a href={'help'} style={{margin: '15px', color: colors.pearl, fontWeight: 'bolder'}}>
+                    მეტი ინფორმაცია სისხლის დონაციაზე
+                </a>
             </div>
         </div>
 

@@ -196,6 +196,9 @@ export const Register = ({setCurrentUser}) => {
                         handleContinue()
                     }}/>
                 </div>
+                <a href={'help'} style={{margin: '15px', color: colors.pearl, fontWeight: 'bolder'}}>
+                    მეტი ინფორმაცია სისხლის დონაციაზე
+                </a>
             </div>
 
         </div>
