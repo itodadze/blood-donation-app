@@ -36,8 +36,8 @@ export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}
             }}
             onClick={() => chooseRecipient(conversation.id)}
         >
-            <div className={"icon_1"} style={{width: "7vh", height: "7vh", borderRadius: "50%",
-            borderWidth: "2px", borderColor: colors.white, borderStyle: "solid", marginRight: "1vh"}}/>
+            <div className={"icon_1"} style={{width: "7.5vh", height: "7.5vh", borderRadius: "50%",
+            borderWidth: "1px", borderColor: colors.black, borderStyle: "solid", marginRight: "1vh"}}/>
             <div>{conversation.first_name + ' ' + conversation.last_name}</div>
         </button>));
     };
