@@ -167,7 +167,8 @@ export const Register = ({setCurrentUser}) => {
                 maxHeight: '100%',
                 maxWidth: '100%',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                textAlign: 'center'
             }}>
                 <div id={'register-error-box'}
                      className="register-error-box"
