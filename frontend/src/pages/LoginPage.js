@@ -53,11 +53,7 @@ export const Login = ({setCurrentUser}) => {
                 setCurrentUser(user);
                 navigate('/');
             } catch (error) {
-                if(error.response.data.detail) {
-                    if(error.response.data.detail.includes('CSRF')) {
-                        setErrorTxt('თავიდან ავტორიზაციისთის გთხოვთ ჯერ გამოხვიდეთ');
-                    }
-                } else if(error.response.data.non_field_errors) {
+                if (error.response.data.non_field_errors) {
                     setErrorTxt(error.response.data.non_field_errors);
                 } else {
                     setErrorTxt('დაფიქსირდა შეცდომა, ავტორიზაცია ვერ ხერხდება');

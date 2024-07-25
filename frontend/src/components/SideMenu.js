@@ -6,15 +6,25 @@ import feed from "../assets/icons/feed.svg"
 import profile from "../assets/icons/profile.svg";
 import chat from "../assets/icons/chat.svg";
 import blood from "../assets/icons/blood.svg";
-import logout from "../assets/icons/logout.svg";
+import logout_logo from "../assets/icons/logout.svg";
 import support from "../assets/icons/support.svg";
 import logo from "../assets/icons/logo.svg"
 import React from "react";
 import strings from "../values/strings";
 import {IconButton} from "./IconButton";
+import {logout} from "../services/SignSystemService";
 
 export const SideMenu = ({current, currentUser}) => {
     const navigate = useNavigate();
+
+    const handleLogout = async (e) => {
+        try {
+            await logout()
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <motion.div
@@ -47,8 +57,8 @@ export const SideMenu = ({current, currentUser}) => {
 
 
             <div style={{marginTop: "auto"}}>
-                <MenuButton svg_file={logout} height={"44vh"} text={"გასვლა"}
-                            onClick={() => navigate("/logout", {currentUser: currentUser})}/>
+                <MenuButton svg_file={logout_logo} height={"44vh"} text={"გასვლა"}
+                            onClick={() => handleLogout()}/>
             </div>
             {(current !== strings.HELP) &&
                 <MenuButton svg_file={support} height={"40vh"}

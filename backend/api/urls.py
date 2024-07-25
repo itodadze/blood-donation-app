@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from .views import (auth_views, blood_views, chat_views, donation_views,
@@ -54,4 +55,6 @@ urlpatterns = [
     path("login/", LoginUser.as_view(), name="login"),
     path("icons/", icon_views.UserIconView.as_view(), name="get-user-icons"),
     path("icons/user/", icon_views.SetUserIconView.as_view(), name="update-user-icon"),
+    path("logout/", auth_views.Logout.as_view(), name='logout'),
+    path('csrf-token/', auth_views.csrf_token_view, name='csrf-token'),
 ]

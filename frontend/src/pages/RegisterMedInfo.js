@@ -55,11 +55,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
                 setCurrentUser(user);
                 navigate('/');
             } catch (error) {
-                if (error.response.data.detail) {
-                    if (error.response.data.detail.includes('CSRF')) {
-                        setErrorTxt('რეგისტრაციის გასავლელად გთხოვთ ჯერ გამოხვიდეთ');
-                    }
-                } else if (error.response.data.email) {
+                if (error.response.data.email) {
                     if (error.response.data.email[0].includes('exists')) {
                         setErrorTxt('მომხმარებელი ასეთი იმეილით უკვე არსებობს')
                     }
