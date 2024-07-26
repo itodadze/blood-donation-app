@@ -19,9 +19,10 @@ class RegisterUser(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            user_data = serializer.save()
+            user = User.objects.get(email=user_data['email'])
             login(request, user)
-            return Response(serializer.data, status=HTTP_201_CREATED)
+            return Response(user_data, status=HTTP_201_CREATED)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
@@ -33,12 +34,13 @@ class LoginUser(generics.GenericAPIView):
         if serializer.is_valid():
             user = serializer.validated_data['user']
             login(request, user)
-            return Response({"detail": "Login successful"}, status=HTTP_200_OK)
+            return Response(serializer.data, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 class Logout(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
         logout(request)
         response = Response({"detail": "Logout successful"}, status=HTTP_200_OK)

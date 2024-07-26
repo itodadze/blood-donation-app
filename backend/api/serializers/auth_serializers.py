@@ -50,12 +50,18 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user = User.objects.create(**validated_data)
         user.set_password(password)
         user.save()
-        return user
+        return {'id': user.pk,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'donor': user.donor_status
+                }
 
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+    user = serializers.SerializerMethodField()
 
     def validate(self, attrs):
         email = attrs.get('email')
@@ -69,3 +75,22 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("იმეილიც და პაროლიც სავალდებულო ველებია")
         attrs['user'] = user
         return attrs
+
+    def get_user(self, instance):
+        user = instance.get('user')
+        if user:
+            return {
+                'id': user.pk,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'donor': user.donor_status
+            }
+        return None
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        user_data = self.get_user(instance)
+        if user_data:
+            representation['user'] = user_data
+        return representation
