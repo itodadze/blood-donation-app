@@ -1,3 +1,5 @@
+import os
+
 from django.http import FileResponse
 from rest_framework import status
 from rest_framework.parsers import FileUploadParser
@@ -7,6 +9,30 @@ from rest_framework.views import APIView
 
 from api.models import User, MedicalDocument
 from api.serializers.document_serializers import MedicalDocumentSerializer
+
+class MedicalDocumentsUploadView(APIView):
+    parser_classes = (FileUploadParser,)
+
+    def post(self, request: Request, identifier: int) -> Response:
+        print(request.data)
+        file = request.FILES["file"]
+        try:
+            user = User.objects.get(pk=identifier)
+            directory = os.path.join('users/documents/', str(user.pk))
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            address = os.path.join(directory, file.name)
+            with open(address, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+            MedicalDocument.objects.create(
+                user=user,
+                file_address=address,
+                description=file.name
+            )
+            return Response(None, status=status.HTTP_201_CREATED)
+        except User.DoesNotExist:
+            return Response("User not found", status=status.HTTP_400_BAD_REQUEST)
 
 
 class MedicalDocumentsView(APIView):
@@ -18,22 +44,6 @@ class MedicalDocumentsView(APIView):
             queryset = MedicalDocument.objects.filter(user=user)
             result_serializer = MedicalDocumentSerializer(queryset, many=True)
             return Response(result_serializer.data, status=status.HTTP_200_OK)
-        except User.DoesNotExist:
-            return Response("User not found", status=status.HTTP_400_BAD_REQUEST)
-
-    def post(self, request: Request, format=None) -> Response:
-        file = request.FILES["file"]
-        try:
-            user = User.objects.get(pk=request.data["id"])
-            address = '/users/documents/' + str(user.pk) + "/" + file.name
-            with open(address, 'wb+') as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
-            MedicalDocument.objects.create(
-                user=user,
-                file_address=address,
-                description=file.name
-            )
         except User.DoesNotExist:
             return Response("User not found", status=status.HTTP_400_BAD_REQUEST)
 
