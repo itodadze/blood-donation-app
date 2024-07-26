@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
 
-import {getUser} from "../../services/UserService";
+import {getUser, updateUser} from "../../services/UserService";
 import background from "../../assets/background/background.png";
 import colors from "../../values/colors";
 import {getIcons} from "../../services/UserIconsService";
-import {ProfileEditableTextField} from "./ProfileEditableTextField";
 import {ProfileEditableField, ProfileField} from "./ProfileField";
 import {LocationPick} from "../map/LocationPick";
 
@@ -44,6 +43,22 @@ export const ProfileInfo = ({currentUser, userId}) => {
             setSelectedIcon(data.icon.file_address)
         }
         setShowPopup(false);
+    }
+
+    const handleUserUpdate = () => {
+        if (currentUser !== userId) {
+            updateUser(
+                userId,
+                selectedIconId,
+                selectedLocLatitude,
+                selectedLocLongitude,
+                selectedFirstName,
+                selectedLastName,
+                selectedEmail,
+                isDonor,
+                description
+            )
+        }
     }
 
     const handleIcons = (data) => {
@@ -149,6 +164,10 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                       latitude={selectedLocLatitude}/>
                     </div>
                 </div>}
+                {currentUser !== userId && <button onClick={handleUserUpdate}
+                    className={'home-unselected-button'}>
+                    განაახლე ინფორმაცია
+                </button>}
             </div>}
         </div>
     )

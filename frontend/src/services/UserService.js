@@ -21,3 +21,22 @@ export const getUser = ({userId}) => {
         .then(response => response.data)
         .catch(error => console.error('Error fetching user:', error));
 }
+
+export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, email,
+                           isDonor, description) => {
+    const requestData = {
+        id: id,
+        icon_id: iconId,
+        is_donor: isDonor,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        description: description,
+        loc_latitude: locLat,
+        loc_longitude: locLon
+    }
+
+    return api.patch('/users/access/', requestData)
+        .then(response => response.data)
+        .catch(error => console.error('Error updating user information', error));
+}
