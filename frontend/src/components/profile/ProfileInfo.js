@@ -4,6 +4,9 @@ import {getUser} from "../../services/UserService";
 import background from "../../assets/background/background.png";
 import colors from "../../values/colors";
 import {getIcons} from "../../services/UserIconsService";
+import {ProfileEditableTextField} from "./ProfileEditableTextField";
+import {ProfileEditableField, ProfileField} from "./ProfileField";
+import {LocationPick} from "../map/LocationPick";
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -58,7 +61,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
         getUser({userId: userId})
             .then((data) => handleSuccess(data))
             .catch(() => handleFailure(userId))
-    });
+    }, [userId]);
 
     return (
         <div style={{
@@ -93,14 +96,59 @@ export const ProfileInfo = ({currentUser, userId}) => {
             </div>}
             {!showPopup && !showIconOptions && <div style={{
                 height: "90%", width: "92%", position: 'relative', backgroundColor:
-                colors.pearl, display: "flex", justifyContent: "center", flexDirection: "column"
+                colors.pearl, display: "flex", flexDirection: "column", alignItems: 'center'
             }}>
-                <div className={selectedIcon} style={{
-                    width: "15vh", height: "15vh", borderRadius: "50%",
-                    borderWidth: "2px", borderColor: colors.black, borderStyle: "solid", margin: "5vh"
-                }} onClick={
-                    () => setShowIconOptions(true)
-                }/>
+                {currentUser !== userId && <div style={{
+                    height: '45%', position: 'relative', display: 'flex',
+                    flexDirection: 'row', alignItems: 'center'
+                }}>
+                    <div className={selectedIcon} style={{
+                        width: "20vh", height: "20vh", borderRadius: "50%",
+                        borderWidth: "2px", borderColor: colors.black, borderStyle: "solid", margin: "5vh"
+                    }} onClick={
+                        () => setShowIconOptions(true)
+                    }/>
+                    <div style={{
+                        position: 'relative', display: 'flex',
+                        flexDirection: 'column', alignItems: 'center'
+                    }}>
+                        <ProfileEditableField description={"სახელი"}
+                                              value={selectedFirstName}
+                                              setValue={setSelectedFirstName}
+                                              width={'18vh'}/>
+                        <ProfileEditableField description={"გვარი"}
+                                              value={selectedLastName}
+                                              setValue={setSelectedLastName}
+                                              width={'20vh'}/>
+                        <ProfileEditableField description={"მეილი"}
+                                              value={selectedEmail}
+                                              setValue={setSelectedEmail}
+                                              width={'28vh'}/>
+                        <ProfileField description={"სისხლის ჯგუფი"}
+                                      value={blood}/>
+                        <div style={{
+                            position: 'relative', display: 'flex',
+                            flexDirection: 'row', alignItems: 'center', width: '100%'
+                        }}>
+                            <text style={{margin: '1vh', fontWeight: 'bold'}}>
+                                ვარ აქტიური დონორი:
+                            </text>
+                            <input
+                                type="checkbox"
+                                checked={isDonor}
+                                onChange={() => setIsDonor(!isDonor)}
+                                className={"request-checkbox"}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <LocationPick setSelectedLat={setSelectedLocLatitude}
+                                      setSelectedLon={setSelectedLocLongitude}
+                                      className={"request-location"}
+                                      longitude={selectedLocLongitude}
+                                      latitude={selectedLocLatitude}/>
+                    </div>
+                </div>}
             </div>}
         </div>
     )
