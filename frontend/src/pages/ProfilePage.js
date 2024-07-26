@@ -2,8 +2,10 @@ import {useParams} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import React from "react";
 import {ProfilePageMenu} from "../components/profile/ProfilePageMenu";
+import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
+import {ProfileInfo} from "../components/profile/ProfileInfo";
 
-export const Profile = ({isSidebarOpen, toggleSidebar, currentUser, }) => {
+export const Profile = ({isSidebarOpen, toggleSidebar, currentUser}) => {
     let { user_id } = useParams()
 
     return (
@@ -19,6 +21,10 @@ export const Profile = ({isSidebarOpen, toggleSidebar, currentUser, }) => {
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
             {isSidebarOpen && <ProfilePageMenu currentUser={currentUser} userId={user_id}/>}
+            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
+                <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
+                <ProfileInfo currentUser={currentUser} userId={user_id}/>
+            </div>
         </div>
     )
 }

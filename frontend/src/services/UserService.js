@@ -15,3 +15,9 @@ export const getDonors = ({id}) => {
         .then(response => response.data)
         .catch(error => console.error('Error fetching users:', error));
 }
+
+export const getUser = ({userId}) => {
+    return api.get('/users/access/', {params: {id: userId}})
+        .then(response => response.data)
+        .catch(error => console.error('Error fetching user:', error));
+}
