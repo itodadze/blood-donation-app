@@ -52,3 +52,15 @@ class Logout(generics.GenericAPIView):
 def csrf_token_view(request):
     csrf_token = get_token(request)
     return JsonResponse({'csrfToken': csrf_token})
+
+
+def current_user_view(request):
+    user = request.user
+    response = {
+        'pk': user.pk,
+        'email': user.email,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'donor': user.donor_status
+    }
+    return JsonResponse(response)

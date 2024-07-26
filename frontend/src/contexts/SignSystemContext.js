@@ -41,6 +41,18 @@ export const SignProvider = ({children}) => {
         }
     };
 
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await api.get('/current-user/');
+                setCurrentUser(response.data);
+            } catch (error) {
+                console.error('მიმდინარე მომხმარებელი ვერ მოიძებნა', error);
+            }
+        };
+        fetchCurrentUser();
+    }, []);
+
     return (<SignContext.Provider value={{currentUser, provideRegister, provideLogin, provideLogout}}>
         {children}
     </SignContext.Provider>);

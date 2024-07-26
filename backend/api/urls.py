@@ -57,4 +57,5 @@ urlpatterns = [
     path("icons/user/", icon_views.SetUserIconView.as_view(), name="update-user-icon"),
     path("logout/", auth_views.Logout.as_view(), name='logout'),
     path('csrf-token/', auth_views.csrf_token_view, name='csrf-token'),
+    path('current-user/', auth_views.current_user_view, name='curr-user'),
 ]
