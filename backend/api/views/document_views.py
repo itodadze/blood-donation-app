@@ -21,7 +21,7 @@ class MedicalDocumentsView(APIView):
         except User.DoesNotExist:
             return Response("User not found", status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self, request: Request, format = None) -> Response:
+    def post(self, request: Request, format=None) -> Response:
         file = request.FILES["file"]
         try:
             user = User.objects.get(pk=request.data["id"])
@@ -46,3 +46,10 @@ class MedicalDocumentView(APIView):
         except MedicalDocument.DoesNotExist:
             return FileResponse(status=status.HTTP_404_NOT_FOUND)
 
+    def delete(self, request: Request) -> Response:
+        try:
+            file = MedicalDocument.objects.get(pk=request.query_params["id"])
+            MedicalDocument.objects.filter(pk=file.pk).delete()
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+        except MedicalDocument.DoesNotExist:
+            return Response("Document could not be found", status=status.HTTP_404_NOT_FOUND)
