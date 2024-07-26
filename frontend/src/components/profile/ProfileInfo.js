@@ -6,6 +6,7 @@ import colors from "../../values/colors";
 import {getIcons} from "../../services/UserIconsService";
 import {ProfileEditableField, ProfileField} from "./ProfileField";
 import {LocationPick} from "../map/LocationPick";
+import {Location} from "../map/Location"
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -46,7 +47,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
     }
 
     const handleUserUpdate = () => {
-        if (currentUser !== userId) {
+        if (currentUser === userId) {
             updateUser(
                 userId,
                 selectedIconId,
@@ -117,7 +118,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                 height: "90%", width: "92%", position: 'relative', backgroundColor:
                 colors.pearl, display: "flex", flexDirection: "column", alignItems: 'center'
             }}>
-                {currentUser !== userId && <div style={{
+                {currentUser === userId && <div style={{
                     height: '45%', position: 'relative', display: 'flex',
                     flexDirection: 'row', alignItems: 'center'
                 }}>
@@ -168,7 +169,49 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                       latitude={selectedLocLatitude}/>
                     </div>
                 </div>}
-                {currentUser !== userId && <div style={{width: '70vh',
+                {currentUser !== userId && <div style={{
+                    height: '45%', position: 'relative', display: 'flex',
+                    flexDirection: 'row', alignItems: 'center'
+                }}>
+                    <div className={selectedIcon} style={{
+                        width: "20vh", height: "20vh", borderRadius: "50%",
+                        borderWidth: "2px", borderColor: colors.black, borderStyle: "solid", margin: "5vh"
+                    }}/>
+                    <div style={{
+                        position: 'relative', display: 'flex',
+                        flexDirection: 'column', alignItems: 'center'
+                    }}>
+                        <ProfileField description={"სახელი"}
+                                              value={selectedFirstName}/>
+                        <ProfileField description={"გვარი"}
+                                              value={selectedLastName}/>
+                        <ProfileField description={"მეილი"}
+                                              value={selectedEmail}/>
+                        <ProfileField description={"სისხლის ჯგუფი"}
+                                      value={blood}/>
+                        <div style={{
+                            position: 'relative', display: 'flex',
+                            flexDirection: 'row', alignItems: 'center', width: '100%'
+                        }}>
+                            {isDonor &&
+                                <text style={{margin: '1vh', fontWeight: 'bold'}}>
+                                    დონორი
+                                </text>
+                            }
+                            {!isDonor &&
+                                <text style={{margin: '1vh', fontWeight: 'bold'}}>
+                                    არ არის დონორი
+                                </text>
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        <Location
+                            selectedLon={selectedLocLongitude}
+                            selectedLat={selectedLocLatitude}/>
+                    </div>
+                </div>}
+                {currentUser === userId && <div style={{width: '70vh',
                     height: '13vh', overflowX: 'auto'}}>
                         <textarea
                             value={description}
@@ -176,7 +219,20 @@ export const ProfileInfo = ({currentUser, userId}) => {
                             className={"scroll profile-description"}
                         />
                 </div>}
-                {currentUser !== userId && <button onClick={handleUserUpdate}
+                {currentUser !== userId && (
+                    <div style={{ width: '70vh', height: '13vh', overflowX: 'auto' }}>
+                        <div
+                            className="scroll profile-description"
+                            style={{
+                                whiteSpace: 'pre-wrap',
+                                overflowY: 'auto'
+                            }}
+                        >
+                            {description}
+                        </div>
+                    </div>
+                )}
+                {currentUser === userId && <button onClick={handleUserUpdate}
                                                    className={'home-unselected-button'}>
                     განაახლე ინფორმაცია
                 </button>}
