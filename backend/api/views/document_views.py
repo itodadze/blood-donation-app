@@ -71,6 +71,8 @@ class MedicalDocumentView(APIView):
     def delete(self, request: Request) -> Response:
         try:
             file = MedicalDocument.objects.get(pk=request.query_params["id"])
+            fs = FileSystemStorage()
+            fs.delete(file.description)
             MedicalDocument.objects.filter(pk=file.pk).delete()
             return Response(None, status=status.HTTP_204_NO_CONTENT)
         except MedicalDocument.DoesNotExist:
