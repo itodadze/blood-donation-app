@@ -64,7 +64,7 @@ class UserView(APIView):
             )
             user: QuerySet = User.objects.filter(pk=updates.id)
             if updates.is_donor is not None:
-                user.update(is_donor=updates.is_donor)
+                user.update(donor_status=updates.is_donor)
             if updates.email:
                 user.update(email=updates.email)
             if updates.loc_longitude and updates.loc_latitude:
