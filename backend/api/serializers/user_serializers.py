@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import User, UserIcon
+from api.models import User, UserIcon, BloodType
 
 
 class UserIconSerializer(serializers.ModelSerializer):
@@ -27,15 +27,37 @@ class UserSerializer(serializers.ModelSerializer):
         return result
 
 
+class UserBloodTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BloodType
+        fields = ['rhesus_factor', 'blood_type']
+
+
 class UserResponseSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    loc_longitude = serializers.FloatField()
-    loc_latitude = serializers.FloatField()
-    blood_type = serializers.CharField()
-    rhesus_factor = serializers.BooleanField()
-    blood_narrative = serializers.CharField()
-    donor_status = serializers.BooleanField()
-    description = serializers.CharField()
-    icon_path = serializers.CharField()
+    icon = UserIconSerializer(read_only=True)
+    blood_type = UserBloodTypeSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'first_name',
+            'last_name',
+            'loc_longitude',
+            'loc_latitude',
+            'blood_type',
+            'donor_status',
+            'description',
+            'icon'
+        ]
+
+
+class UserUpdateRequestSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    icon_id = serializers.IntegerField(allow_null=True)
+    first_name = serializers.CharField(allow_null=True)
+    last_name = serializers.CharField(allow_null=True)
+    email = serializers.CharField(allow_null=True)
+    description = serializers.CharField(allow_null=True)
+    loc_longitude = serializers.FloatField(allow_null=True)
+    loc_latitude = serializers.FloatField(allow_null=True)
