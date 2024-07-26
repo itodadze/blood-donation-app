@@ -1,6 +1,8 @@
 import os
 
+from django.core.files.storage.filesystem import FileSystemStorage
 from django.http import FileResponse
+from django.core.files.storage import default_storage
 from rest_framework import status
 from rest_framework.parsers import FileUploadParser
 from rest_framework.request import Request
@@ -10,6 +12,7 @@ from rest_framework.views import APIView
 from api.models import User, MedicalDocument
 from api.serializers.document_serializers import MedicalDocumentSerializer
 
+
 class MedicalDocumentsUploadView(APIView):
     parser_classes = (FileUploadParser,)
 
@@ -18,17 +21,20 @@ class MedicalDocumentsUploadView(APIView):
         file = request.FILES["file"]
         try:
             user = User.objects.get(pk=identifier)
-            directory = os.path.join('users/documents/', str(user.pk))
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-            address = os.path.join(directory, file.name)
-            with open(address, 'wb+') as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
+            fs = FileSystemStorage()
+            filename = fs.save(str(user.pk) + "_" + file.name, file)
+            with default_storage.open(filename, 'rb') as file:
+                lines = file.readlines()
+            if len(lines) > 4:
+                lines = lines[4:]
+            else:
+                lines = []
+            with default_storage.open(filename, 'wb') as file:
+                file.writelines(lines)
             MedicalDocument.objects.create(
                 user=user,
-                file_address=address,
-                description=file.name
+                file_address=filename,
+                description=filename
             )
             return Response(None, status=status.HTTP_201_CREATED)
         except User.DoesNotExist:
@@ -52,7 +58,13 @@ class MedicalDocumentView(APIView):
     def get(self, request: Request) -> FileResponse:
         try:
             file = MedicalDocument.objects.get(pk=request.query_params["id"])
-            return FileResponse(open(file.file_address, 'rb'), filename=file.description, as_attachment=True)
+            fs = FileSystemStorage()
+            if fs.exists(file.file_address):
+                response = FileResponse(fs.open(file.file_address, 'rb'), content_type='application/octet-stream',
+                                        as_attachment=True)
+                response['Content-Disposition'] = f'attachment; filename="{file.description}"'
+                response['Access-Control-Expose-Headers'] = 'Content-Disposition'
+                return response
         except MedicalDocument.DoesNotExist:
             return FileResponse(status=status.HTTP_404_NOT_FOUND)
 
