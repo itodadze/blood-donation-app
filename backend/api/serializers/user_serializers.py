@@ -54,6 +54,7 @@ class UserResponseSerializer(serializers.ModelSerializer):
 
 class UserUpdateRequestSerializer(serializers.Serializer):
     id = serializers.IntegerField()
+    is_donor = serializers.BooleanField(allow_null=True)
     icon_id = serializers.IntegerField(allow_null=True)
     first_name = serializers.CharField(allow_null=True)
     last_name = serializers.CharField(allow_null=True)
