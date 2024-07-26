@@ -50,7 +50,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user = User.objects.create(**validated_data)
         user.set_password(password)
         user.save()
-        return {'id': user.pk,
+        return {'pk': user.pk,
                 'email': user.email,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
@@ -80,7 +80,7 @@ class LoginSerializer(serializers.Serializer):
         user = instance.get('user')
         if user:
             return {
-                'id': user.pk,
+                'pk': user.pk,
                 'email': user.email,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
