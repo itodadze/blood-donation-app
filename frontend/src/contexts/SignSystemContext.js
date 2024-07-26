@@ -26,7 +26,7 @@ export const SignProvider = ({children}) => {
     const provideLogin = async (email, password) => {
         try {
             const user = await login(email, password);
-            setCurrentUser(user);
+            setCurrentUser(user.user);
         } catch (error) {
             console.error('ავტორიზაცია ვერ ხერხდება', error);
         }

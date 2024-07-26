@@ -4,7 +4,7 @@ import {HomePageMenu} from "../components/home/HomePageMenu";
 import {Helmet} from "react-helmet";
 import {HomePageSearchBar} from "../components/home/HomePageSearchBar";
 
-export const Home = ({isSidebarOpen, toggleSidebar, currentUser}) => {
+export const Home = ({isSidebarOpen, toggleSidebar}) => {
     const [bloodOverUsers, setBloodOverUsers] = useState(true);
     const [mapRequestData, setMapRequestData] = useState([])
     const [mapUserData, setMapUserData] = useState([])
@@ -25,14 +25,14 @@ export const Home = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <HomePageMenu currentUser={currentUser}/>}
+            {isSidebarOpen && <HomePageMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <HomePageSearchBar toggleSidebar={toggleSidebar} bloodOverUsers={bloodOverUsers}
                 toggleFilterButton={toggleFilterButton} setMapRequestData={setMapRequestData}
                 setMapUserData={setMapUserData}/>
                 <div style={{flex: '1', position: 'relative', width: "100%"}}>
-                    {bloodOverUsers && <Map mapData={mapRequestData} isBlood={true} currentUser={currentUser}/>}
-                    {!bloodOverUsers && <Map mapData={mapUserData} isBlood={false} currentUser={currentUser}/>}
+                    {bloodOverUsers && <Map mapData={mapRequestData} isBlood={true}/>}
+                    {!bloodOverUsers && <Map mapData={mapUserData} isBlood={false}/>}
                 </div>
             </div>
         </div>
