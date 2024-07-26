@@ -7,6 +7,7 @@ import {getIcons} from "../../services/UserIconsService";
 import {ProfileEditableField, ProfileField} from "./ProfileField";
 import {LocationPick} from "../map/LocationPick";
 import {Location} from "../map/Location"
+import {uploadFile} from "../../services/MedicalDocumentsService";
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -64,6 +65,15 @@ export const ProfileInfo = ({currentUser, userId}) => {
 
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value)
+    }
+
+    const handleFileChange = async (event) => {
+        const selectedFile = event.target.files[0];
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        uploadFile({formData: formData, filename: "file", userId: userId})
     }
 
     const handleIcons = (data) => {
@@ -236,6 +246,19 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                                    className={'home-unselected-button'}>
                     განაახლე ინფორმაცია
                 </button>}
+                {currentUser !== userId &&
+                    <div>
+                        <input
+                            type="file"
+                            id="file-upload"
+                            onChange={handleFileChange}
+                            style={{display: 'none'}}
+                        />
+                        <label htmlFor="file-upload">
+                            Click to select a file
+                        </label>
+                    </div>
+                }
             </div>}
         </div>
     )
