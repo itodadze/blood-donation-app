@@ -178,7 +178,7 @@
 
 .profile-document-box {
     width: 17vh;
-    height: 23vh;
+    height: 20vh;
     border-style: solid;
     border-color: #ffc2d1;
     background-color: #ffffff;
@@ -187,8 +187,10 @@
     margin: 2vh;
     align-items: center;
     align-content: center;
+    text-align: center;
     font-size: medium;
     justify-items: center;
+    word-wrap: break-word;
 }
 
 .request-popup {

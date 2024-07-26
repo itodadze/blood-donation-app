@@ -19,3 +19,9 @@ export const getMedicalDocument = ({id}) => {
         .then(response => response)
         .catch(error => console.log("Could not access medical document", error));
 }
+
+export const deleteMedicalDocument = ({id}) => {
+    return api.delete('/documents/access/', {params: {id: id}})
+        .then(response => response.data)
+        .catch(error => console.log("Could not delete document", error))
+}

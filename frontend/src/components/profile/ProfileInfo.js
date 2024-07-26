@@ -7,7 +7,14 @@ import {getIcons} from "../../services/UserIconsService";
 import {ProfileEditableField, ProfileField} from "./ProfileField";
 import {LocationPick} from "../map/LocationPick";
 import {Location} from "../map/Location"
-import {getMedicalDocument, getMedicalDocuments, saveFile} from "../../services/MedicalDocumentsService";
+import {
+    deleteMedicalDocument,
+    getMedicalDocument,
+    getMedicalDocuments,
+    saveFile
+} from "../../services/MedicalDocumentsService";
+
+import file_icon from "../../assets/icons/file.svg";
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -98,6 +105,10 @@ export const ProfileInfo = ({currentUser, userId}) => {
         setMedicalDocuments(data)
     }
 
+    const deleteFile = (id) => {
+        deleteMedicalDocument({id})
+    }
+
     const downloadFile = (id) => {
         getMedicalDocument({id})
             .then((response) => {
@@ -132,7 +143,8 @@ export const ProfileInfo = ({currentUser, userId}) => {
 
     return (
         <div style={{
-            flex: '1', position: 'relative', width: "100%", backgroundImage: `url(${background})`,
+            flex: '1', position: 'relative', width: "100%", maxWidth: '100%',
+            backgroundImage: `url(${background})`, maxHeight: '100%',
             backgroundSize: 'cover', display: "flex", justifyContent: "center", flexDirection: "column",
             alignItems: 'center'
         }}>
@@ -162,11 +174,11 @@ export const ProfileInfo = ({currentUser, userId}) => {
                 }
             </div>}
             {!showPopup && !showIconOptions && <div style={{
-                height: "90%", width: "92%", position: 'relative', backgroundColor:
+                height: "90%", maxHeight: '90%', width: "92%", maxWidth: '92%', position: 'relative', backgroundColor:
                 colors.pearl, display: "flex", flexDirection: "column", alignItems: 'center'
             }}>
                 {currentUser === userId && <div style={{
-                    height: '45%', position: 'relative', display: 'flex',
+                    height: '42%', position: 'relative', display: 'flex',
                     flexDirection: 'row', alignItems: 'center'
                 }}>
                     <div className={selectedIcon} style={{
@@ -217,7 +229,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                     </div>
                 </div>}
                 {currentUser !== userId && <div style={{
-                    height: '45%', position: 'relative', display: 'flex',
+                    height: '42%', position: 'relative', display: 'flex',
                     flexDirection: 'row', alignItems: 'center'
                 }}>
                     <div className={selectedIcon} style={{
@@ -283,31 +295,49 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                                    className={'home-unselected-button'}>
                     განაახლე ინფორმაცია
                 </button>}
-                {currentUser !== userId &&
-                    <div>
+                {currentUser === userId &&
+                    <div style={{marginTop: '1vh', marginBottom: '1vh'}}>
                         <input type="file" onChange={handleFileChange}/>
-                        <button onClick={uploadFile}>Upload File</button>
+                        <button onClick={uploadFile} className={'home-unselected-button'}>ატვირთე</button>
                     </div>
                 }
                 <div style={{
-                    height: '30%', position: 'relative', display: 'flex',
-                    flexDirection: 'row', alignItems: 'center'}}>
-                    {
-                        medicalDocuments.map(
-                            (document) => {
-                                return <div className={'profile-document-box'}
-                                onClick = {
-                                    () => {
-                                        downloadFile(document.id, document.file_address)
-                                    }
-                                }>
-                                    <text style={{color: colors.primary_dark,
-                                        margin: '1vh'}}>
-                                        {document.description}</text>
-                                </div>
-                            }
-                        )
-                    }
+                    height: '30%', width: '90%', maxHeight: '30%', maxWidth: '90%'
+                }}>
+                    <div style={{
+                        position: 'relative', display: 'flex', flexDirection: 'row',
+                        alignItems: 'center', overflowX: 'scroll', overflowY: 'clip'
+                    }}>
+                        {
+                            medicalDocuments.map(
+                                (document) => {
+                                    return <div className={'profile-document-box'}>
+                                        <img src={file_icon} style={{width: '5vh', height: '5vh'}}
+                                             onClick={
+                                                 () => {
+                                                     downloadFile(document.id, document.file_address)
+                                                 }
+                                             }/>
+                                        <span
+                                            style={{
+                                                color: colors.primary_dark,
+                                                marginLeft: '1vh',
+                                                marginRight: '1vh',
+                                                display: 'block',
+                                            }}
+                                        >
+                                        {document.description}
+                                        </span>
+                                        {currentUser === userId &&
+                                            <button onClick={() => {
+                                                deleteFile(document.id)
+                                            }}>წაშლა</button>
+                                        }
+                                    </div>
+                                }
+                            )
+                        }
+                    </div>
                 </div>
             </div>}
         </div>

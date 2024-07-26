@@ -21,7 +21,8 @@ export const Profile = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
             {isSidebarOpen && <ProfilePageMenu currentUser={currentUser} userId={user_id}/>}
-            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
+            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%",
+            maxWidth: '100%', maxHeight: '100%', overflow: 'hidden'}}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
                 <ProfileInfo currentUser={currentUser} userId={user_id}/>
             </div>
