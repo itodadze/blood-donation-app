@@ -9,6 +9,7 @@ import {Register} from "./pages/RegisterPage";
 import {RegisterMedInfo} from "./pages/RegisterMedInfo";
 import {Request} from "./pages/RequestPage";
 import {Help} from "./pages/HelpPage";
+import {SignProvider} from "./contexts/SignSystemContext";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,33 +19,33 @@ function App() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-    return (
+    return (<SignProvider>
+
         <Routes>
             <Route path='/' element={<Home isSidebarOpen={isSidebarOpen}
                                            toggleSidebar={toggleSidebar}
-                                            currentUser={currentUser}/>}/>
+                                           currentUser={currentUser}/>}/>
             <Route path='/request/broadcast' element={<RequestForm isSidebarOpen={isSidebarOpen}
-                                                         toggleSidebar={toggleSidebar}
-                                                        currentUser={currentUser}/>}/>
+                                                                   toggleSidebar={toggleSidebar}
+                                                                   currentUser={currentUser}/>}/>
             <Route path='/chat' element={<Chat isSidebarOpen={isSidebarOpen}
                                                toggleSidebar={toggleSidebar}
-                                                currentUser={currentUser}/>}/>
-            <Route path="/request/:request_id" element = {
-                <Request isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}
-                currentUser={currentUser}/>
-            }/>
+                                               currentUser={currentUser}/>}/>
+            <Route path="/request/:request_id"
+                   element={<Request isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}
+                                     currentUser={currentUser}/>}/>
             <Route path='/login' element={<Login isSidebarOpen={isSidebarOpen}
                                                  toggleSidebar={toggleSidebar}
-                                                setCurrentUser={setCurrentUser}/>}/>
+                                                 setCurrentUser={setCurrentUser}/>}/>
             <Route path='/register' element={<Register isSidebarOpen={isSidebarOpen}
                                                        toggleSidebar={toggleSidebar}
                                                        setCurrentUser={setCurrentUser}/>}/>
             <Route path='/registerMed' element={<RegisterMedInfo setCurrentUser={setCurrentUser}/>}/>
-            <Route path="/help" element = {<Help isSidebarOpen={isSidebarOpen}
-                                                 toggleSidebar={toggleSidebar}
-                                                 setCurrentUser={setCurrentUser}/>}/>
+            <Route path="/help" element={<Help isSidebarOpen={isSidebarOpen}
+                                               toggleSidebar={toggleSidebar}
+                                               setCurrentUser={setCurrentUser}/>}/>
         </Routes>
-    );
+    </SignProvider>);
 }
 
 export default App;
