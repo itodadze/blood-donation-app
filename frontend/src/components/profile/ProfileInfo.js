@@ -7,7 +7,7 @@ import {getIcons} from "../../services/UserIconsService";
 import {ProfileEditableField, ProfileField} from "./ProfileField";
 import {LocationPick} from "../map/LocationPick";
 import {Location} from "../map/Location"
-import {uploadFile} from "../../services/MedicalDocumentsService";
+import {getMedicalDocument, getMedicalDocuments, saveFile} from "../../services/MedicalDocumentsService";
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -23,7 +23,25 @@ export const ProfileInfo = ({currentUser, userId}) => {
     const [popupMessage, setPopupMessage] = useState('იძებნება');
     const [showIconOptions, setShowIconOptions] = useState(false);
     const [showPopup, setShowPopup] = useState(true);
+    const [medicalDocuments, setMedicalDocuments] = useState([]);
     const [icons, setIcons] = useState([]);
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    };
+
+    const uploadFile = async () => {
+        if (!file) {
+            console.error('No file selected');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        saveFile({formData: formData, userId: userId, file: file})
+    }
+
 
     const handleSuccess = (data) => {
         setSelectedEmail(data.email)
@@ -67,15 +85,6 @@ export const ProfileInfo = ({currentUser, userId}) => {
         setDescription(event.target.value)
     }
 
-    const handleFileChange = async (event) => {
-        const selectedFile = event.target.files[0];
-
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-
-        uploadFile({formData: formData, filename: "file", userId: userId})
-    }
-
     const handleIcons = (data) => {
         setIcons(data)
     }
@@ -85,12 +94,40 @@ export const ProfileInfo = ({currentUser, userId}) => {
         setShowPopup(true);
     }
 
+    const handleMedicalDocuments = (data) => {
+        setMedicalDocuments(data)
+    }
+
+    const downloadFile = (id) => {
+        getMedicalDocument({id})
+            .then((response) => {
+                let filename = 'downloaded-file';
+                let contentDisposition = response.headers['content-disposition'];
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                    if (filenameMatch && filenameMatch[1]) {
+                        filename = filenameMatch[1];
+                    }
+                }
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            })
+    }
+
     useEffect(() => {
         getIcons()
             .then((data) => handleIcons(data))
         getUser({userId: userId})
             .then((data) => handleSuccess(data))
             .catch(() => handleFailure(userId))
+        getMedicalDocuments({userId})
+            .then((data) => handleMedicalDocuments(data))
     }, [userId]);
 
     return (
@@ -248,18 +285,31 @@ export const ProfileInfo = ({currentUser, userId}) => {
                 </button>}
                 {currentUser !== userId &&
                     <div>
-                        <input
-                            type="file"
-                            id="file-upload"
-                            onChange={handleFileChange}
-                            style={{display: 'none'}}
-                        />
-                        <label htmlFor="file-upload">
-                            Click to select a file
-                        </label>
+                        <input type="file" onChange={handleFileChange}/>
+                        <button onClick={uploadFile}>Upload File</button>
                     </div>
                 }
+                <div style={{
+                    height: '30%', position: 'relative', display: 'flex',
+                    flexDirection: 'row', alignItems: 'center'}}>
+                    {
+                        medicalDocuments.map(
+                            (document) => {
+                                return <div className={'profile-document-box'}
+                                onClick = {
+                                    () => {
+                                        downloadFile(document.id, document.file_address)
+                                    }
+                                }>
+                                    <text style={{color: colors.primary_dark,
+                                        margin: '1vh'}}>
+                                        {document.description}</text>
+                                </div>
+                            }
+                        )
+                    }
+                </div>
             </div>}
         </div>
-    )
+    );
 }
