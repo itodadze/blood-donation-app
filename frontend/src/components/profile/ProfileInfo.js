@@ -61,6 +61,10 @@ export const ProfileInfo = ({currentUser, userId}) => {
         }
     }
 
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value)
+    }
+
     const handleIcons = (data) => {
         setIcons(data)
     }
@@ -164,8 +168,16 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                       latitude={selectedLocLatitude}/>
                     </div>
                 </div>}
+                {currentUser !== userId && <div style={{width: '70vh',
+                    height: '13vh', overflowX: 'auto'}}>
+                        <textarea
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            className={"scroll profile-description"}
+                        />
+                </div>}
                 {currentUser !== userId && <button onClick={handleUserUpdate}
-                    className={'home-unselected-button'}>
+                                                   className={'home-unselected-button'}>
                     განაახლე ინფორმაცია
                 </button>}
             </div>}

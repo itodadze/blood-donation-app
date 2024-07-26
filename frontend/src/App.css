@@ -163,6 +163,19 @@
     }
 }
 
+.profile-description {
+    width: 65vh;
+    height: 12vh;
+    border-style: solid;
+    border-color: #ffc2d1;
+    background-color: #ffffff;
+    border-width: 2px;
+
+    @media (max-width: 1000px) {
+        width: 240px;
+    }
+}
+
 .request-popup {
     position: relative;
     width: 500px;
