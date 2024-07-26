@@ -3,7 +3,7 @@ from rest_framework import serializers
 from api.models import User, UserIcon, BloodType
 
 
-class UserIconSerializer(serializers.ModelSerializer):
+class IconSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserIcon
         fields = "__all__"
@@ -34,7 +34,7 @@ class UserBloodTypeSerializer(serializers.ModelSerializer):
 
 
 class UserResponseSerializer(serializers.ModelSerializer):
-    icon = UserIconSerializer(read_only=True)
+    icon = IconSerializer(read_only=True)
     blood_type = UserBloodTypeSerializer(read_only=True)
 
     class Meta:
