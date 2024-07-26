@@ -33,7 +33,7 @@ class UserBloodTypeSerializer(serializers.ModelSerializer):
         fields = ['rhesus_factor', 'blood_type']
 
 
-class UserResponseSerializer(serializers.Serializer):
+class UserResponseSerializer(serializers.ModelSerializer):
     icon = UserIconSerializer(read_only=True)
     blood_type = UserBloodTypeSerializer(read_only=True)
 
