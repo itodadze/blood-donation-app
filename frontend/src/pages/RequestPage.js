@@ -1,10 +1,10 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {RequestFormPageMenu} from "../components/request/RequestFormPageMenu";
 import React, {useEffect} from "react";
 import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
 import {RequestInfo} from "../components/request/RequestInfo";
 import {Helmet} from "react-helmet";
 import {getCurrentUserId} from "../services/CurrentUserService";
+import {SideMenu} from "../components/SideMenu";
 
 export const Request = ({isSidebarOpen, toggleSidebar}) => {
     let { request_id } = useParams();
@@ -34,7 +34,7 @@ export const Request = ({isSidebarOpen, toggleSidebar}) => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <RequestFormPageMenu/>}
+            {isSidebarOpen && <SideMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
                 <RequestInfo request_id={request_id}/>
