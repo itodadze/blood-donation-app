@@ -9,8 +9,10 @@ import {donate} from "../../services/DonationService";
 import {connectUsers} from "../../services/ChatCreateService";
 import {deleteConversation} from "../../services/ChatDeleteService";
 import {useNavigate} from "react-router-dom";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
-export const RequestInfo = ({request_id, currentUser}) => {
+export const RequestInfo = ({request_id}) => {
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
 
     const [selectedBlood, setSelectedBlood] = useState(null);
@@ -66,8 +68,17 @@ export const RequestInfo = ({request_id, currentUser}) => {
 
     const handleConnect = () => {
         connectUsers({donor: currentUser, receiver: receiver})
-        navigate("/chat", {currentUser: currentUser})
+        navigate("/chat")
     }
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
 
     useEffect(() => {
         getRequest({requestId: request_id})

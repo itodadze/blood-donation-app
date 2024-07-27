@@ -50,9 +50,9 @@ export const SideMenu = ({current}) => {
             animate={{x: 0}}
             transition={{type: 'tween', ease: 'easeOut', duration: 0}}>
             <IconButton svg_file={logo} height={"60vh"} text={"DonorStream"}
-                            onClick={() => navigate("/", {currentUser: currentUser})}/>
+                            onClick={() => navigate("/")}/>
             <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
-                        onClick={() => navigate("/", {currentUser: currentUser})}
+                        onClick={() => navigate("/")}
                         selected={current === strings.HOME}/>
 
             <MenuButton svg_file={profile} height={"38vh"} text={"პროფილი"}
@@ -60,11 +60,11 @@ export const SideMenu = ({current}) => {
                         selected={current === strings.PROFILE}/>
 
             <MenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
-                        onClick={() => navigate("/chat", {currentUser: currentUser})}
+                        onClick={() => navigate("/chat")}
                         selected={current === strings.CHATS}/>
 
             <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
-                        onClick={() => navigate("/request/broadcast", {currentUser: currentUser})}
+                        onClick={() => navigate("/request/broadcast")}
                         selected={current === strings.REQUEST}/>
 
 
@@ -73,7 +73,7 @@ export const SideMenu = ({current}) => {
                             onClick={() => handleLogout()}/>
             </div>
             <MenuButton svg_file={support} height={"40vh"} text={"დახმარება"}
-                        onClick={() => navigate("/help", {currentUser: currentUser})}
+                        onClick={() => navigate("/help")}
                         selected={current === strings.HELP}/>
         </motion.div>
     );

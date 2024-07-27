@@ -5,10 +5,10 @@ import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import chaos_background from "../assets/background/chaos_background.png";
-import {login, register} from "../services/SignSystemService";
+import {login} from "../services/SignSystemService";
 import {useNavigate} from "react-router-dom";
 
-export const Login = ({setCurrentUser}) => {
+export const Login = () => {
     const [selectedEmail, setSelectedEmail] = useState(null);
     const [selectedPassword, setSelectedPassword] = useState(null);
     const [errorTxt, setErrorTxt] = useState('');
@@ -49,8 +49,7 @@ export const Login = ({setCurrentUser}) => {
             setErrorTxt('გთხოვთ შეავსოთ ყველა ველი');
         } else {
             try {
-                const user = await login(selectedEmail, selectedPassword)
-                setCurrentUser(user);
+                await login(selectedEmail, selectedPassword)
                 navigate('/');
             } catch (error) {
                 if (error.response.data.non_field_errors) {

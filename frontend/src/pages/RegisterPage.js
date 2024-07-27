@@ -8,7 +8,7 @@ import {ClickableButton} from "../components/sign_system/ClickableButton";
 import chaos_background from "../assets/background/chaos_background.png";
 import colors from "../values/colors";
 
-export const Register = ({setCurrentUser}) => {
+export const Register = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedFirstName, setSelectedFirstName] = useState(null);
     const [selectedLastName, setSelectedLastName] = useState(null);

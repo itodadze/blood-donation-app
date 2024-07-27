@@ -8,7 +8,7 @@ import {register} from "../services/SignSystemService"
 import {useLocation, useNavigate} from "react-router-dom";
 import chaos_background from "../assets/background/chaos_background.png";
 
-export const RegisterMedInfo = ({setCurrentUser}) => {
+export const RegisterMedInfo = () => {
 
     const location = useLocation();
     const {
@@ -51,8 +51,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
             setErrorTxt('თუ დონორად რეგისტრირდებით, გთხოვთ აირჩიოთ სისხლის ტიპი');
         } else {
             try {
-                const user = await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood, medInfo)
-                setCurrentUser(user);
+                await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood, medInfo)
                 navigate('/');
             } catch (error) {
                 if (error.response.data.email) {

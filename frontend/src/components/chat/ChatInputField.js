@@ -1,8 +1,10 @@
 import colors from "../../values/colors";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {sendMessage} from "../../services/ChosenChatService";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
-export const ChatInputField = ({chosenRecipient, setMessageTime, currentUser}) => {
+export const ChatInputField = ({chosenRecipient, setMessageTime}) => {
+    const [currentUser, setCurrentUser] = useState(null);
     const [message, setMessage] = useState("");
 
     const handleChangeMessage = (input) => {
@@ -28,6 +30,15 @@ export const ChatInputField = ({chosenRecipient, setMessageTime, currentUser}) =
             handleSendMessage();
         }
     };
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
 
     return (<div className="chat-input-container">
         <div className="chat-input-message-container">

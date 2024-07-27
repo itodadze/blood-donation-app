@@ -1,6 +1,6 @@
 import api from "../AxiosInstance"
 
-export const broadcastRequest = async ({ selectedBlood, description, emergency, selectedLat, selectedLon}) => {
+export const broadcastRequest = async ({selectedBlood, description, emergency, selectedLat, selectedLon}) => {
     const requestData = {
         blood_id: selectedBlood,
         description: description,

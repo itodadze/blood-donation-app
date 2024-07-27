@@ -4,13 +4,25 @@ import {ChatMessage} from "./ChatMessage";
 import {getConversation} from "../../services/ChosenChatService"
 import {ChatInputField} from "./ChatInputField";
 import ReactLoading from 'react-loading';
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
-export const ChosenChat = ({chosenRecipient, currentUser}) => {
+export const ChosenChat = ({chosenRecipient}) => {
+    const [currentUser, setCurrentUser] = useState(null);
+
     const [conversation, fillConversation] = useState(null);
     const [loading, setLoading] = useState(false);
     const [lastMessageTime, setMessageTime] = useState(null);
     const chatRef = useRef(null);
     const POLLING_INTERVAL = 8000;
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
 
     useEffect(() => {
         if (chosenRecipient !== null && chosenRecipient !== undefined) {
@@ -28,7 +40,7 @@ export const ChosenChat = ({chosenRecipient, currentUser}) => {
                 setLoading(false);
             });
         }
-    }, [chosenRecipient, lastMessageTime]);
+    }, [chosenRecipient, lastMessageTime, currentUser]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -43,7 +55,7 @@ export const ChosenChat = ({chosenRecipient, currentUser}) => {
         }, POLLING_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, [chosenRecipient, lastMessageTime]);
+    }, [chosenRecipient, lastMessageTime, currentUser]);
 
     const renderMessages = () => {
         if (loading) {

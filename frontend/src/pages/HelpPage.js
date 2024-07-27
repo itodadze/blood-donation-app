@@ -4,10 +4,10 @@ import {HelpPageMenu} from "../components/help/HelpPageMenu";
 import {HelpTopBar} from "../components/help/HelpTopBar";
 import {HelpInformation} from "../components/help/HelpInformation";
 
-export const Help = ({isSidebarOpen, toggleSidebar, currentUser}) => {
+export const Help = ({isSidebarOpen, toggleSidebar}) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'row', height: '100vh', maxHeight: '100vh' }}>
-            {isSidebarOpen && <HelpPageMenu currentUser={currentUser} />}
+            {isSidebarOpen && <HelpPageMenu/>}
             <div style={{ flex: '1', display: 'flex', flexDirection: 'column', width: "100%", maxHeight: '100%' }}>
                 <HelpTopBar toggleSidebar={toggleSidebar} />
                 <div style={{
