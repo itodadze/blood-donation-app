@@ -14,6 +14,8 @@ from api.models import BloodType, ReceiverRequest, User
 from api.serializers.search_serializers import (BroadcastSearchSerializer,
                                                 SearchSerializer)
 
+from backend import settings
+
 
 class FilterSearchRequestsView(APIView):
     def get(self, request: Request) -> Response:
@@ -79,7 +81,7 @@ class BroadcastSearchView(APIView):
         user_to: User,
         request: ReceiverRequest,
     ) -> None:
-        link_url = "http://localhost:3000/request/" + str(request.id)
+        link_url = settings.REACT_APP_BASE_URL + "/request/" + str(request.id)
         email_body = (
             "სისხლი ესაჭიროება მომხმარებელს: "
             + user_from.first_name
