@@ -62,3 +62,4 @@ class UserUpdateRequestSerializer(serializers.Serializer):
     description = serializers.CharField(allow_null=True)
     loc_longitude = serializers.FloatField(allow_null=True)
     loc_latitude = serializers.FloatField(allow_null=True)
+    blood_id = serializers.IntegerField(allow_null=True)

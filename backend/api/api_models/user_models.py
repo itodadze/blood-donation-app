@@ -12,6 +12,7 @@ class UserUpdateRequest:
     description: str | None = None
     loc_longitude: float | None = None
     loc_latitude: float | None = None
+    blood_id: int | None = None
 
     def as_dictionary(self) -> dict:
         return {
@@ -23,5 +24,6 @@ class UserUpdateRequest:
             "email": self.email,
             "description": self.description,
             "loc_longitude": self.loc_longitude,
-            "loc_latitude": self.loc_latitude
+            "loc_latitude": self.loc_latitude,
+            "blood_id": self.blood_id,
         }

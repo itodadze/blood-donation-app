@@ -81,6 +81,12 @@ class UserView(APIView):
                     user.update(icon=icon)
             except UserIcon.DoesNotExist:
                 return Response("Icon does not exist", status=status.HTTP_404_NOT_FOUND)
+            try:
+                if updates.blood_id:
+                    blood = BloodType.objects.get(pk=updates.blood_id)
+                    user.update(blood_type=blood)
+            except BloodType.DoesNotExist:
+                return Response("Blood type does not exist", status=status.HTTP_404_NOT_FOUND)
             return Response(None, status=status.HTTP_200_OK)
         else:
             return Response("Update request invalid", status=status.HTTP_400_BAD_REQUEST)
