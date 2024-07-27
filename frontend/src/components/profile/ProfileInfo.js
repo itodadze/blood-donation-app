@@ -73,19 +73,17 @@ export const ProfileInfo = ({currentUser, userId}) => {
     }
 
     const handleUserUpdate = () => {
-        if (currentUser === userId) {
-            updateUser(
-                userId,
-                selectedIconId,
-                selectedLocLatitude,
-                selectedLocLongitude,
-                selectedFirstName,
-                selectedLastName,
-                selectedEmail,
-                isDonor,
-                description
-            )
-        }
+        updateUser(
+            userId,
+            selectedIconId,
+            selectedLocLatitude,
+            selectedLocLongitude,
+            selectedFirstName,
+            selectedLastName,
+            selectedEmail,
+            isDonor,
+            description
+        )
     }
 
     const handleDescriptionChange = (event) => {
