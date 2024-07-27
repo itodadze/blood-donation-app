@@ -12,7 +12,7 @@ export const RegisterMedInfo = () => {
 
     const location = useLocation();
     const {
-        selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate
+        selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm
     } = location.state || {};
 
     const [medInfo, setInputInfo] = useState(true);
@@ -26,10 +26,10 @@ export const RegisterMedInfo = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!selectedFirstName || !selectedLastName || !selectedEmail || !selectedPassword || !selectedPasswordConfirm || !selectedDate) {
+        if (!selectedFirstName || !selectedLastName || !selectedEmail || !selectedPassword || !selectedPasswordConfirm) {
             navigate('/register');
         }
-    }, [selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate]);
+    }, [selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm]);
 
 
     const handleMedInfo = () => {
@@ -51,7 +51,7 @@ export const RegisterMedInfo = () => {
             setErrorTxt('თუ დონორად რეგისტრირდებით, გთხოვთ აირჩიოთ სისხლის ტიპი');
         } else {
             try {
-                await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood, medInfo)
+                await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedLat, selectedLon, selectedBlood, medInfo)
                 navigate('/');
             } catch (error) {
                 if (error.response.data.email) {

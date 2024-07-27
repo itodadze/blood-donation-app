@@ -6,7 +6,6 @@ from api.models import User
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-    birthday = serializers.DateField(input_formats=["%d/%m/%Y"])
     password = serializers.CharField(write_only=True)
     password_confirm = serializers.CharField(write_only=True)
 
@@ -16,7 +15,6 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
-            "birthday",
             "loc_longitude",
             "loc_latitude",
             "blood_type",

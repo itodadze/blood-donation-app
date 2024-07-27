@@ -2,14 +2,13 @@ import api from "../AxiosInstance"
 import Cookies from 'js-cookie';
 
 
-export const register = async (firstName, lastName, email, password, passwordConfirm, date, lat, lon, blood, donor) => {
+export const register = async (firstName, lastName, email, password, passwordConfirm, lat, lon, blood, donor) => {
     const data = {
         first_name: firstName,
         last_name: lastName,
         email: email,
         password: password,
         password_confirm: passwordConfirm,
-        birthday: date,
         loc_latitude: lat,
         loc_longitude: lon,
         blood_type: blood,

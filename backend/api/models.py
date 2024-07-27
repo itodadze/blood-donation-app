@@ -35,7 +35,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=200, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    birthday = models.DateField()
     loc_longitude = models.FloatField(null=True, blank=True)
     loc_latitude = models.FloatField(null=True, blank=True)
     blood_type = models.ForeignKey(

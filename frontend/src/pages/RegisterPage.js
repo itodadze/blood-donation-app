@@ -9,28 +9,30 @@ import background from "../assets/background/background.png";
 import colors from "../values/colors";
 
 export const Register = () => {
-    const [selectedDate, setSelectedDate] = useState(null);
     const [selectedFirstName, setSelectedFirstName] = useState(null);
     const [selectedLastName, setSelectedLastName] = useState(null);
     const [selectedPassword, setSelectedPassword] = useState(null);
     const [selectedPasswordConfirm, setSelectedPasswordConfirm] = useState(null);
     const [selectedEmail, setSelectedEmail] = useState(null);
     const [errorTxt, setErrorTxt] = useState('');
+    const [terms, checkTerms] = useState(false);
 
     const navigate = useNavigate();
     const validator = require('validator');
 
     const stateVariables = [
-        selectedDate,
         selectedFirstName,
         selectedLastName,
         selectedPassword,
         selectedPasswordConfirm,
-        selectedEmail
+        selectedEmail,
+        terms
     ];
 
     const handleContinue = () => {
-        if (stateVariables.some(variable => !variable)) {
+        if (!terms) {
+            setErrorTxt('თანხმობის ველი უნდა იყოს მონიშნული');
+        } else if (stateVariables.some(variable => !variable)) {
             setErrorTxt('გთხოვთ შეავსოთ ყველა ველი სწორად');
         } else {
             setErrorTxt('');
@@ -41,8 +43,7 @@ export const Register = () => {
                     selectedLastName: selectedLastName,
                     selectedEmail: selectedEmail,
                     selectedPassword: selectedPassword,
-                    selectedPasswordConfirm: selectedPasswordConfirm,
-                    selectedDate: selectedDate
+                    selectedPasswordConfirm: selectedPasswordConfirm
                 }
             })
         }
@@ -103,18 +104,6 @@ export const Register = () => {
         setErrorTxt(error);
     }
 
-    const handleDateChange = (value, setError) => {
-        let error;
-        if (!validator.isDate(value, {format: 'DD/MM/YYYY'})) {
-            setSelectedDate(null);
-            error = 'თარიღი არ არის სწორად შეყვანილი';
-        } else {
-            setSelectedDate(value);
-            error = '';
-        }
-        setError(error);
-        setErrorTxt(error);
-    }
 
     const handlePasswordChange = (e, setError) => {
         let error;
@@ -149,6 +138,10 @@ export const Register = () => {
         }
         setError(error);
         setErrorTxt(error);
+    }
+
+    const handleCheckTerms = (e) => {
+        checkTerms(!terms);
     }
 
     return (<div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
@@ -192,7 +185,16 @@ export const Register = () => {
                         <PasswordField fieldName={'დადასტურება'} placeholderText={'გაიმეორე პაროლი'}
                                        handleFunc={handlePasswordConfirmChange} disableField={!selectedPassword}/>
                     </div>
-                    <DateChooser handleFunc={handleDateChange}/>
+                    <div style={{flex:0.5, marginTop: '5px', width: '100%'}}>
+                        <label
+                            style={{width: '100%', padding: '2%', display: 'flex', justifyContent: 'center'}}>
+                            <input type={"checkbox"} onInput={handleCheckTerms}
+                                   style={{
+                                       width: '30px', height: '30px', marginLeft: '10%'
+                                   }}/>
+                            <span>ვარ სრულწლოვანი და ვეთანხმები რომ ჩემი მონაცემები იყოს დამუშავებული </span>
+                        </label>
+                    </div>
                     <ClickableButton buttonText={'განაგრძე'} onClick={(e) => {
                         handleContinue()
                     }}/>
