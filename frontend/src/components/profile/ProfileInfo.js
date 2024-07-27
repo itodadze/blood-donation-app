@@ -139,6 +139,8 @@ export const ProfileInfo = ({currentUser, userId}) => {
             .catch(() => handleFailure(userId))
         getMedicalDocuments({userId})
             .then((data) => handleMedicalDocuments(data))
+        console.log(userId)
+        console.log(currentUser)
     }, [userId]);
 
     return (
@@ -177,7 +179,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                 height: "90%", maxHeight: '90%', width: "92%", maxWidth: '92%', position: 'relative', backgroundColor:
                 colors.pearl, display: "flex", flexDirection: "column", alignItems: 'center'
             }}>
-                {currentUser === userId && <div style={{
+                {'' + currentUser === userId && <div style={{
                     height: '42%', position: 'relative', display: 'flex',
                     flexDirection: 'row', alignItems: 'center'
                 }}>
@@ -228,7 +230,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                       latitude={selectedLocLatitude}/>
                     </div>
                 </div>}
-                {currentUser !== userId && <div style={{
+                {'' + currentUser !== userId && <div style={{
                     height: '42%', position: 'relative', display: 'flex',
                     flexDirection: 'row', alignItems: 'center'
                 }}>
@@ -270,7 +272,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                             selectedLat={selectedLocLatitude}/>
                     </div>
                 </div>}
-                {currentUser === userId && <div style={{width: '70vh',
+                {'' + currentUser === userId && <div style={{width: '70vh',
                     height: '13vh', overflowX: 'auto'}}>
                         <textarea
                             value={description}
@@ -278,7 +280,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                             className={"scroll profile-description"}
                         />
                 </div>}
-                {currentUser !== userId && (
+                {'' + currentUser !== userId && (
                     <div style={{ width: '70vh', height: '13vh', overflowX: 'auto' }}>
                         <div
                             className="scroll profile-description"
@@ -291,11 +293,11 @@ export const ProfileInfo = ({currentUser, userId}) => {
                         </div>
                     </div>
                 )}
-                {currentUser === userId && <button onClick={handleUserUpdate}
+                {'' + currentUser === userId && <button onClick={handleUserUpdate}
                                                    className={'home-unselected-button'}>
                     განაახლე ინფორმაცია
                 </button>}
-                {currentUser === userId &&
+                {'' + currentUser === userId &&
                     <div style={{marginTop: '1vh', marginBottom: '1vh'}}>
                         <input type="file" onChange={handleFileChange}/>
                         <button onClick={uploadFile} className={'home-unselected-button'}>ატვირთე</button>
@@ -328,7 +330,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                         >
                                         {document.description}
                                         </span>
-                                        {currentUser === userId &&
+                                        {'' + currentUser === userId &&
                                             <button onClick={() => {
                                                 deleteFile(document.id)
                                             }}>წაშლა</button>
