@@ -32,7 +32,8 @@ export const HomePageUserFilterOptions = ({handleHeightChange, setMapUserData}) 
     return (
         <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center'}}>
             <BloodDropdownMenu handleSelect={handleSelect} className={"home-dropdown-menu"}/>
-            <MatchDropdownMenu matches={matches} selectedMatch={selectedMatch} handleMatch={handleMatch}/>
+            <MatchDropdownMenu matches={matches} selectedMatch={selectedMatch} handleMatch={handleMatch}
+            defaultVal={"ფილტრი"}/>
         </div>
     );
 }

@@ -1,11 +1,11 @@
 import {Button, Dropdown} from "react-bootstrap";
 import {DropdownMatchOption} from "./DropdownMatchOption";
 
-export const MatchDropdownMenu = ({matches, selectedMatch, handleMatch}) => {
+export const MatchDropdownMenu = ({matches, selectedMatch, handleMatch, defaultVal}) => {
     return (
         <Dropdown>
             <Dropdown.Toggle as={Button} variant="outline-dark" className={"home-dropdown-menu"}>
-                {selectedMatch ? selectedMatch : 'ფილტრი'}
+                {selectedMatch ? selectedMatch : defaultVal}
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {
