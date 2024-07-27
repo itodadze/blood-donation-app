@@ -21,8 +21,11 @@ import blackhole from "../../assets/donation_icons/blackhole.png"
 import file_icon from "../../assets/icons/file.svg";
 import {BloodDropdownMenu} from "../BloodDropdownMenu";
 import {getDonationCount} from "../../services/DonationCountService";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
-export const ProfileInfo = ({currentUser, userId}) => {
+export const ProfileInfo = ({userId}) => {
+    const [currentUser, setCurrentUser] = useState(null);
+
     const [selectedIconId, setSelectedIconId] = useState(null);
     const [selectedIcon, setSelectedIcon] = useState('icon_0');
     const [selectedFirstName, setSelectedFirstName] = useState('');
@@ -86,6 +89,11 @@ export const ProfileInfo = ({currentUser, userId}) => {
         setUpdateBloodId(eventKey.id);
     };
 
+    const handleUpdateFailure = async () => {
+        setPopupMessage(`მომხმარებლის ინფორმაცია ვერ განახლდა.`)
+        setShowPopup(true);
+    }
+
     const handleUserUpdate = () => {
         updateUser(
             userId,
@@ -99,6 +107,11 @@ export const ProfileInfo = ({currentUser, userId}) => {
             description,
             updateBloodId
         )
+            .catch(
+            () => {
+                handleUpdateFailure();
+            }
+        );
     }
 
     const handleDescriptionChange = (event) => {
@@ -110,7 +123,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
     }
 
     const handleFailure = (userId) => {
-        setPopupMessage(`მომხმარებელი ${userId} ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
+        setPopupMessage(`მომხმარებელი ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
         setShowPopup(true);
     }
 
@@ -162,27 +175,45 @@ export const ProfileInfo = ({currentUser, userId}) => {
     }
 
     useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+                setCurrentUser(null)
+            })
+    }, []);
+
+    useEffect(() => {
         getIcons()
             .then((data) => handleIcons(data))
         getUser({userId: userId})
-            .then((data) => handleSuccess(data))
+            .then((data) => {
+                handleSuccess(data)
+                getMedicalDocuments({userId})
+                    .then((inner) => handleMedicalDocuments(inner))
+                getDonationCount(userId)
+                    .then((inner) => handleDonationCount(inner))
+            })
             .catch(() => handleFailure(userId))
-        getMedicalDocuments({userId})
-            .then((data) => handleMedicalDocuments(data))
-        getDonationCount(userId)
-            .then((data) => handleDonationCount(data))
-    }, [userId]);
+    }, [userId, currentUser]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            getUser({userId: userId})
-                .then((data) => handleSuccess(data))
-            getMedicalDocuments({userId})
-                .then((data) => handleMedicalDocuments(data))
+            if (!showPopup) {
+                getUser({userId: userId})
+                    .then((data) => {
+                        setShowPopup(false)
+                        getMedicalDocuments({userId})
+                            .then((inner) => handleMedicalDocuments(inner))
+                    })
+                    .catch(
+                        () => handleFailure(userId)
+                    )
+            }
         }, POLLING_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, [userId]);
+    }, [userId, currentUser]);
 
     return (
         <div style={{
@@ -340,7 +371,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                 }
                 {'' + currentUser === userId && <button onClick={handleUserUpdate}
                                                    className={'home-unselected-button'}>
-                    განაახლე ინფორმაცია
+                    განაახლე
                 </button>}
                 <div style={{display: 'flex', flexDirection: 'row', padding: '0.5vh',
                 alignItems: 'center'}}>

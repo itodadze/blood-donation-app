@@ -5,15 +5,25 @@ import ReactLoading from "react-loading";
 import "../../styles/chat_page.css"
 import "../../assets/user_icons/icons.css"
 import {useNavigate} from "react-router-dom";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
 
-export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}) => {
+export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
+    // const [currentUser, setCurrentUser] = useState(null);
     const [conversations, fillConversations] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                getConversations(data)
+            }).catch(() => {
+        })
+    }, []);
+
+    const getConversations = (currentUser) => {
         setLoading(true);
         getConversationList(currentUser).then(data => {
             fillConversations(data);
@@ -22,7 +32,7 @@ export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}
         }).finally(() => {
             setLoading(false);
         });
-    }, [chosenRecipient]);
+    }
 
     const renderConversationList = () => {
         if (loading) {
@@ -43,7 +53,7 @@ export const ConversationList = ({chosenRecipient, chooseRecipient, currentUser}
                  style={{width: "7.5vh", height: "7.5vh", borderRadius: "50%",
             borderWidth: "1px", borderColor: colors.black, borderStyle: "solid", marginRight: "1vh"}}
             onClick={
-                () => {navigate("/profile/" + conversation.id, {currentUser: currentUser})}
+                () => {navigate("/profile/" + conversation.id)}
             }/>
             <div>{conversation.first_name + ' ' + conversation.last_name}</div>
         </button>));

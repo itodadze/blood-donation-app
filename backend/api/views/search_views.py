@@ -7,36 +7,48 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.api_models.search_models import BroadcastSearchRequest, FilterRequest
+from api.api_models.search_models import (BroadcastSearchRequest,
+                                          FilterReceiverRequest)
 from api.core.blood_matcher import all_blood_types, all_donors, all_recipients
 from api.core.donor_ranker import DonorPriorityRanker
 from api.models import BloodType, ReceiverRequest, User
 from api.serializers.search_serializers import (BroadcastSearchSerializer,
                                                 SearchSerializer)
-
 from backend import settings
 
 
 class FilterSearchRequestsView(APIView):
     def get(self, request: Request) -> Response:
-        search: FilterRequest = FilterRequest(int(request.query_params["id"]),
-                                              request.query_params["exact_match"] == "true")
+        search: FilterReceiverRequest = FilterReceiverRequest(
+            request.query_params.get("id", None),
+            request.query_params["exact_match"] == "true",
+            request.query_params["current_author"] == "true",
+        )
         recipient_blood_types = self._blood_types(search)
         queryset: QuerySet = ReceiverRequest.objects.filter(
             blood_type__in=recipient_blood_types, search_status=True
         )
+        if search.current_author:
+            try:
+                user: User = User.objects.get(pk=request.user.pk)
+                queryset = queryset.filter(user_id=user.pk)
+            except User.DoesNotExist:
+                return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
         result_serializer = SearchSerializer(queryset, many=True)
         return Response(result_serializer.data, status=status.HTTP_200_OK)
 
     @staticmethod
-    def _blood_types(search: FilterRequest) -> list[int]:
-        try:
-            curr_id = search.id
-            if search.exact_match:
-                return [curr_id]
-            else:
-                return all_recipients(curr_id)
-        except BloodType.DoesNotExist:
+    def _blood_types(search: FilterReceiverRequest) -> list[int]:
+        if search.id:
+            try:
+                BloodType.objects.get(pk=search.id)
+                if search.exact_match:
+                    return [search.id]
+                else:
+                    return all_recipients(search.id)
+            except BloodType.DoesNotExist:
+                return all_blood_types()
+        else:
             return all_blood_types()
 
 
@@ -47,7 +59,7 @@ class BroadcastSearchView(APIView):
             search: BroadcastSearchRequest = BroadcastSearchRequest(
                 **serializer.validated_data
             )
-            user: User = User.objects.get(pk=search.user_id)
+            user: User = User.objects.get(pk=request.user.pk)
             blood_type: BloodType = BloodType.objects.get(pk=search.blood_id)
             receiver_request = ReceiverRequest.objects.create(
                 user=user,

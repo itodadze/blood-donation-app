@@ -5,8 +5,7 @@ import {LocationPick} from "../map/LocationPick";
 import colors from "../../values/colors";
 import {broadcastRequest} from "../../services/BroadcastRequestService";
 
-export const RequestFormInput = ({currentUser}) => {
-
+export const RequestFormInput = () => {
     const [selectedBlood, setSelectedBlood] = useState(null);
     const [selectedLat, setSelectedLat] = useState(null);
     const [selectedLon, setSelectedLon] = useState(null)
@@ -43,15 +42,15 @@ export const RequestFormInput = ({currentUser}) => {
     }
 
     const handleConfirm = () => {
-        broadcastRequest({currentUser, selectedBlood, description,
+        broadcastRequest({selectedBlood, description,
         emergency, selectedLat, selectedLon}).then(handleSuccess).catch(handleFailure);
     }
 
     return (
         <div style={{
-            flex: '1', position: 'relative', width: "100%", backgroundImage: `url(${background})`,
+            flex: '1', position: 'relative', width: "100%", height: '100%', backgroundImage: `url(${background})`,
             backgroundSize: 'cover', display: "flex", justifyContent: "center", flexDirection: "column",
-            alignItems: 'center'
+            alignItems: 'center', overflow: 'auto', maxHeight: '100%', maxWidth: '100%'
         }}>
             {showPopup && <div className={"request-popup"}>
                 <div className="close-button" onClick={onPopupClose}>X</div>
@@ -59,8 +58,9 @@ export const RequestFormInput = ({currentUser}) => {
             </div>}
 
             {!showPopup && <div style={{
-                height: "90%", width: "92%", position: 'relative', backgroundColor:
-                colors.pearl, display: "flex", justifyContent: "center", flexDirection: "column"
+                height: "90%", maxHeight: '90%', width: "92%", position: 'relative', backgroundColor: colors.pearl,
+                display: "flex", justifyContent: "center", flexDirection: "column",
+                overflowY: 'auto', boxSizing: "border-box", margin: 'auto'
             }}>
                 <div className={"request-item"}>
                 <text className={"request-item-desc"}>
@@ -80,7 +80,7 @@ export const RequestFormInput = ({currentUser}) => {
                     <text className={"request-item-desc"}>
                         აღწერა:
                     </text>
-                    <div style={{width: '380px', height: '170px', overflowX: 'auto'}}>
+                    <div style={{width: '380px', height: '150px', overflowX: 'auto'}}>
                         <textarea
                             value={description}
                             onChange={handleChange}

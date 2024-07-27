@@ -6,13 +6,13 @@ import {LocationPick} from "../components/map/LocationPick";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import {register} from "../services/SignSystemService"
 import {useLocation, useNavigate} from "react-router-dom";
-import chaos_background from "../assets/background/chaos_background.png";
+import background from "../assets/background/background.png";
 
-export const RegisterMedInfo = ({setCurrentUser}) => {
+export const RegisterMedInfo = () => {
 
     const location = useLocation();
     const {
-        selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate
+        selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm
     } = location.state || {};
 
     const [medInfo, setInputInfo] = useState(true);
@@ -26,12 +26,10 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!selectedFirstName || !selectedLastName || !selectedEmail ||
-            !selectedPassword || !selectedPasswordConfirm || !selectedDate) {
+        if (!selectedFirstName || !selectedLastName || !selectedEmail || !selectedPassword || !selectedPasswordConfirm) {
             navigate('/register');
         }
-    }, [selectedFirstName, selectedLastName, selectedEmail,
-              selectedPassword, selectedPasswordConfirm, selectedDate]);
+    }, [selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm]);
 
 
     const handleMedInfo = () => {
@@ -53,12 +51,13 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
             setErrorTxt('თუ დონორად რეგისტრირდებით, გთხოვთ აირჩიოთ სისხლის ტიპი');
         } else {
             try {
-                const user = await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedDate, selectedLat, selectedLon, selectedBlood, medInfo)
-                setCurrentUser(user);
+                await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedLat, selectedLon, selectedBlood, medInfo)
                 navigate('/');
             } catch (error) {
-                if (error.response.data.email[0].includes('exists')) {
-                    setErrorTxt('მომხმარებელი ასეთი იმეილით უკვე არსებობს')
+                if (error.response.data.email) {
+                    if (error.response.data.email[0].includes('exists')) {
+                        setErrorTxt('მომხმარებელი ასეთი იმეილით უკვე არსებობს')
+                    }
                 } else if (error.response.data.password) {
                     setErrorTxt('შეყვანილი პაროლი არ აკმაყოფილებს მოთხოვნებს');
                 } else {
@@ -90,7 +89,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
             flex: '1',
             justifyContent: 'center',
             position: 'relative',
-            backgroundImage: `url(${chaos_background})`
+            backgroundImage: `url(${background})`
         }}>
             {showPopup && <div className={"register-popup-envelope"}>
                 <div className={"register-popup"}>
@@ -101,7 +100,7 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
             </div>}
 
             {!showPopup && <div style={{
-                backgroundImage: `url(${chaos_background})`,
+                backgroundImage: `url(${background})`,
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',

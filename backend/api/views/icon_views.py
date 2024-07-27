@@ -13,7 +13,7 @@ class UserIconView(APIView):
     def get(self, request: Request) -> Response:
         return Response(
             IconSerializer(UserIcon.objects.all(), many=True).data,
-            status=status.HTTP_200_OK
+            status=status.HTTP_200_OK,
         )
 
 

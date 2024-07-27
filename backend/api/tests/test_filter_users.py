@@ -18,7 +18,6 @@ def insert_default_user(
         email=email,
         first_name=first_name,
         last_name=last_name,
-        birthday=datetime(1995, 12, 12),
         loc_longitude=11.1,
         loc_latitude=5.5,
         blood_type=blood,

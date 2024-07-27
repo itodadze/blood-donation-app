@@ -2,12 +2,13 @@ import {useEffect, useRef, useState} from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 import {getPinMarker} from "./PinMarkerComponent";
-//import {getPinMarker} from "./PinMarkerComponent";
 import {useNavigate} from "react-router-dom";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXRvZGFkemUiLCJhIjoiY2x1bWdveHpnMG4zdjJrb2F2bXN3ZWx6YiJ9.-yIhnR6oioGEsaa2U1vgsQ';
 
-export const Map = ({mapData, isBlood, currentUser}) => {
+export const Map = ({mapData, isBlood}) => {
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
 
     const mapContainer = useRef(null);
@@ -18,6 +19,15 @@ export const Map = ({mapData, isBlood, currentUser}) => {
     const [currentMarkers] = useState([]);
 
     useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
+
+    useEffect(() => {
         if (map.current) return; // initialize map only once
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
@@ -25,7 +35,7 @@ export const Map = ({mapData, isBlood, currentUser}) => {
             center: [lng, lat],
             zoom: zoom
         });
-        });
+    });
 
     useEffect(() => {
         if (!map.current) return;
@@ -41,16 +51,16 @@ export const Map = ({mapData, isBlood, currentUser}) => {
             marker.addTo(map.current)
             if (isBlood) {
                 marker.getElement().addEventListener('click', () => {
-                    navigate("/request/" + id, {currentUser: currentUser});
+                    navigate("/request/" + id);
                 });
             } else {
                 marker.getElement().addEventListener('click', () => {
-                    navigate("/profile/" + id, {currentUser: currentUser});
+                    navigate("/profile/" + id);
                 });
             }
             currentMarkers.push(marker);
         });
-    }, [mapData]);
+    }, [mapData, currentUser]);
     return (
         <div>
             <div ref={mapContainer} style={{minWidth: "100vh", minHeight: "85vh", textAlign: "center"}}/>

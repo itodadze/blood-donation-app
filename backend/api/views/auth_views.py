@@ -1,11 +1,16 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework.status import (HTTP_200_OK, HTTP_201_CREATED,
+                                   HTTP_400_BAD_REQUEST)
 
 from api.models import User
-from api.serializers.auth_serializers import RegisterUserSerializer, LoginSerializer
+from api.serializers.auth_serializers import (LoginSerializer,
+                                              RegisterUserSerializer)
 
 
 class RegisterUser(generics.CreateAPIView):
@@ -16,9 +21,10 @@ class RegisterUser(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            user_data = serializer.save()
+            user = User.objects.get(email=user_data["email"])
             login(request, user)
-            return Response(serializer.data, status=HTTP_201_CREATED)
+            return Response(user_data, status=HTTP_201_CREATED)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
@@ -28,7 +34,35 @@ class LoginUser(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.validated_data['user']
+            user = serializer.validated_data["user"]
             login(request, user)
-            return Response({"detail": "Login successful"}, status=HTTP_200_OK)
+            return Response(serializer.data, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+class Logout(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        response = Response({"detail": "Logout successful"}, status=HTTP_200_OK)
+        response.delete_cookie("sessionid")
+        return response
+
+
+@ensure_csrf_cookie
+def csrf_token_view(request):
+    csrf_token = get_token(request)
+    return JsonResponse({"csrfToken": csrf_token})
+
+
+def current_user_view(request):
+    user = request.user
+    response = {
+        "pk": user.pk,
+        "email": user.email,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "donor": user.donor_status,
+    }
+    return JsonResponse(response)

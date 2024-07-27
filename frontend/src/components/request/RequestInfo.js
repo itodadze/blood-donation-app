@@ -9,8 +9,10 @@ import {donate} from "../../services/DonationService";
 import {connectUsers} from "../../services/ChatCreateService";
 import {deleteConversation} from "../../services/ChatDeleteService";
 import {useNavigate} from "react-router-dom";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
-export const RequestInfo = ({request_id, currentUser}) => {
+export const RequestInfo = ({request_id}) => {
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
 
     const [selectedBlood, setSelectedBlood] = useState(null);
@@ -41,7 +43,7 @@ export const RequestInfo = ({request_id, currentUser}) => {
     }
 
     const handleFailure = (request_id) => {
-        setPopupMessage(`მოთხოვნა ${request_id} ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
+        setPopupMessage(`მოთხოვნა ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
         setShowPopup(true);
     }
 
@@ -50,7 +52,9 @@ export const RequestInfo = ({request_id, currentUser}) => {
             deleteConversation(user.id, currentUser)
         })
         deleteRequest({requestId: request_id})
-            .then().catch()
+            .then(() => {
+                navigate("/")
+            }).catch()
     }
 
     const handleAccept = () => {
@@ -61,13 +65,24 @@ export const RequestInfo = ({request_id, currentUser}) => {
             deleteConversation(user.id, currentUser)
         })
         deleteRequest({requestId: request_id})
-            .then().catch()
+            .then(() => {
+                navigate("/")
+            }).catch()
     }
 
     const handleConnect = () => {
         connectUsers({donor: currentUser, receiver: receiver})
-        navigate("/chat", {currentUser: currentUser})
+        navigate("/chat")
     }
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
 
     useEffect(() => {
         getRequest({requestId: request_id})
@@ -77,16 +92,17 @@ export const RequestInfo = ({request_id, currentUser}) => {
 
     return (
         <div style={{
-            flex: '1', position: 'relative', width: "100%", backgroundImage: `url(${background})`,
+            flex: '1', position: 'relative', width: "100%", height: '100%', backgroundImage: `url(${background})`,
             backgroundSize: 'cover', display: "flex", justifyContent: "center", flexDirection: "column",
-            alignItems: 'center'
+            alignItems: 'center', overflow: 'auto', maxHeight: '100%', maxWidth: '100%'
         }}>
             {showPopup && <div className={"request-popup"}>
                 <text className={"request-item-desc"}>{popupMessage}</text>
             </div>}
             {!showPopup && <div style={{
-                height: "90%", width: "92%", position: 'relative', backgroundColor:
-                colors.pearl, display: "flex", justifyContent: "center", flexDirection: "column"
+                height: "90%", maxHeight: '90%', width: "92%", position: 'relative', backgroundColor: colors.pearl,
+                display: "flex", justifyContent: "center", flexDirection: "column",
+                overflowY: 'auto', boxSizing: "border-box", margin: 'auto'
             }}>
                 <div className={"request-item"}>
                     <text className={"request-item-desc"}>
@@ -106,7 +122,7 @@ export const RequestInfo = ({request_id, currentUser}) => {
                     <text className={"request-item-desc"}>
                         აღწერა:
                     </text>
-                    <div style={{width: '380px', height: '170px', overflowX: 'auto'}}>
+                    <div style={{width: '380px', height: '150px', overflowX: 'auto'}}>
                         <div className={"scroll request-description"}>
                             {description}
                         </div>

@@ -39,5 +39,8 @@ export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, emai
 
     return api.patch('/users/access/', requestData)
         .then(response => response.data)
-        .catch(error => console.error('Error updating user information', error));
+        .catch(error => {
+            console.error('Error updating user information', error);
+            throw error;
+        });
 }

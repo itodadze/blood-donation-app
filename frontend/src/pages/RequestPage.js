@@ -1,12 +1,26 @@
-import {useParams} from "react-router-dom";
-import {RequestFormPageMenu} from "../components/request/RequestFormPageMenu";
-import React from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect} from "react";
 import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
 import {RequestInfo} from "../components/request/RequestInfo";
 import {Helmet} from "react-helmet";
+import {getCurrentUserId} from "../services/CurrentUserService";
+import {SideMenu} from "../components/SideMenu";
 
-export const Request = ({isSidebarOpen, toggleSidebar, currentUser}) => {
+export const Request = ({isSidebarOpen, toggleSidebar}) => {
     let { request_id } = useParams();
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                if(!data) {
+                    navigate('/login');
+                }
+            }).catch(() => {
+            navigate('/login');
+        })
+    }, []);
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
@@ -20,10 +34,10 @@ export const Request = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <RequestFormPageMenu currentUSer={currentUser}/>}
+            {isSidebarOpen && <SideMenu/>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%"}}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
-                <RequestInfo request_id={request_id} currentUser={currentUser}/>
+                <RequestInfo request_id={request_id}/>
             </div>
         </div>
     )

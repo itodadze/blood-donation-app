@@ -16,7 +16,6 @@ def insert_user_by_location(
         email=email,
         first_name="Test",
         last_name="Subject",
-        birthday=datetime(1995, 12, 12),
         loc_longitude=loc_longitude,
         loc_latitude=loc_latitude,
         blood_type=blood,
@@ -36,7 +35,6 @@ def default_broadcast_search_request(
         emergency_status=True,
         loc_latitude=loc_latitude,
         loc_longitude=loc_longitude,
-        user_id=user.pk,
     )
 
 

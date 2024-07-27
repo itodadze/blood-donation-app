@@ -1,12 +1,26 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {ProfilePageMenu} from "../components/profile/ProfilePageMenu";
 import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
 import {ProfileInfo} from "../components/profile/ProfileInfo";
+import {getCurrentUserId} from "../services/CurrentUserService";
 
-export const Profile = ({isSidebarOpen, toggleSidebar, currentUser}) => {
-    let { user_id } = useParams()
+export const Profile = ({isSidebarOpen, toggleSidebar}) => {
+    let {user_id} = useParams()
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                if(!data) {
+                    navigate('/login');
+                }
+            }).catch(() => {
+            navigate('/login');
+        })
+    }, []);
+
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
@@ -20,11 +34,13 @@ export const Profile = ({isSidebarOpen, toggleSidebar, currentUser}) => {
                 <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
-            {isSidebarOpen && <ProfilePageMenu currentUser={currentUser} userId={user_id}/>}
-            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%",
-            maxWidth: '100%', maxHeight: '100%', overflow: 'hidden'}}>
+            {isSidebarOpen && <ProfilePageMenu userId={user_id}/>}
+            <div style={{
+                flex: '1', display: 'flex', flexDirection: 'column', width: "100%",
+                maxWidth: '100%', maxHeight: '100%', overflow: 'hidden'
+            }}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
-                <ProfileInfo currentUser={currentUser} userId={user_id}/>
+                <ProfileInfo userId={user_id}/>
             </div>
         </div>
     )
