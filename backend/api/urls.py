@@ -1,8 +1,7 @@
-from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from .views import (auth_views, blood_views, chat_views, donation_views,
-                    icon_views, request_views, search_views, user_views)
+                    icon_views, request_views, search_views, user_views, document_views)
 from .views.auth_views import LoginUser
 
 urlpatterns = [
@@ -58,4 +57,9 @@ urlpatterns = [
     path("logout/", auth_views.Logout.as_view(), name='logout'),
     path('csrf-token/', auth_views.csrf_token_view, name='csrf-token'),
     path('current-user/', auth_views.current_user_view, name='curr-user'),
+    path("documents/", document_views.MedicalDocumentsView.as_view(), name="documents"),
+    path("documents/<int:identifier>/upload/", document_views.MedicalDocumentsUploadView.as_view(),
+         name='upload-document'),
+    path("documents/access/", document_views.MedicalDocumentView.as_view(), name="get-document"),
+    path("users/access/", user_views.UserView.as_view(), name="access-user")
 ]
