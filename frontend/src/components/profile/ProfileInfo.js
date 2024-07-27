@@ -13,9 +13,14 @@ import {
     getMedicalDocuments,
     saveFile
 } from "../../services/MedicalDocumentsService";
-
+import glass from "../../assets/donation_icons/glass.png"
+import jar from "../../assets/donation_icons/jar.png"
+import bucket from "../../assets/donation_icons/bucket.png"
+import ship from "../../assets/donation_icons/ship.png"
+import blackhole from "../../assets/donation_icons/blackhole.png"
 import file_icon from "../../assets/icons/file.svg";
 import {BloodDropdownMenu} from "../BloodDropdownMenu";
+import {getDonationCount} from "../../services/DonationCountService";
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -35,6 +40,8 @@ export const ProfileInfo = ({currentUser, userId}) => {
     const [medicalDocuments, setMedicalDocuments] = useState([]);
     const [icons, setIcons] = useState([]);
     const [file, setFile] = useState(null);
+    const [donationImage, setDonationImage] = useState(null);
+    const [donationCount, setDonationCount] = useState(0);
     const POLLING_INTERVAL = 8000;
 
     const handleFileChange = (event) => {
@@ -137,6 +144,23 @@ export const ProfileInfo = ({currentUser, userId}) => {
             })
     }
 
+    const handleDonationCount = (data) => {
+        setDonationCount(data.amount)
+        if (data.amount < 1) {
+            setDonationImage(null);
+        } else if (data.amount < 2) {
+            setDonationImage(glass)
+        } else if (data.amount < 4) {
+            setDonationImage(jar)
+        } else if (data.amount < 7) {
+            setDonationImage(bucket)
+        } else if (data.amount < 12) {
+            setDonationImage(ship)
+        } else {
+            setDonationImage(blackhole)
+        }
+    }
+
     useEffect(() => {
         getIcons()
             .then((data) => handleIcons(data))
@@ -145,6 +169,8 @@ export const ProfileInfo = ({currentUser, userId}) => {
             .catch(() => handleFailure(userId))
         getMedicalDocuments({userId})
             .then((data) => handleMedicalDocuments(data))
+        getDonationCount(userId)
+            .then((data) => handleDonationCount(data))
     }, [userId]);
 
     useEffect(() => {
@@ -316,6 +342,26 @@ export const ProfileInfo = ({currentUser, userId}) => {
                                                    className={'home-unselected-button'}>
                     განაახლე ინფორმაცია
                 </button>}
+                <div style={{display: 'flex', flexDirection: 'row', padding: '0.5vh',
+                alignItems: 'center'}}>
+                    <text style={{
+                        margin: '1vh', fontWeight: 'bold', fontSize: 'larger'
+                    }}>დონაციათა რაოდენობა:     {donationCount}</text>
+                    {donationImage && <div style={{
+                        backgroundImage: `url(${donationImage})`,
+                        width: '20vh',
+                        height: '20vh',
+                        backgroundSize: 'contain',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundColor: colors.white,
+                        margin: '1vh',
+                        borderStyle: 'solid',
+                        borderWidth: '1px',
+                        borderColor: colors.tertiary,
+                        borderRadius: '1vh'
+                    }}></div>}
+                </div>
                 {'' + currentUser === userId &&
                     <div style={{marginTop: '1vh', marginBottom: '1vh'}}>
                         <input type="file" onChange={handleFileChange}/>
