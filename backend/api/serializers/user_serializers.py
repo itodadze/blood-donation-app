@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import User, UserIcon, BloodType
+from api.models import BloodType, User, UserIcon
 
 
 class IconSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserBloodTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = BloodType
-        fields = ['rhesus_factor', 'blood_type']
+        fields = ["rhesus_factor", "blood_type"]
 
 
 class UserResponseSerializer(serializers.ModelSerializer):
@@ -40,15 +40,15 @@ class UserResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'email',
-            'first_name',
-            'last_name',
-            'loc_longitude',
-            'loc_latitude',
-            'blood_type',
-            'donor_status',
-            'description',
-            'icon'
+            "email",
+            "first_name",
+            "last_name",
+            "loc_longitude",
+            "loc_latitude",
+            "blood_type",
+            "donor_status",
+            "description",
+            "icon",
         ]
 
 

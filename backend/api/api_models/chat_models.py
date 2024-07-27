@@ -71,7 +71,7 @@ class ChatPeopleResponse:
             email=user.email,
             first_name=user.first_name,
             last_name=user.last_name,
-            icon_file_address=user.icon.file_address
+            icon_file_address=user.icon.file_address,
         )
 
     def as_dictionary(self) -> dict:
@@ -80,7 +80,7 @@ class ChatPeopleResponse:
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "icon_file_address": self.icon_file_address
+            "icon_file_address": self.icon_file_address,
         }
 
 

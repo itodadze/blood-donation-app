@@ -7,21 +7,23 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.api_models.search_models import BroadcastSearchRequest, FilterRequest, FilterReceiverRequest
+from api.api_models.search_models import (BroadcastSearchRequest,
+                                          FilterReceiverRequest)
 from api.core.blood_matcher import all_blood_types, all_donors, all_recipients
 from api.core.donor_ranker import DonorPriorityRanker
 from api.models import BloodType, ReceiverRequest, User
 from api.serializers.search_serializers import (BroadcastSearchSerializer,
                                                 SearchSerializer)
-
 from backend import settings
 
 
 class FilterSearchRequestsView(APIView):
     def get(self, request: Request) -> Response:
-        search: FilterReceiverRequest = FilterReceiverRequest(request.query_params.get("id", None),
-                                                              request.query_params["exact_match"] == "true",
-                                                              request.query_params["current_author"] == "true")
+        search: FilterReceiverRequest = FilterReceiverRequest(
+            request.query_params.get("id", None),
+            request.query_params["exact_match"] == "true",
+            request.query_params["current_author"] == "true",
+        )
         recipient_blood_types = self._blood_types(search)
         queryset: QuerySet = ReceiverRequest.objects.filter(
             blood_type__in=recipient_blood_types, search_status=True
@@ -84,29 +86,29 @@ class BroadcastSearchView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def email(
-            self,
-            search: BroadcastSearchRequest,
-            blood: BloodType,
-            user_from: User,
-            user_to: User,
-            request: ReceiverRequest,
+        self,
+        search: BroadcastSearchRequest,
+        blood: BloodType,
+        user_from: User,
+        user_to: User,
+        request: ReceiverRequest,
     ) -> None:
         link_url = settings.REACT_APP_BASE_URL + "/request/" + str(request.id)
         email_body = (
-                "სისხლი ესაჭიროება მომხმარებელს: "
-                + user_from.first_name
-                + " "
-                + user_from.last_name
-                + "-ს. \n"
-                + "ეძებს დონორს სისხლისთვის: "
-                + blood.narrative
-                + ".\n"
-                + "აღწერა: "
-                + search.description
-                + "\n"
-                + "მოთხოვნის ლინკი: "
-                + link_url
-                + "\n"
+            "სისხლი ესაჭიროება მომხმარებელს: "
+            + user_from.first_name
+            + " "
+            + user_from.last_name
+            + "-ს. \n"
+            + "ეძებს დონორს სისხლისთვის: "
+            + blood.narrative
+            + ".\n"
+            + "აღწერა: "
+            + search.description
+            + "\n"
+            + "მოთხოვნის ლინკი: "
+            + link_url
+            + "\n"
         )
         email = EmailMessage(
             subject="სისხლის დონაცია", body=email_body, to=[user_to.email]

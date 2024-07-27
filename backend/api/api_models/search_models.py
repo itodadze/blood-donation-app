@@ -18,7 +18,11 @@ class FilterReceiverRequest:
     current_author: bool
 
     def as_dictionary(self) -> dict:
-        return {"id": self.id, "exact_match": self.exact_match, "current_author": self.current_author}
+        return {
+            "id": self.id,
+            "exact_match": self.exact_match,
+            "current_author": self.current_author,
+        }
 
 
 @dataclass

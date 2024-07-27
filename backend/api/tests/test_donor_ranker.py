@@ -34,7 +34,7 @@ def default_broadcast_search_request(
         description="Test",
         emergency_status=True,
         loc_latitude=loc_latitude,
-        loc_longitude=loc_longitude
+        loc_longitude=loc_longitude,
     )
 
 
