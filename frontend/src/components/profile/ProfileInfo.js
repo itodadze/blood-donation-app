@@ -177,20 +177,29 @@ export const ProfileInfo = ({userId}) => {
         getIcons()
             .then((data) => handleIcons(data))
         getUser({userId: userId})
-            .then((data) => handleSuccess(data))
+            .then((data) => {
+                handleSuccess(data)
+                getMedicalDocuments({userId})
+                    .then((inner) => handleMedicalDocuments(inner))
+                getDonationCount(userId)
+                    .then((inner) => handleDonationCount(inner))
+            })
             .catch(() => handleFailure(userId))
-        getMedicalDocuments({userId})
-            .then((data) => handleMedicalDocuments(data))
-        getDonationCount(userId)
-            .then((data) => handleDonationCount(data))
     }, [userId, currentUser]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            getUser({userId: userId})
-                .then((data) => handleSuccess(data))
-            getMedicalDocuments({userId})
-                .then((data) => handleMedicalDocuments(data))
+            if (!showPopup) {
+                getUser({userId: userId})
+                    .then((data) => {
+                        setShowPopup(false)
+                        getMedicalDocuments({userId})
+                            .then((inner) => handleMedicalDocuments(inner))
+                    })
+                    .catch(
+                        () => handleFailure(userId)
+                    )
+            }
         }, POLLING_INTERVAL);
 
         return () => clearInterval(intervalId);
