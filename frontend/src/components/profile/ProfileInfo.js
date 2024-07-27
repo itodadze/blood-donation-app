@@ -15,6 +15,7 @@ import {
 } from "../../services/MedicalDocumentsService";
 
 import file_icon from "../../assets/icons/file.svg";
+import {BloodDropdownMenu} from "../BloodDropdownMenu";
 
 export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedIconId, setSelectedIconId] = useState(null);
@@ -24,6 +25,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
     const [selectedEmail, setSelectedEmail] = useState('');
     const [description, setDescription] = useState('')
     const [blood, setBlood] = useState('')
+    const [updateBloodId, setUpdateBloodId] = useState(null)
     const [selectedLocLatitude, setSelectedLocLatitude] = useState(0.0);
     const [selectedLocLongitude, setSelectedLocLongitude] = useState(0.0);
     const [isDonor, setIsDonor] = useState(false);
@@ -72,6 +74,10 @@ export const ProfileInfo = ({currentUser, userId}) => {
         setShowPopup(false);
     }
 
+    const handleBloodSelect = (eventKey, event) => {
+        setUpdateBloodId(eventKey.id);
+    };
+
     const handleUserUpdate = () => {
         updateUser(
             userId,
@@ -82,7 +88,8 @@ export const ProfileInfo = ({currentUser, userId}) => {
             selectedLastName,
             selectedEmail,
             isDonor,
-            description
+            description,
+            updateBloodId
         )
     }
 
@@ -291,6 +298,9 @@ export const ProfileInfo = ({currentUser, userId}) => {
                         </div>
                     </div>
                 )}
+                {'' + currentUser === userId &&
+                    <BloodDropdownMenu handleSelect={handleBloodSelect} className={"home-dropdown-menu"}/>
+                }
                 {'' + currentUser === userId && <button onClick={handleUserUpdate}
                                                    className={'home-unselected-button'}>
                     განაახლე ინფორმაცია

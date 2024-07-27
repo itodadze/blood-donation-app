@@ -23,7 +23,7 @@ export const getUser = ({userId}) => {
 }
 
 export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, email,
-                           isDonor, description) => {
+                           isDonor, description, bloodId) => {
     const requestData = {
         id: id,
         icon_id: iconId,
@@ -33,7 +33,8 @@ export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, emai
         email: email,
         description: description,
         loc_latitude: locLat,
-        loc_longitude: locLon
+        loc_longitude: locLon,
+        blood_id: bloodId
     }
 
     return api.patch('/users/access/', requestData)
