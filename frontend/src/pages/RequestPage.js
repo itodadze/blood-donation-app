@@ -1,12 +1,26 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {RequestFormPageMenu} from "../components/request/RequestFormPageMenu";
-import React from "react";
+import React, {useEffect} from "react";
 import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
 import {RequestInfo} from "../components/request/RequestInfo";
 import {Helmet} from "react-helmet";
+import {getCurrentUserId} from "../services/CurrentUserService";
 
 export const Request = ({isSidebarOpen, toggleSidebar}) => {
     let { request_id } = useParams();
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                if(!data) {
+                    navigate('/login');
+                }
+            }).catch(() => {
+            navigate('/login');
+        })
+    }, []);
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>

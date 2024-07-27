@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Map} from "../components/map/Map"
 import {HomePageMenu} from "../components/home/HomePageMenu";
 import {Helmet} from "react-helmet";
 import {HomePageSearchBar} from "../components/home/HomePageSearchBar";
+import {getCurrentUserId} from "../services/CurrentUserService";
+import {useNavigate} from "react-router-dom";
 
 export const Home = ({isSidebarOpen, toggleSidebar}) => {
     const [bloodOverUsers, setBloodOverUsers] = useState(true);
@@ -12,6 +14,20 @@ export const Home = ({isSidebarOpen, toggleSidebar}) => {
     const toggleFilterButton = () => {
         setBloodOverUsers(!bloodOverUsers);
     }
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                if(!data) {
+                    navigate('/login');
+                }
+            }).catch(() => {
+            navigate('/login');
+        })
+    }, []);
+
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>

@@ -1,5 +1,4 @@
 import api from "../AxiosInstance"
-import Cookies from 'js-cookie';
 
 
 export const register = async (firstName, lastName, email, password, passwordConfirm, lat, lon, blood, donor) => {

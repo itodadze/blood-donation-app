@@ -2,9 +2,24 @@ import {Helmet} from "react-helmet";
 import {RequestFormPageMenu} from "../components/request/RequestFormPageMenu";
 import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
 import {RequestFormInput} from "../components/request/RequestFormInput";
-import React from "react";
+import React, {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {getCurrentUserId} from "../services/CurrentUserService";
 
 export const RequestForm = ({isSidebarOpen, toggleSidebar}) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                if(!data) {
+                    navigate('/login');
+                }
+            }).catch(() => {
+            navigate('/login');
+        })
+    }, []);
+
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
             <Helmet>

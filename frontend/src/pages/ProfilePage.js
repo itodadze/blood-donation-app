@@ -1,18 +1,26 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {ProfilePageMenu} from "../components/profile/ProfilePageMenu";
 import {RequestFormPageTopBar} from "../components/request/RequestFormPageTopBar";
 import {ProfileInfo} from "../components/profile/ProfileInfo";
 import {getCurrentUserId} from "../services/CurrentUserService";
 
 export const Profile = ({isSidebarOpen, toggleSidebar}) => {
-    let { user_id } = useParams()
+    let {user_id} = useParams()
+    const navigate = useNavigate();
 
     useEffect(() => {
-        let id = getCurrentUserId()
-        console.log(id)
+        getCurrentUserId()
+            .then((data) => {
+                if(!data) {
+                    navigate('/login');
+                }
+            }).catch(() => {
+            navigate('/login');
+        })
     }, []);
+
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '100vh'}}>
@@ -27,8 +35,10 @@ export const Profile = ({isSidebarOpen, toggleSidebar}) => {
                 <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
             </Helmet>
             {isSidebarOpen && <ProfilePageMenu userId={user_id}/>}
-            <div style={{flex: '1', display: 'flex', flexDirection: 'column', width: "100%",
-            maxWidth: '100%', maxHeight: '100%', overflow: 'hidden'}}>
+            <div style={{
+                flex: '1', display: 'flex', flexDirection: 'column', width: "100%",
+                maxWidth: '100%', maxHeight: '100%', overflow: 'hidden'
+            }}>
                 <RequestFormPageTopBar toggleSidebar={toggleSidebar}/>
                 <ProfileInfo userId={user_id}/>
             </div>

@@ -10,15 +10,18 @@ import {useNavigate} from "react-router-dom";
 import {getCurrentUserId} from "../services/CurrentUserService";
 
 export const Chat = ({isSidebarOpen, toggleSidebar}) => {
-    const [currentUser, setCurrentUser] = useState(null);
     const [chosenRecipient, setRecipient] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getCurrentUserId()
             .then((data) => {
-                setCurrentUser(data)
+                if(!data) {
+                    navigate('/login');
+                }
             }).catch(() => {
-            setCurrentUser(null)
+            navigate('/login');
         })
     }, []);
 
@@ -26,11 +29,6 @@ export const Chat = ({isSidebarOpen, toggleSidebar}) => {
         setRecipient(recipient);
     };
 
-    const navigate = useNavigate();
-
-    if (!currentUser) {
-        navigate('/login');
-    }
 
     return (<div className="chat-page-menu-container">
         <Helmet>
