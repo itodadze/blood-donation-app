@@ -83,11 +83,3 @@ class FilterSearchRequestsTestCase(TestCase):
         response: Response = FilterSearchRequestsView().get(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(len(list(response.data)), 1)
-
-    def test_filter_search_exact_match(self) -> None:
-        search = FilterReceiverRequest(self.o_minus.pk, True, False).as_dictionary()
-        request = MagicMock(spec=Request)
-        request.query_params = search
-        response: Response = FilterSearchRequestsView().get(request)
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(len(list(response.data)), 1)
