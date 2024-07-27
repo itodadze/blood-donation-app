@@ -71,7 +71,7 @@ class ChatPeopleResponse:
             email=user.email,
             first_name=user.first_name,
             last_name=user.last_name,
-            icon_file_address=user.icon.file_address,
+            icon_file_address=user.icon.file_address if user.icon else None
         )
 
     def as_dictionary(self) -> dict:
