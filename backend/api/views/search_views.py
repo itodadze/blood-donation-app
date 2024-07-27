@@ -48,7 +48,7 @@ class BroadcastSearchView(APIView):
             search: BroadcastSearchRequest = BroadcastSearchRequest(
                 **serializer.validated_data
             )
-            user: User = User.objects.get(pk=search.user_id)
+            user: User = User.objects.get(pk=request.user.pk)
             blood_type: BloodType = BloodType.objects.get(pk=search.blood_id)
             receiver_request = ReceiverRequest.objects.create(
                 user=user,

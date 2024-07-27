@@ -38,7 +38,6 @@ class FilterRequestSerializer(serializers.Serializer):
 
 
 class BroadcastSearchSerializer(serializers.Serializer):
-    user_id = serializers.UUIDField()
     blood_id = serializers.UUIDField()
     description = serializers.CharField()
     emergency_status = serializers.BooleanField()

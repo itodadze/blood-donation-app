@@ -13,7 +13,6 @@ class FilterRequest:
 
 @dataclass
 class BroadcastSearchRequest:
-    user_id: UUID
     blood_id: UUID
     description: str
     emergency_status: bool
@@ -22,7 +21,6 @@ class BroadcastSearchRequest:
 
     def as_dictionary(self) -> dict:
         return {
-            "user_id": self.user_id,
             "blood_id": self.blood_id,
             "description": self.description,
             "emergency_status": self.emergency_status,

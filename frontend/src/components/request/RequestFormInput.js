@@ -43,7 +43,7 @@ export const RequestFormInput = ({currentUser}) => {
     }
 
     const handleConfirm = () => {
-        broadcastRequest({currentUser, selectedBlood, description,
+        broadcastRequest({selectedBlood, description,
         emergency, selectedLat, selectedLon}).then(handleSuccess).catch(handleFailure);
     }
 
