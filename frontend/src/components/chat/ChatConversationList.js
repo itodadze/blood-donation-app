@@ -9,7 +9,7 @@ import {getCurrentUserId} from "../../services/CurrentUserService";
 
 
 export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
-    const [currentUser, setCurrentUser] = useState(null);
+    // const [currentUser, setCurrentUser] = useState(null);
     const [conversations, fillConversations] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -18,13 +18,12 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
     useEffect(() => {
         getCurrentUserId()
             .then((data) => {
-                setCurrentUser(data)
+                getConversations(data)
             }).catch(() => {
-            setCurrentUser(null)
         })
     }, []);
 
-    useEffect(() => {
+    const getConversations = (currentUser) => {
         setLoading(true);
         getConversationList(currentUser).then(data => {
             fillConversations(data);
@@ -33,7 +32,7 @@ export const ConversationList = ({chosenRecipient, chooseRecipient}) => {
         }).finally(() => {
             setLoading(false);
         });
-    }, [chosenRecipient, currentUser]);
+    }
 
     const renderConversationList = () => {
         if (loading) {
