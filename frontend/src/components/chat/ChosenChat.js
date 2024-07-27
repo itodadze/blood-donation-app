@@ -10,12 +10,12 @@ export const ChosenChat = ({chosenRecipient, currentUser}) => {
     const [loading, setLoading] = useState(false);
     const [lastMessageTime, setMessageTime] = useState(null);
     const chatRef = useRef(null);
+    const POLLING_INTERVAL = 8000;
 
     useEffect(() => {
         if (chosenRecipient !== null && chosenRecipient !== undefined) {
             setLoading(true);
             getConversation(currentUser, chosenRecipient).then(data => {
-                console.log('Data:', data);
                 fillConversation(data);
                 setTimeout(() => {
                     if (chatRef.current) {
@@ -28,6 +28,21 @@ export const ChosenChat = ({chosenRecipient, currentUser}) => {
                 setLoading(false);
             });
         }
+    }, [chosenRecipient, lastMessageTime]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getConversation(currentUser, chosenRecipient).then(data => {
+                fillConversation(data);
+                setTimeout(() => {
+                    if (chatRef.current) {
+                        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+                    }
+                }, 0);
+            });
+        }, POLLING_INTERVAL);
+
+        return () => clearInterval(intervalId);
     }, [chosenRecipient, lastMessageTime]);
 
     const renderMessages = () => {

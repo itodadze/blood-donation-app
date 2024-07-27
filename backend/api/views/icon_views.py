@@ -6,11 +6,15 @@ from rest_framework.views import APIView
 from api.api_models.icon_models import IconSet
 from api.models import User, UserIcon
 from api.serializers.icon_serializers import UserIconSerializer
+from api.serializers.user_serializers import IconSerializer
 
 
 class UserIconView(APIView):
     def get(self, request: Request) -> Response:
-        return Response(UserIcon.objects.all(), status=status.HTTP_200_OK)
+        return Response(
+            IconSerializer(UserIcon.objects.all(), many=True).data,
+            status=status.HTTP_200_OK
+        )
 
 
 class SetUserIconView(APIView):

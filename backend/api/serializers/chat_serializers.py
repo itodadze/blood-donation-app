@@ -31,6 +31,7 @@ class ChatPeopleResponseSerializer(serializers.Serializer):
     email = serializers.EmailField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+    icon_file_address = serializers.CharField(allow_null=True)
 
 
 class ChatMessagesResponseSerializer(serializers.Serializer):

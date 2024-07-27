@@ -15,3 +15,29 @@ export const getDonors = ({id}) => {
         .then(response => response.data)
         .catch(error => console.error('Error fetching users:', error));
 }
+
+export const getUser = ({userId}) => {
+    return api.get('/users/access/', {params: {id: userId}})
+        .then(response => response.data)
+        .catch(error => console.error('Error fetching user:', error));
+}
+
+export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, email,
+                           isDonor, description, bloodId) => {
+    const requestData = {
+        id: id,
+        icon_id: iconId,
+        is_donor: isDonor,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        description: description,
+        loc_latitude: locLat,
+        loc_longitude: locLon,
+        blood_id: bloodId
+    }
+
+    return api.patch('/users/access/', requestData)
+        .then(response => response.data)
+        .catch(error => console.error('Error updating user information', error));
+}

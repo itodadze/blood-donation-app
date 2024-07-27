@@ -10,6 +10,7 @@ import {RegisterMedInfo} from "./pages/RegisterMedInfo";
 import {Request} from "./pages/RequestPage";
 import {Help} from "./pages/HelpPage";
 import {SignProvider} from "./contexts/SignSystemContext";
+import {Profile} from "./pages/ProfilePage";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -41,9 +42,14 @@ function App() {
                                                        toggleSidebar={toggleSidebar}
                                                        setCurrentUser={setCurrentUser}/>}/>
             <Route path='/registerMed' element={<RegisterMedInfo setCurrentUser={setCurrentUser}/>}/>
-            <Route path="/help" element={<Help isSidebarOpen={isSidebarOpen}
-                                               toggleSidebar={toggleSidebar}
-                                               setCurrentUser={setCurrentUser}/>}/>
+            <Route path="/help" element = {<Help isSidebarOpen={isSidebarOpen}
+                                                 toggleSidebar={toggleSidebar}
+                                                 setCurrentUser={setCurrentUser}/>}/>
+            <Route path="/profile/:user_id"
+                   element= {<Profile isSidebarOpen={isSidebarOpen}
+                                   toggleSidebar={toggleSidebar}
+                                   currentUser={currentUser}/>
+            }/>
         </Routes>
     </SignProvider>);
 }
