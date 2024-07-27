@@ -90,7 +90,7 @@ export const ProfileInfo = ({userId}) => {
     };
 
     const handleUpdateFailure = async () => {
-        setPopupMessage(`მომხმარებელი ${userId}ს ინფორმაცია ვერ განახლდა.`)
+        setPopupMessage(`მომხმარებლის ინფორმაცია ვერ განახლდა.`)
         setShowPopup(true);
     }
 
@@ -123,7 +123,7 @@ export const ProfileInfo = ({userId}) => {
     }
 
     const handleFailure = (userId) => {
-        setPopupMessage(`მომხმარებელი ${userId} ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
+        setPopupMessage(`მომხმარებელი ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
         setShowPopup(true);
     }
 

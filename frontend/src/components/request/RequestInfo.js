@@ -43,7 +43,7 @@ export const RequestInfo = ({request_id}) => {
     }
 
     const handleFailure = (request_id) => {
-        setPopupMessage(`მოთხოვნა ${request_id} ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
+        setPopupMessage(`მოთხოვნა ვერ იქნა ნაპოვნი, გთხოვთ ხელახლა სცადოთ.`)
         setShowPopup(true);
     }
 
