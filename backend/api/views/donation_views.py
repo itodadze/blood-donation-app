@@ -27,7 +27,7 @@ class DonationView(APIView):
 
 class DonationAmountView(APIView):
     def get(self, request: Request) -> Response:
-        serializer = DonorSerializer(data=request.data)
+        serializer = DonorSerializer(data=request.query_params)
 
         if serializer.is_valid():
             donation = Donor(**serializer.validated_data)

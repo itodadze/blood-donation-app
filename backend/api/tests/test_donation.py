@@ -40,7 +40,7 @@ class DonationTestCase(TestCase):
 
     def test_get_donation_amount_incorrect_data(self) -> None:
         request = MagicMock(spec=Request)
-        request.data = 3
+        request.query_params = 3
         response: Response = DonationAmountView().get(request)
         self.assertEquals(response.status_code, 400)
 
@@ -48,7 +48,7 @@ class DonationTestCase(TestCase):
         request = MagicMock(spec=Request)
         Donation.objects.create(donor=self.user)
         Donation.objects.create(donor=self.user)
-        request.data = Donor(self.user.pk).as_dictionary()
+        request.query_params = Donor(self.user.pk).as_dictionary()
         response: Response = DonationAmountView().get(request)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.data, {"amount": 2})

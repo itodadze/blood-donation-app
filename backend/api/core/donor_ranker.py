@@ -5,6 +5,8 @@ from api.models import User
 
 
 def dist_squared(search: BroadcastSearchRequest, user: User) -> float:
+    if not user.loc_latitude or not user.loc_longitude:
+        return pow(90.0, 2) + pow(90.0, 2)
     a_sq = pow(abs(search.loc_latitude - user.loc_latitude), 2)
     b_sq = pow(abs(search.loc_longitude - user.loc_longitude), 2)
     return a_sq + b_sq

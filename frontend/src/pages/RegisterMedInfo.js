@@ -151,6 +151,10 @@ export const RegisterMedInfo = ({setCurrentUser}) => {
                             }}>
                                 <BloodDropdownMenu handleSelect={handleSelect}
                                                    className={"med-dropdown-menu"}/>
+                                <text style={{
+                                    color: colors.blood, fontWeight: 'bold', padding: '0.5vh'
+                                }}>თქვენი ლოკაცია გამოყენებული იქნება დონორთა საერთო რუკაზე,
+                                ასევე მის მიხედვით შეირჩევა თქვენთვის ოპტიმალური სისხლზე მოთხოვნები.</text>
                                 <ClickableButton buttonText={"აირჩიე ლოკაცია"} onClick={onPopupOpen}/>
                             </div>}
                             {!medInfo && <span style={{margin: '0px 10px', textAlign: 'center', color: colors.blood}}>

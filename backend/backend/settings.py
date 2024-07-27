@@ -127,7 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
     }
 ]
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+REACT_APP_BASE_URL = env("REACT_APP_BASE_URL", default="http://localhost:3000")
+
+CORS_ORIGIN_WHITELIST = (REACT_APP_BASE_URL,)
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'content-disposition',
@@ -135,7 +137,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    REACT_APP_BASE_URL,
 ]
 
 CORS_ALLOW_CREDENTIALS = True
