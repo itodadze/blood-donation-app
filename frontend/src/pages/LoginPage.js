@@ -4,7 +4,7 @@ import colors from "../values/colors";
 import {CredentialField} from "../components/sign_system/CredentialField";
 import {PasswordField} from "../components/sign_system/PasswordField";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
-import chaos_background from "../assets/background/chaos_background.png";
+import background from "../assets/background/background.png";
 import {login} from "../services/SignSystemService";
 import {useNavigate} from "react-router-dom";
 
@@ -70,7 +70,7 @@ export const Login = () => {
         <div style={{display: 'flex', flexDirection: 'column', flex: '1'}}>
 
             <div style={{
-                backgroundImage: `url(${chaos_background})`,
+                backgroundImage: `url(${background})`,
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',

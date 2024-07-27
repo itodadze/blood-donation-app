@@ -6,7 +6,7 @@ import {LocationPick} from "../components/map/LocationPick";
 import {ClickableButton} from "../components/sign_system/ClickableButton";
 import {register} from "../services/SignSystemService"
 import {useLocation, useNavigate} from "react-router-dom";
-import chaos_background from "../assets/background/chaos_background.png";
+import background from "../assets/background/background.png";
 
 export const RegisterMedInfo = () => {
 
@@ -89,7 +89,7 @@ export const RegisterMedInfo = () => {
             flex: '1',
             justifyContent: 'center',
             position: 'relative',
-            backgroundImage: `url(${chaos_background})`
+            backgroundImage: `url(${background})`
         }}>
             {showPopup && <div className={"register-popup-envelope"}>
                 <div className={"register-popup"}>
@@ -100,7 +100,7 @@ export const RegisterMedInfo = () => {
             </div>}
 
             {!showPopup && <div style={{
-                backgroundImage: `url(${chaos_background})`,
+                backgroundImage: `url(${background})`,
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
