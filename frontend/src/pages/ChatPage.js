@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Helmet} from "react-helmet";
 import colors from "../values/colors";
 import menu from "../assets/icons/menu.svg";
@@ -6,13 +6,31 @@ import {ChosenChat} from "../components/chat/ChosenChat";
 import {ConversationList} from "../components/chat/ChatConversationList";
 import {SideMenu} from "../components/SideMenu";
 import strings from "../values/strings";
+import {useNavigate} from "react-router-dom";
+import {getCurrentUserId} from "../services/CurrentUserService";
 
 export const Chat = ({isSidebarOpen, toggleSidebar}) => {
+    const [currentUser, setCurrentUser] = useState(null);
     const [chosenRecipient, setRecipient] = useState(null);
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
 
     const chooseRecipient = (recipient) => {
         setRecipient(recipient);
     };
+
+    const navigate = useNavigate();
+
+    if (!currentUser) {
+        navigate('/login');
+    }
 
     return (<div className="chat-page-menu-container">
         <Helmet>
