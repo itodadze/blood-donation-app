@@ -52,7 +52,9 @@ export const RequestInfo = ({request_id}) => {
             deleteConversation(user.id, currentUser)
         })
         deleteRequest({requestId: request_id})
-            .then().catch()
+            .then(() => {
+                navigate("/")
+            }).catch()
     }
 
     const handleAccept = () => {
@@ -63,7 +65,9 @@ export const RequestInfo = ({request_id}) => {
             deleteConversation(user.id, currentUser)
         })
         deleteRequest({requestId: request_id})
-            .then().catch()
+            .then(() => {
+                navigate("/")
+            }).catch()
     }
 
     const handleConnect = () => {

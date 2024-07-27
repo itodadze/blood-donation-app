@@ -371,7 +371,7 @@ export const ProfileInfo = ({userId}) => {
                 }
                 {'' + currentUser === userId && <button onClick={handleUserUpdate}
                                                    className={'home-unselected-button'}>
-                    განაახლე ინფორმაცია
+                    განაახლე
                 </button>}
                 <div style={{display: 'flex', flexDirection: 'row', padding: '0.5vh',
                 alignItems: 'center'}}>
