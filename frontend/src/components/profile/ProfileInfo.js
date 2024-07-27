@@ -35,6 +35,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
     const [medicalDocuments, setMedicalDocuments] = useState([]);
     const [icons, setIcons] = useState([]);
     const [file, setFile] = useState(null);
+    const POLLING_INTERVAL = 8000;
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -144,8 +145,17 @@ export const ProfileInfo = ({currentUser, userId}) => {
             .catch(() => handleFailure(userId))
         getMedicalDocuments({userId})
             .then((data) => handleMedicalDocuments(data))
-        console.log(userId)
-        console.log(currentUser)
+    }, [userId]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getUser({userId: userId})
+                .then((data) => handleSuccess(data))
+            getMedicalDocuments({userId})
+                .then((data) => handleMedicalDocuments(data))
+        }, POLLING_INTERVAL);
+
+        return () => clearInterval(intervalId);
     }, [userId]);
 
     return (
