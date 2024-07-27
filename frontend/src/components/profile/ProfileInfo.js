@@ -153,7 +153,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
             flex: '1', position: 'relative', width: "100%", maxWidth: '100%',
             backgroundImage: `url(${background})`, maxHeight: '100%',
             backgroundSize: 'cover', display: "flex", justifyContent: "center", flexDirection: "column",
-            alignItems: 'center'
+            alignItems: 'center', overflow: 'hidden'
         }}>
             {showPopup && <div className={"request-popup"}>
                 <text className={"request-item-desc"}>{popupMessage}</text>
@@ -182,7 +182,8 @@ export const ProfileInfo = ({currentUser, userId}) => {
             </div>}
             {!showPopup && !showIconOptions && <div style={{
                 height: "90%", maxHeight: '90%', width: "92%", maxWidth: '92%', position: 'relative', backgroundColor:
-                colors.pearl, display: "flex", flexDirection: "column", alignItems: 'center'
+                colors.pearl, display: "flex", flexDirection: "column", alignItems: 'center', overflowY: "auto",
+                padding: "2vh", boxSizing: "border-box"
             }}>
                 {'' + currentUser === userId && <div style={{
                     height: '42%', position: 'relative', display: 'flex',
@@ -278,7 +279,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                     </div>
                 </div>}
                 {'' + currentUser === userId && <div style={{width: '70vh',
-                    height: '13vh', overflowX: 'auto'}}>
+                    minHeight: '13vh', height: '13vh', overflowX: 'auto'}}>
                         <textarea
                             value={description}
                             onChange={handleDescriptionChange}
@@ -286,7 +287,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
                         />
                 </div>}
                 {'' + currentUser !== userId && (
-                    <div style={{ width: '70vh', height: '13vh', overflowX: 'auto' }}>
+                    <div style={{ width: '70vh', minHeight: '13vh', height: '13vh', overflowX: 'auto' }}>
                         <div
                             className="scroll profile-description"
                             style={{
