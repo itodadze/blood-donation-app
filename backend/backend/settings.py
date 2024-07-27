@@ -13,6 +13,7 @@ import os
 import sys
 from pathlib import Path
 
+from corsheaders.defaults import default_headers
 from environ import environ
 
 
@@ -23,6 +24,10 @@ env = environ.Env(
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -123,6 +128,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'content-disposition',
+    'filename',
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",

@@ -44,6 +44,9 @@ export const Map = ({mapData, isBlood, currentUser}) => {
                     navigate("/request/" + id, {currentUser: currentUser});
                 });
             } else {
+                marker.getElement().addEventListener('click', () => {
+                    navigate("/profile/" + id, {currentUser: currentUser});
+                });
             }
             currentMarkers.push(marker);
         });

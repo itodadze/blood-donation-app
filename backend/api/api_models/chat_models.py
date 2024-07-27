@@ -62,6 +62,7 @@ class ChatPeopleResponse:
     email: str
     first_name: str
     last_name: str
+    icon_file_address: str | None = None
 
     @staticmethod
     def from_user(user: User) -> "ChatPeopleResponse":
@@ -70,6 +71,7 @@ class ChatPeopleResponse:
             email=user.email,
             first_name=user.first_name,
             last_name=user.last_name,
+            icon_file_address=user.icon.file_address
         )
 
     def as_dictionary(self) -> dict:
@@ -78,6 +80,7 @@ class ChatPeopleResponse:
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "icon_file_address": self.icon_file_address
         }
 
 

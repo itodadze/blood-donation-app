@@ -9,6 +9,7 @@ import {Register} from "./pages/RegisterPage";
 import {RegisterMedInfo} from "./pages/RegisterMedInfo";
 import {Request} from "./pages/RequestPage";
 import {Help} from "./pages/HelpPage";
+import {Profile} from "./pages/ProfilePage";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -43,6 +44,11 @@ function App() {
             <Route path="/help" element = {<Help isSidebarOpen={isSidebarOpen}
                                                  toggleSidebar={toggleSidebar}
                                                  setCurrentUser={setCurrentUser}/>}/>
+            <Route path="/profile/:user_id"
+                   element= {<Profile isSidebarOpen={isSidebarOpen}
+                                   toggleSidebar={toggleSidebar}
+                                   currentUser={currentUser}/>
+            }/>
         </Routes>
     );
 }

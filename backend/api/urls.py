@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (auth_views, blood_views, chat_views, donation_views,
-                    icon_views, request_views, search_views, user_views)
+                    icon_views, request_views, search_views, user_views, document_views)
 from .views.auth_views import LoginUser
 
 urlpatterns = [
@@ -54,4 +54,9 @@ urlpatterns = [
     path("login/", LoginUser.as_view(), name="login"),
     path("icons/", icon_views.UserIconView.as_view(), name="get-user-icons"),
     path("icons/user/", icon_views.SetUserIconView.as_view(), name="update-user-icon"),
+    path("documents/", document_views.MedicalDocumentsView.as_view(), name="documents"),
+    path("documents/<int:identifier>/upload/", document_views.MedicalDocumentsUploadView.as_view(),
+         name='upload-document'),
+    path("documents/access/", document_views.MedicalDocumentView.as_view(), name="get-document"),
+    path("users/access/", user_views.UserView.as_view(), name="access-user")
 ]

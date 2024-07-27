@@ -30,28 +30,29 @@ export const SideMenu = ({current, currentUser}) => {
             transition={{type: 'tween', ease: 'easeOut', duration: 0}}>
             <IconButton svg_file={logo} height={"60vh"} text={"DonorStream"}
                             onClick={() => navigate("/", {currentUser: currentUser})}/>
-            {(current !== strings.HOME) &&
-                <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
-                            onClick={() => navigate("/", {currentUser: currentUser})}/>}
+            <MenuButton svg_file={feed} height={"42vh"} text={"მთავარი"}
+                        onClick={() => navigate("/", {currentUser: currentUser})}
+                        selected={current === strings.HOME}/>
 
-            {(current !== strings.PROFILE) && <MenuButton svg_file={profile} height={"38vh"}
-                                                          text={"პროფილი"}/>}
+            <MenuButton svg_file={profile} height={"38vh"} text={"პროფილი"}
+                        onClick={() => navigate("/profile/" + currentUser, {currentUser: currentUser})}
+                        selected={current === strings.PROFILE}/>
 
-            {(current !== strings.CHATS) &&
-                <MenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
-                            onClick={() => navigate("/chat", {currentUser: currentUser})}/>}
+            <MenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}
+                        onClick={() => navigate("/chat", {currentUser: currentUser})}
+                        selected={current === strings.CHATS}/>
 
-            {(current !== strings.REQUEST) &&
-                <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
-                            onClick={() => navigate("/request/broadcast", {currentUser: currentUser})}/>}
+            <MenuButton svg_file={blood} height={"42vh"} text={"მჭირდება სისხლი"}
+                        onClick={() => navigate("/request/broadcast", {currentUser: currentUser})}
+                        selected={current === strings.REQUEST}/>
 
 
             <div style={{marginTop: "auto"}}>
                 <MenuButton svg_file={logout} height={"44vh"} text={"გასვლა"}/>
             </div>
-            {(current !== strings.HELP) &&
-                <MenuButton svg_file={support} height={"40vh"}
-                            text={"დახმარება"} onClick={() => navigate("/help", {currentUser: currentUser})}/>}
+            <MenuButton svg_file={support} height={"40vh"} text={"დახმარება"}
+                        onClick={() => navigate("/help", {currentUser: currentUser})}
+                        selected={current === strings.HELP}/>
         </motion.div>
     );
 }
