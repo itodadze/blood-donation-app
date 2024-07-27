@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.api_models.search_models import FilterRequest
+from api.api_models.search_models import FilterReceiverRequest
 from api.models import BloodType, ReceiverRequest, User, UserIcon
 from api.tests.test_filter_users import insert_default_user
 from api.views.search_views import FilterSearchRequestsView
@@ -69,7 +69,7 @@ class FilterSearchRequestsTestCase(TestCase):
         )
 
     def test_filter_search_wrong_blood(self) -> None:
-        search = FilterRequest(self.ab_plus.pk, False).as_dictionary()
+        search = FilterReceiverRequest(self.ab_plus.pk, False, False).as_dictionary()
         request = MagicMock(spec=Request)
         request.query_params = search
         response: Response = FilterSearchRequestsView().get(request)
@@ -77,7 +77,7 @@ class FilterSearchRequestsTestCase(TestCase):
         self.assertEquals(len(list(response.data)), 0)
 
     def test_filter_search_ignores_inactive(self) -> None:
-        search = FilterRequest(self.ab_minus.pk, False).as_dictionary()
+        search = FilterReceiverRequest(self.ab_minus.pk, False, False).as_dictionary()
         request = MagicMock(spec=Request)
         request.query_params = search
         response: Response = FilterSearchRequestsView().get(request)
@@ -85,7 +85,7 @@ class FilterSearchRequestsTestCase(TestCase):
         self.assertEquals(len(list(response.data)), 1)
 
     def test_filter_search_exact_match(self) -> None:
-        search = FilterRequest(self.o_minus.pk, True).as_dictionary()
+        search = FilterReceiverRequest(self.o_minus.pk, True, False).as_dictionary()
         request = MagicMock(spec=Request)
         request.query_params = search
         response: Response = FilterSearchRequestsView().get(request)

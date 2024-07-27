@@ -12,6 +12,16 @@ class FilterRequest:
 
 
 @dataclass
+class FilterReceiverRequest:
+    id: int | None
+    exact_match: bool
+    current_author: bool
+
+    def as_dictionary(self) -> dict:
+        return {"id": self.id, "exact_match": self.exact_match, "current_author": self.current_author}
+
+
+@dataclass
 class BroadcastSearchRequest:
     blood_id: UUID
     description: str
