@@ -89,6 +89,11 @@ export const ProfileInfo = ({userId}) => {
         setUpdateBloodId(eventKey.id);
     };
 
+    const handleUpdateFailure = async () => {
+        setPopupMessage(`მომხმარებელი ${userId}ს ინფორმაცია ვერ განახლდა.`)
+        setShowPopup(true);
+    }
+
     const handleUserUpdate = () => {
         updateUser(
             userId,
@@ -102,6 +107,11 @@ export const ProfileInfo = ({userId}) => {
             description,
             updateBloodId
         )
+            .catch(
+            () => {
+                handleUpdateFailure();
+            }
+        );
     }
 
     const handleDescriptionChange = (event) => {

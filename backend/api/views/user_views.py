@@ -66,6 +66,19 @@ class UserView(APIView):
                 **serializer.validated_data
             )
             user: QuerySet = User.objects.filter(pk=updates.id)
+            try:
+                if updates.icon_id:
+                    UserIcon.objects.get(pk=updates.icon_id)
+            except UserIcon.DoesNotExist:
+                return Response("Icon does not exist", status=status.HTTP_404_NOT_FOUND)
+            try:
+                if updates.blood_id:
+                    BloodType.objects.get(pk=updates.blood_id)
+            except BloodType.DoesNotExist:
+                return Response("Blood type does not exist", status=status.HTTP_404_NOT_FOUND)
+            if updates.email and updates.email != user.get(pk=updates.id).email:
+                if User.objects.filter(email=updates.email).count() > 0:
+                    return Response("User with given email already exists", status=status.HTTP_403_FORBIDDEN)
             if updates.is_donor is not None:
                 user.update(donor_status=updates.is_donor)
             if updates.email:
@@ -78,18 +91,10 @@ class UserView(APIView):
                 user.update(last_name=updates.last_name)
             if updates.description:
                 user.update(description=updates.description)
-            try:
-                if updates.icon_id:
-                    icon = UserIcon.objects.get(pk=updates.icon_id)
-                    user.update(icon=icon)
-            except UserIcon.DoesNotExist:
-                return Response("Icon does not exist", status=status.HTTP_404_NOT_FOUND)
-            try:
-                if updates.blood_id:
-                    blood = BloodType.objects.get(pk=updates.blood_id)
-                    user.update(blood_type=blood)
-            except BloodType.DoesNotExist:
-                return Response("Blood type does not exist", status=status.HTTP_404_NOT_FOUND)
+            if updates.icon_id:
+                user.update(icon=UserIcon.objects.get(pk=updates.icon_id))
+            if updates.blood_id:
+                user.update(blood_type=BloodType.objects.get(pk=updates.blood_id))
             return Response(None, status=status.HTTP_200_OK)
         else:
             return Response("Update request invalid", status=status.HTTP_400_BAD_REQUEST)
