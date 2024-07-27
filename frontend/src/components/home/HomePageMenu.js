@@ -4,6 +4,6 @@ import strings from "../../values/strings";
 
 export const HomePageMenu = ({currentUser}) => {
     return (
-        <SideMenu current={strings.HOME} currentUser={currentUser}/>
+        <SideMenu current={strings.HOME}/>
     );
 }

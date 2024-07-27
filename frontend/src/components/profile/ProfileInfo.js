@@ -21,8 +21,11 @@ import blackhole from "../../assets/donation_icons/blackhole.png"
 import file_icon from "../../assets/icons/file.svg";
 import {BloodDropdownMenu} from "../BloodDropdownMenu";
 import {getDonationCount} from "../../services/DonationCountService";
+import {getCurrentUserId} from "../../services/CurrentUserService";
 
-export const ProfileInfo = ({currentUser, userId}) => {
+export const ProfileInfo = ({userId}) => {
+    const [currentUser, setCurrentUser] = useState(null);
+
     const [selectedIconId, setSelectedIconId] = useState(null);
     const [selectedIcon, setSelectedIcon] = useState('icon_0');
     const [selectedFirstName, setSelectedFirstName] = useState('');
@@ -162,6 +165,15 @@ export const ProfileInfo = ({currentUser, userId}) => {
     }
 
     useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+                setCurrentUser(null)
+            })
+    }, []);
+
+    useEffect(() => {
         getIcons()
             .then((data) => handleIcons(data))
         getUser({userId: userId})
@@ -171,7 +183,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
             .then((data) => handleMedicalDocuments(data))
         getDonationCount(userId)
             .then((data) => handleDonationCount(data))
-    }, [userId]);
+    }, [userId, currentUser]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -182,7 +194,7 @@ export const ProfileInfo = ({currentUser, userId}) => {
         }, POLLING_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, [userId]);
+    }, [userId, currentUser]);
 
     return (
         <div style={{

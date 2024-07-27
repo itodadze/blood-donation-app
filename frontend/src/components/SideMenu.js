@@ -9,12 +9,14 @@ import blood from "../assets/icons/blood.svg";
 import logout_logo from "../assets/icons/logout.svg";
 import support from "../assets/icons/support.svg";
 import logo from "../assets/icons/logo.svg"
-import React from "react";
+import React, {useEffect, useState} from "react";
 import strings from "../values/strings";
 import {IconButton} from "./IconButton";
 import {logout} from "../services/SignSystemService";
+import {getCurrentUserId} from "../services/CurrentUserService";
 
-export const SideMenu = ({current, currentUser}) => {
+export const SideMenu = ({current}) => {
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
 
     const handleLogout = async (e) => {
@@ -25,6 +27,15 @@ export const SideMenu = ({current, currentUser}) => {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        getCurrentUserId()
+            .then((data) => {
+                setCurrentUser(data)
+            }).catch(() => {
+            setCurrentUser(null)
+        })
+    }, []);
 
     return (
         <motion.div
@@ -45,7 +56,7 @@ export const SideMenu = ({current, currentUser}) => {
                         selected={current === strings.HOME}/>
 
             <MenuButton svg_file={profile} height={"38vh"} text={"პროფილი"}
-                        onClick={() => navigate("/profile/" + currentUser, {currentUser: currentUser})}
+                        onClick={() => navigate("/profile/" + currentUser)}
                         selected={current === strings.PROFILE}/>
 
             <MenuButton svg_file={chat} height={"42vh"} text={"შეტყობინებები"}

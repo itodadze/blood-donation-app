@@ -4,6 +4,6 @@ import strings from "../../values/strings";
 
 export const RequestFormPageMenu = ({currentUSer}) => {
     return (
-        <SideMenu current={strings.REQUEST} currentUser={currentUSer}/>
+        <SideMenu current={strings.REQUEST}/>
     );
 }
