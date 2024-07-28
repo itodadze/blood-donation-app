@@ -58,7 +58,6 @@ class UserUpdateRequestSerializer(serializers.Serializer):
     icon_id = serializers.IntegerField(allow_null=True)
     first_name = serializers.CharField(allow_null=True)
     last_name = serializers.CharField(allow_null=True)
-    email = serializers.EmailField(allow_null=True)
     description = serializers.CharField(allow_null=True)
     loc_longitude = serializers.FloatField(allow_null=True)
     loc_latitude = serializers.FloatField(allow_null=True)

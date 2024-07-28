@@ -80,16 +80,8 @@ class UserView(APIView):
                 return Response(
                     "Blood type does not exist", status=status.HTTP_404_NOT_FOUND
                 )
-            if updates.email and updates.email != user.get(pk=updates.id).email:
-                if User.objects.filter(email=updates.email).count() > 0:
-                    return Response(
-                        "User with given email already exists",
-                        status=status.HTTP_403_FORBIDDEN,
-                    )
             if updates.is_donor is not None:
                 user.update(donor_status=updates.is_donor)
-            if updates.email:
-                user.update(email=updates.email)
             if updates.loc_longitude and updates.loc_latitude:
                 user.update(
                     loc_longitude=updates.loc_longitude,
