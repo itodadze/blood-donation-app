@@ -8,3 +8,5 @@ django-environ
 gunicorn
 psycopg2-binary
 environ
+django-allauth
+dj-rest-auth

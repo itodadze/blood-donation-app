@@ -47,8 +47,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "corsheaders",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     "rest_framework",
+    "rest_framework.authtoken",
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     "api",
 ]
 
@@ -61,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -124,6 +132,13 @@ AUTH_PASSWORD_VALIDATORS = [
         },
     }
 ]
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
 
 REACT_APP_BASE_URL = env("REACT_APP_BASE_URL", default="http://localhost:3000")
 
