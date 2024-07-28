@@ -32,7 +32,7 @@ export const Location = ({selectedLat, selectedLon}) => {
         new mapboxgl.Marker()
             .setLngLat([lng, lat])
             .addTo(map.current);
-    }, []);
+    }, [lat, lng]);
 
     return (
         <div>

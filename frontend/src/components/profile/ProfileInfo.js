@@ -34,8 +34,8 @@ export const ProfileInfo = ({userId}) => {
     const [description, setDescription] = useState('')
     const [blood, setBlood] = useState('')
     const [updateBloodId, setUpdateBloodId] = useState(null)
-    const [selectedLocLatitude, setSelectedLocLatitude] = useState(0.0);
-    const [selectedLocLongitude, setSelectedLocLongitude] = useState(0.0);
+    const [selectedLocLatitude, setSelectedLocLatitude] = useState(null);
+    const [selectedLocLongitude, setSelectedLocLongitude] = useState(null);
     const [isDonor, setIsDonor] = useState(false);
     const [popupMessage, setPopupMessage] = useState('იძებნება');
     const [showIconOptions, setShowIconOptions] = useState(false);
@@ -67,20 +67,33 @@ export const ProfileInfo = ({userId}) => {
         setSelectedEmail(data.email)
         setSelectedFirstName(data.first_name)
         setSelectedLastName(data.last_name)
-        setSelectedLocLatitude(data.loc_latitude)
-        setSelectedLocLongitude(data.loc_longitude)
+        if (data.loc_latitude && data.loc_longitude) {
+            setSelectedLocLatitude(data.loc_latitude)
+            setSelectedLocLongitude(data.loc_longitude)
+        } else {
+            setSelectedLocLatitude(null)
+            setSelectedLocLongitude(null)
+        }
         if (data.blood_type) {
             if (data.blood_type.rhesus_factor) {
                 setBlood(data.blood_type.blood_type + "+")
             } else {
                 setBlood(data.blood_type.blood_type + "-")
             }
+        } else {
+            setBlood('არ არის განსაზღვრული')
         }
         setIsDonor(data.donor_status)
-        setDescription(data.description)
+        if (data.description) {
+            setDescription(data.description)
+        } else {
+            setDescription('')
+        }
         if (data.icon) {
             setSelectedIconId(data.icon.id)
             setSelectedIcon(data.icon.file_address)
+        } else {
+            setSelectedIcon('icon_0')
         }
         setShowPopup(false);
     }
@@ -102,7 +115,6 @@ export const ProfileInfo = ({userId}) => {
             selectedLocLongitude,
             selectedFirstName,
             selectedLastName,
-            selectedEmail,
             isDonor,
             description,
             updateBloodId
@@ -274,10 +286,8 @@ export const ProfileInfo = ({userId}) => {
                                               value={selectedLastName}
                                               setValue={setSelectedLastName}
                                               width={'20vh'}/>
-                        <ProfileEditableField description={"მეილი"}
-                                              value={selectedEmail}
-                                              setValue={setSelectedEmail}
-                                              width={'28vh'}/>
+                        <ProfileField description={"მეილი"}
+                                      value={selectedEmail}/>
                         <ProfileField description={"სისხლის ჯგუფი"}
                                       value={blood}/>
                         <div style={{
@@ -319,8 +329,6 @@ export const ProfileInfo = ({userId}) => {
                                               value={selectedFirstName}/>
                         <ProfileField description={"გვარი"}
                                               value={selectedLastName}/>
-                        <ProfileField description={"მეილი"}
-                                              value={selectedEmail}/>
                         <ProfileField description={"სისხლის ჯგუფი"}
                                       value={blood}/>
                         <div style={{

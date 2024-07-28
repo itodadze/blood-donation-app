@@ -22,7 +22,7 @@ export const getUser = ({userId}) => {
         .catch(error => console.error('Error fetching user:', error));
 }
 
-export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, email,
+export const updateUser = (id, iconId, locLat, locLon, firstName, lastName,
                            isDonor, description, bloodId) => {
     const requestData = {
         id: id,
@@ -30,7 +30,6 @@ export const updateUser = (id, iconId, locLat, locLon, firstName, lastName, emai
         is_donor: isDonor,
         first_name: firstName,
         last_name: lastName,
-        email: email,
         description: description,
         loc_latitude: locLat,
         loc_longitude: locLon,
