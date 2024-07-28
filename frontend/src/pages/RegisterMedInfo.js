@@ -51,8 +51,9 @@ export const RegisterMedInfo = () => {
             setErrorTxt('თუ დონორად რეგისტრირდებით, გთხოვთ აირჩიოთ სისხლის ტიპი');
         } else {
             try {
-                await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword, selectedPasswordConfirm, selectedLat, selectedLon, selectedBlood, medInfo)
-                navigate('/');
+                await register(selectedFirstName, selectedLastName, selectedEmail, selectedPassword,
+                    selectedPasswordConfirm, selectedLat, selectedLon, selectedBlood, medInfo)
+                setErrorTxt('გთხოვთ დაადასტუროთ მეილზე რეგისტრაცია');
             } catch (error) {
                 if (error.response.data.email) {
                     if (error.response.data.email[0].includes('exists')) {

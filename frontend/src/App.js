@@ -11,6 +11,7 @@ import {Request} from "./pages/RequestPage";
 import {Help} from "./pages/HelpPage";
 import {SignProvider} from "./contexts/SignSystemContext";
 import {Profile} from "./pages/ProfilePage";
+import {ConfirmEmail} from "./pages/ConfirmEmail";
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -22,6 +23,7 @@ function App() {
     return (<SignProvider>
 
         <Routes>
+            <Route path="/confirm-email/:uid/:token" element={<ConfirmEmail />} />
             <Route path='/' element={<Home isSidebarOpen={isSidebarOpen}
                                            toggleSidebar={toggleSidebar}/>}/>
             <Route path='/request/broadcast' element={<RequestForm isSidebarOpen={isSidebarOpen}
