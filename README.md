@@ -1,5 +1,7 @@
 # BloodStream
 
+### Pyhon version used: 3.11
+
 ### Before running docker
 * Make sure you have a local postgresql database set up and your user has all the permissions.
 * Make sure you have a gmail business email with an app-specific password.  
